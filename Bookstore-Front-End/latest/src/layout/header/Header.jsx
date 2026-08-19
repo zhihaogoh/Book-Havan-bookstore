@@ -1,4 +1,5 @@
 import { Dropdown, Form, Nav, Navbar, NavItem, NavLink } from "react-bootstrap";
+import { NavLink as RouterNavLink } from "react-router";
 import { IoSearchOutline } from "react-icons/io5";
 import {
   MdFavoriteBorder,
@@ -83,12 +84,19 @@ export default function Header() {
         </div>
       </Navbar>
       {/* header end */}
-      <Nav className="main_menu" variant="underline" defaultActiveKey="/">
+      <Nav className="main_menu" variant="underline">
         <Nav.Item>
-          <Nav.Link className="me-3" href="/">Home</Nav.Link>
+          <RouterNavLink
+            className={({ isActive }) =>
+              `nav-link me-3${isActive ? " fw-bold" : ""}`
+            }
+            to="/"
+          >
+            Home
+          </RouterNavLink>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className="me-3" eventKey="link-1">Categories</Nav.Link>
+          <Nav.Link className="me-3" eventKey="2">Categories</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link className="me-3"  eventKey="link-2">Product</Nav.Link>
@@ -103,7 +111,14 @@ export default function Header() {
           <Nav.Link className="me-3" eventKey="link-5">Deals</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className="me-3" eventKey="link-6">About Us</Nav.Link>
+          <RouterNavLink
+            className={({ isActive }) =>
+              `nav-link me-3${isActive ? " fw-bold" : ""}`
+            }
+            to="/about"
+          >
+            About Us
+          </RouterNavLink>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link className="me-3" eventKey="link-7">Contact Us</Nav.Link>

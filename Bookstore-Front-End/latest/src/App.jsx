@@ -3,6 +3,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import Home from './pages/Home/Home';
+import About from './pages/About/About';
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -10,6 +11,10 @@ function App() {
     {
       path: "/",
       element: <Home />,
+    },
+    {
+      path: "/about",
+      element: <About />,
     },
   ]);
   return (
