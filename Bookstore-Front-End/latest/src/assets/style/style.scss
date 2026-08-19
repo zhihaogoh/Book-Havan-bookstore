@@ -284,7 +284,7 @@
     }
   }
 }
-
+// about page start
 .about-primary {
   .title {
     background-image: url("../../assets/image/About/About-Title-Background.jpg");
@@ -304,8 +304,10 @@
       line-height: 2rem;
     }
   }
+
+}
   .havan-story {
-    padding: 3rem;
+    padding: 3rem 5rem;
     .havan-story-content {
       padding : 2rem 1rem;
       align-items: center;
@@ -335,4 +337,5 @@
       }
     }
   }
-}
+
+  //about page end
