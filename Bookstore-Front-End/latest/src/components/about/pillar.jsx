@@ -9,7 +9,7 @@ export default function Pillar() {
         </div>
         <Row>
           <Col xs={12} md={4} lg={4}>
-            <Card className="bg-success text-white">
+            <Card className="bg-success text-white mb-3">
               <Card.Body >
                 <div className="card-title">
                   <h3>Our Mission</h3>
@@ -26,7 +26,7 @@ export default function Pillar() {
           </Col>
 
           <Col xs={12} md={4} lg={4}>
-            <Card>
+            <Card className="mb-3">
               <Card.Body>
                 <div className="card-title">
                   <h3>Our Vision</h3>
@@ -42,7 +42,7 @@ export default function Pillar() {
             </Card>
           </Col>
           <Col xs={12} md={4} lg={4}>
-            <Card className="bg-success text-white">
+            <Card className="bg-success text-white mb-3">
               <Card.Body>
                 <div className="card-title ">
                   <h3>Integrity</h3>

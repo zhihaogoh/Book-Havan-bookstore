@@ -371,4 +371,47 @@
   }
 }
 
+.scholars {
+  .title {
+    margin: 0 0 4rem 0;
+    h3 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      line-height: 2rem;
+      text-align: center;
+    }
+  }
+  .content {
+
+    .img-fluid {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+
+    }
+    h3 {
+      margin: 0rem 0 0 0;
+      font-size: 1.25rem;
+      font-weight: bold;
+      line-height: 2rem;
+      color: black;
+    }
+    .position {
+      margin: 0rem 0 0 0;
+      font-size: 1rem;
+      font-weight: bold;
+      line-height: 1.5rem;
+      color: green;
+    }
+    .description {
+      color: black;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      font-style: italic;
+    
+    }
+  }
+ 
+}
+
 //about page end
