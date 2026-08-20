@@ -1,5 +1,5 @@
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Col, Row } from "react-bootstrap";
+
 
 export default function AboutContent() {
   return (

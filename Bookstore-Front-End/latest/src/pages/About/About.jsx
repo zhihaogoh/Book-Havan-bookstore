@@ -1,5 +1,6 @@
 import AboutContent from "../../components/about/about_content";
 import AboutPrimary from "../../components/about/about_primary";
+import Pillar from "../../components/about/Pillar";
 import Layout from "../../layout/Layout";
 
 export default function About() {
@@ -8,7 +9,7 @@ export default function About() {
       <Layout>
         <AboutPrimary />
         <AboutContent />
-        
+        <Pillar />
       </Layout>
     </>
   );
