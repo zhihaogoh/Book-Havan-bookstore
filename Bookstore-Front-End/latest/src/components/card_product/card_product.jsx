@@ -44,7 +44,7 @@ export default function CardProduct({ product }) {
         <p className="author">{product.Author}</p>
         <StarRating rating={product.star} reviewCount={product.viewNumber} />
         <div className="price-cart">
-          <p className="price">RM{product.Price}</p>
+          <p className="price">RM{product.Price.toFixed(2)}</p>
           <MdShoppingCart />
         </div>
       </Card>

@@ -200,9 +200,7 @@
 
 //categories component start
 .categories {
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
+  padding: 1rem 0;
   .title {
     display: flex;
     flex-direction: row;
@@ -231,6 +229,15 @@
     margin-top: 1rem;
     .card {
       padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      img{
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+      }
       h3 {
         color: black;
         font-size: 1rem;

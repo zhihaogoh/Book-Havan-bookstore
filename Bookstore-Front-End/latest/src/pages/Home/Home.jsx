@@ -13,22 +13,27 @@ export default function Home() {
         <Categories 
           categories = {[
             {
+              icon: "../src/assets/Image/Icon/open-book.png",
               category : "Fiction",
               books_number : 400 
             },
             {
+              icon: "../src/assets/Image/Icon/spell-book.png",
               category : "Non Fiction",
               books_number : 450 
             },
             {
+              icon: "../src/assets/Image/Icon/briefcase.png",
               category : "Business",
               books_number : 650
             },
             {
+              icon: "../src/assets/Image/Icon/test.png",
               category : "Scinece & Tech",
               books_number : 550
             },
             {
+              icon: "../src/assets/Image/Icon/hearts.png",
               category : "Romance",
               books_number : 550
             }
@@ -98,7 +103,7 @@ export default function Home() {
             {
               BookName: "The Silent Patient",
               Author: "Alex Michaelides",
-              Price: 15.99,
+              Price: 8.00,
               img: "../src/assets/Image/Product/Product6.jpg",
               viewNumber: 1000,
               star: 4.5,
@@ -107,7 +112,7 @@ export default function Home() {
             {
               BookName: "The Midnight Library",
               Author: "Matt Haig",
-              Price: 14.99,
+              Price: 7.50,
               img: "../src/assets/Image/Product/Product5.jpg",
               viewNumber: 800,
               star: 4.3,
@@ -116,7 +121,7 @@ export default function Home() {
             {
               BookName: "The Vanishing Half",
               Author: "Brit Bennett",
-              Price: 16.99,
+              Price: 8.50,
               img: "../src/assets/Image/Product/Product4.jpg",
               viewNumber: 1200,
               star: 4.7,
@@ -125,7 +130,7 @@ export default function Home() {
             {
               BookName: "The Four Winds",
               Author: "Kristin Hannah",
-              Price: 17.99,
+              Price: 8.50,
               img: "../src/assets/Image/Product/Product3.jpg",
               viewNumber: 900,
               star: 4.6,
@@ -134,7 +139,7 @@ export default function Home() {
             {
               BookName: "The Night Circus",
               Author: "Erin Morgenstern",
-              Price: 13.99,
+              Price: 7.00,
               img: "../src/assets/Image/Product/Product2.jpg",
               viewNumber: 1100,
               star: 4.4,
@@ -143,7 +148,7 @@ export default function Home() {
             {
               BookName: "The Seven Husbands of Evelyn Hugo",
               Author: "Taylor Jenkins Reid",
-              Price: 14.99,
+              Price: 7.50,
               img: "../src/assets/Image/Product/Product1.jpg",
               viewNumber: 1000,
               star: 4.5,

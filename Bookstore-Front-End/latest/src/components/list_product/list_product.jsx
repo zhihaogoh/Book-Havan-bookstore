@@ -9,7 +9,7 @@ import { Navigation } from 'swiper/modules';
 export default function ListProduct({ title, viewAllLink, products }) {
   return (
     <>
-      <div className="container list_product">
+      <div className="list_product container">
         <div className="title">
           <h3>{title}</h3>
           <a href={viewAllLink}>{viewAllLink}</a>

@@ -13,6 +13,7 @@ export default function Categories({ categories }) {
             {categories.map((item, index) => (
               <Col key={index}>
                 <Card >
+                  <img src={item.icon} alt={item.icon} />
                   <h3>{item.category}</h3>
                   <p>{item.books_number} books</p>
                 </Card>
