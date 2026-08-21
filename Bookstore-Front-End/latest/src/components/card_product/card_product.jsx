@@ -15,11 +15,11 @@ function StarRating({ rating = 0, reviewCount = 0 }) {
       <div className="stars" aria-hidden="true">
         {[1, 2, 3, 4, 5].map((position) => {
           if (normalizedRating >= position) {
-            return <FaStar key={position} />;
+            return <FaStar key={position} />; 
           }
 
           if (normalizedRating >= position - 0.5) {
-            return <FaStarHalfAlt key={position} />; //  <0.5
+            return <FaStarHalfAlt key={position} />; 
           }
 
           return <FaRegStar key={position} />;

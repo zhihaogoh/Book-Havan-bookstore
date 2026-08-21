@@ -212,18 +212,38 @@
       font-weight: bold;
       line-height: 1rem;
     }
-    a {
+    .view-all {
+      padding: 0;
+      border: 0;
+      background: transparent;
       font-size: 1rem;
       color: green;
       line-height: 1rem;
       text-decoration: none;
+      cursor: pointer;
     }
-    a:hover {
+    .view-all:hover {
       font-weight: bold;
       text-decoration: underline;
     }
   }
   .categories_list {
+    margin-top: 1rem;
+    .card {
+      padding: 1rem;
+      h3 {
+        color: black;
+        font-size: 1rem;
+        line-height: 1rem;
+        text-align: center;
+      }
+      p {
+        color: gray;
+        font-weight: 1rem;
+        line-height: 1rem;
+        text-align: center;
+      }
+    }
   }
 }
 //categories component end
@@ -391,6 +411,7 @@
 //about page end
 //list priduct start
 .list_product {
+  padding: 2rem 0;
   .title {
     display: flex;
     flex-direction: row;
@@ -456,7 +477,7 @@
     }
   }
   .price-cart {
-    padding: 0 0.25rem;
+    padding: 0.25rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
