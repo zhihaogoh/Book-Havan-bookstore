@@ -24,23 +24,6 @@ export default function Header() {
           {/* main menu  */}
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
-            {/* <Nav
-              className="me-auto my-2 my-lg-0 fw-bold ms-auto menu-section"
-              navbarScroll
-            >
-              <Nav.Link className="menu" href="/">
-                Home
-              </Nav.Link>
-              <Nav.Link className="menu" href="/list_product">
-                Product
-              </Nav.Link>
-              <Nav.Link className="menu" href="#action3">
-                Contact
-              </Nav.Link>
-              <Nav.Link className="menu" href="#action4">
-                FAQ
-              </Nav.Link>
-            </Nav> */}
             {/* search form */}
             <Form className="d-flex search-form">
               <Dropdown className="categories_dropdown" as={NavItem}>
@@ -66,10 +49,6 @@ export default function Header() {
             {/* sub menu  */}
             <Nav.Link className="menu">
               <MdPerson className="icon-menu" />
-              <div className="notification">
-                <div className="norice">Sign In</div>
-                <h5 className="notification-badge">Account</h5>
-              </div>
             </Nav.Link>
 
             <Nav.Link className="menu">

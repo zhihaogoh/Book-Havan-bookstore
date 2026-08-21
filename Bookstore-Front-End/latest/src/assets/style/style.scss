@@ -224,28 +224,7 @@
     }
   }
   .categories_list {
-    .categories_item {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 0.5rem 0;
-      h5 {
-        font-size: 1rem;
-        font-weight: bold;
-        line-height: 1rem;
-        margin: 0.5rem 0 0 0;
-      }
-      .categories_icon {
-        width: 3rem;
-        height: 3rem;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #f2f2ee;
-      }
-    }
+   
   }
 }
 //categories component end
