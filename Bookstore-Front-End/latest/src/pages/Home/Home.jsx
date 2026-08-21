@@ -69,7 +69,7 @@ export default function Home() {
              {/* New Arrivals  Ends*/}
                           {/* Discount Starts*/}
                        <ListProduct 
-            title="New Arrivals"
+            title="Discounted Items"
             viewAllLink = "All Link"
             products = {[
               {
