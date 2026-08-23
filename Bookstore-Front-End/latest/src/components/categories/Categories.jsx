@@ -9,14 +9,17 @@ export default function Categories({ categories }) {
           <h2>Shop by Categories</h2>
         </div>
         <div className="categories_list">
-          <Row xs={2} md={4} lg={5} className="g-4">
+          <Row xs={2} md={3} lg={6} className="g-4">
             {categories.map((item, index) => (
               <Col key={index}>
-                <Card >
+                <Card className="h-100">
                   <img src={item.icon} alt={item.icon} />
-                  <h3>{item.category}</h3>
+                  <h3 className="mt-2">{item.category}</h3>
+                  { item.books_number > 1 ?
                   <p>{item.books_number} books</p>
-                </Card>
+                  : <></>
+                  }
+                  </Card>
               </Col>
             ))}
           </Row>

@@ -10,7 +10,7 @@ export default function ServiceList() {
   return (
     <>
       <div className="container service_list">
-        <Row xs={4} md={8} lg={12} className="g-4">
+        <Row xs={2} md={4} lg={9} className="g-4">
           <div className="service_list_item">
             <MdOutlineLocalShipping className="me-2 service_icon" />
             <div className="service_list_item_text">

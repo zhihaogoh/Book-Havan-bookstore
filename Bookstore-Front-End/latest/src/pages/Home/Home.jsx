@@ -1,4 +1,4 @@
-import Banner from "../../components/Banner/Banner";
+import Banner from "../../components/banner/Banner";
 import ListProduct from "../../components/list_product/list_product";
 import Categories from "../../components/categories/Categories";
 import ServiceList from "../../components/service/service_list";
@@ -36,6 +36,11 @@ export default function Home() {
               icon: "../src/assets/Image/Icon/hearts.png",
               category : "Romance",
               books_number : 550
+            },
+            {
+              icon: "../src/assets/Image/Icon/categories.png",
+              category : "More",
+              
             }
           ]}
         />

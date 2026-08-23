@@ -70,25 +70,34 @@ export default function Header() {
               `nav-link me-3${isActive ? " fw-bold" : ""}`
             }
             to="/"
-            
           >
             Home
           </RouterNavLink>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className="me-3" eventKey="2">Categories</Nav.Link>
+          <Nav.Link className="me-3" eventKey="2">
+            Categories
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className="me-3"  eventKey="link-2">Product</Nav.Link>
+          <Nav.Link className="me-3" eventKey="link-2">
+            Product
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className="me-3" eventKey="link-3">Bestseller</Nav.Link>
+          <Nav.Link className="me-3" eventKey="link-3">
+            Bestseller
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className="me-3" eventKey="link-4">New Arrival</Nav.Link>
+          <Nav.Link className="me-3" eventKey="link-4">
+            New Arrival
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className="me-3" eventKey="link-5">Deals</Nav.Link>
+          <Nav.Link className="me-3" eventKey="link-5">
+            Deals
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <RouterNavLink
@@ -101,7 +110,9 @@ export default function Header() {
           </RouterNavLink>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className="me-3" eventKey="link-7">Contact Us</Nav.Link>
+          <Nav.Link className="me-3" eventKey="link-7">
+            Contact Us
+          </Nav.Link>
         </Nav.Item>
       </Nav>
     </>

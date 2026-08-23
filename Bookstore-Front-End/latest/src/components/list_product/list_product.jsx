@@ -46,6 +46,7 @@ ListProduct.propTypes = {
       star: PropTypes.number.isRequired,
       viewNumber: PropTypes.number.isRequired,
       Price: PropTypes.number.isRequired,
+      discount: PropTypes.number
     })
   ).isRequired,
 };

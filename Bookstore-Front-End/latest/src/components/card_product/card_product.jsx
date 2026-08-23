@@ -4,8 +4,7 @@ import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import PropTypes from "prop-types";
 
 function StarRating({ rating = 0, reviewCount = 0 }) {
-  const normalizedRating =
-    Math.round(Math.min(5, Math.max(0, rating)) * 2) / 2;
+  const normalizedRating = Math.round(Math.min(5, Math.max(0, rating)) * 2) / 2;
 
   return (
     <div
@@ -15,18 +14,18 @@ function StarRating({ rating = 0, reviewCount = 0 }) {
       <div className="stars" aria-hidden="true">
         {[1, 2, 3, 4, 5].map((position) => {
           if (normalizedRating >= position) {
-            return <FaStar key={position} />; 
+            return <FaStar key={position} />;
           }
 
           if (normalizedRating >= position - 0.5) {
-            return <FaStarHalfAlt key={position} />; 
+            return <FaStarHalfAlt key={position} />;
           }
 
           return <FaRegStar key={position} />;
         })}
       </div>
       <span className="review-count">({reviewCount.toLocaleString()})</span>
-    </div>      
+    </div>
   );
 }
 
@@ -39,13 +38,16 @@ export default function CardProduct({ product }) {
   return (
     <>
       <Card className="card-product">
-        <img src={product.img} className="product_img" />
+        <div className="discount_img">
+          <img src={product.img} className="product_img" />
+          {product.discount > 0 && <span>-{product.discount}%</span>}
+        </div>
         <h3 className="book-name">{product.BookName}</h3>
         <p className="author">{product.Author}</p>
         <StarRating rating={product.star} reviewCount={product.viewNumber} />
         <div className="price-cart">
           <p className="price">RM{product.Price.toFixed(2)}</p>
-          <MdShoppingCart />
+          <MdShoppingCart className="icon" />
         </div>
       </Card>
     </>
@@ -60,5 +62,6 @@ CardProduct.propTypes = {
     star: PropTypes.number.isRequired,
     viewNumber: PropTypes.number.isRequired,
     Price: PropTypes.number.isRequired,
+    discount: PropTypes.number,
   }).isRequired,
 };
