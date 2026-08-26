@@ -29,7 +29,7 @@ export default function ProductResult({ products }) {
             ))}
           </Row>
         </div>
-        <Pagination>
+        <Pagination className="justify-content-center">
           
           <Pagination.Prev />
           <Pagination.Item active>{1}</Pagination.Item>

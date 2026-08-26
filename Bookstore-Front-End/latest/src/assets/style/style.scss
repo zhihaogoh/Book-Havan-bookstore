@@ -104,7 +104,7 @@
   //end icon menu
 }
 .main_menu {
-  padding: 0.5rem 0;
+  padding: 0.5rem 0 1rem 0;
   border-top: 1px solid #ddd;
   justify-content: center !important;
 
@@ -644,9 +644,7 @@
 
 //result product
 .result_product{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
   .pagination{
     --bs-pagination-color: black;
     --bs-pagination-active-color: #fff;
