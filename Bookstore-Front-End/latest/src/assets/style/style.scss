@@ -531,14 +531,14 @@
       align-items: center;
       padding: 0 0 0.5rem 0;
       border-bottom: 1px solid #ddd;
-      h3{
+      h3 {
         color: black;
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         line-height: 1rem;
         font-weight: bold;
       }
-      span{
-         color: black;
+      span {
+        color: black;
         font-size: 1rem;
         line-height: 1rem;
         font-weight: 300;
@@ -555,6 +555,9 @@
         .form-check-input:checked {
           background-color: black;
           border-color: black;
+          &:focus {
+            box-shadow: none;
+          }
         }
         .form-check-label {
           font-size: 1rem;
@@ -562,9 +565,76 @@
           color: black;
           font-weight: 400;
         }
-          .form-check-input:checked + .form-check-label {
-            font-weight: bold;
+        .form-check-input:checked + .form-check-label {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .price {
+    .title {
+      h3 {
+        color: black;
+        font-size: 1.25rem;
+        line-height: 1rem;
+        font-weight: bold;
+      }
+    }
+    .form-control:focus {
+      box-shadow: none;
+    }
+  }
+  .avalibity {
+    .title {
+      h3 {
+        color: black;
+        font-size: 1.25rem;
+        line-height: 1rem;
+        font-weight: bold;
+      }
+    }
+    .form-check-input:checked {
+      background-color: black;
+      border-color: black;
+    }
+    .form-check-input:focus {
+     box-shadow: none;
+    }
+  }
+  .result_product {
+    .title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0 0.5rem 0;
+      border-bottom: 1px solid #ddd;
+      h3 {
+        color: black;
+        font-size: 1.25rem;
+        line-height: 1rem;
+        font-weight: bold;
+      }
+      .sort {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        span {
+          color: black;
+          font-size: 1rem;
+          line-height: 1rem;
+          font-weight: 300;
+          padding-right: 0.5rem;
+        }
+        .form-select {
+          color: black;
+          font-size: 1rem;
+          line-height: 1rem;
+          font-weight: 300;
+          &:focus {
+            box-shadow: none;
           }
+        }
       }
     }
   }

@@ -41,7 +41,7 @@ export default function Fliter({ check_categories}) {
               </Row>
             </Form>
           </div>
-          <div className="avalibility py-3">
+          <div className="avalibity py-3">
             <div className="title border-0">
               <h3>Avalibility</h3>
             </div>
