@@ -161,6 +161,7 @@ export default function Home() {
             },
           ]}
         />
+  
         {/* Discount Ends*/}
       </Layout>
     </>

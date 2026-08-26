@@ -1,5 +1,5 @@
 import { Dropdown, Form, Nav, Navbar, NavItem, NavLink } from "react-bootstrap";
-import { NavLink as RouterNavLink } from "react-router";
+import { NavLink as RouterNavLink, useNavigate } from "react-router";
 import { IoSearchOutline } from "react-icons/io5";
 import {
   MdFavoriteBorder,
@@ -8,6 +8,10 @@ import {
 } from "react-icons/md";
 
 export default function Header() {
+  const navigate = useNavigate();
+  const LinkFliterProduct = () =>{
+      navigate('/fliter_product');
+  }
   return (
     <>
       {/* Header Start */}
@@ -42,7 +46,7 @@ export default function Header() {
                 aria-label="Search"
                 id="search-input"
               />
-              <button type="submit" className="search-button">
+              <button type="submit" className="search-button" onClick={LinkFliterProduct}  >
                 <IoSearchOutline className="search-icon" />
               </button>
             </Form>

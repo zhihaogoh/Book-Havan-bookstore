@@ -33,7 +33,7 @@ Categories.propTypes = {
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       category: PropTypes.string.isRequired,
-      books_number: PropTypes.number.isRequired,
+      books_number: PropTypes.number,
     }),
   ).isRequired,
 };

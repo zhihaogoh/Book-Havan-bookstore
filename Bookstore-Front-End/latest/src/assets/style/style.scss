@@ -460,7 +460,7 @@
       height: 300px;
       object-fit: cover;
     }
-    span{
+    span {
       padding: 0.25rem 1rem;
       background-color: red;
       color: #fff;
@@ -515,6 +515,57 @@
     }
     .icon {
       font-size: 2rem;
+    }
+  }
+}
+
+// card product end
+
+// fliter product
+.fliter_product {
+  .fliter {
+    .title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0 0.5rem 0;
+      border-bottom: 1px solid #ddd;
+      h3{
+        color: black;
+        font-size: 1.5rem;
+        line-height: 1rem;
+        font-weight: bold;
+      }
+      span{
+         color: black;
+        font-size: 1rem;
+        line-height: 1rem;
+        font-weight: 300;
+      }
+    }
+  }
+  .list_fliter {
+    .categories {
+      .check {
+        .form-check-input {
+          width: 1rem;
+          height: 1rem;
+        }
+        .form-check-input:checked {
+          background-color: black;
+          border-color: black;
+        }
+        .form-check-label {
+          font-size: 1rem;
+          line-height: 1rem;
+          color: black;
+          font-weight: 400;
+        }
+          .form-check-input:checked + .form-check-label {
+            font-weight: bold;
+          }
+      }
     }
   }
 }
