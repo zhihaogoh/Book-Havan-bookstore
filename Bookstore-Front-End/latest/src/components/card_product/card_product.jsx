@@ -2,6 +2,7 @@ import { Card } from "react-bootstrap";
 import { MdShoppingCart } from "react-icons/md";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import PropTypes from "prop-types";
+import { Link } from "react-router";
 
 function StarRating({ rating = 0, reviewCount = 0 }) {
   const normalizedRating = Math.round(Math.min(5, Math.max(0, rating)) * 2) / 2;
@@ -37,25 +38,28 @@ StarRating.propTypes = {
 export default function CardProduct({ product }) {
   return (
     <>
-      <Card className="card-product">
-        <div className="discount_img">
-          <img src={product.img} className="product_img" />
-          {product.discount > 0 && <span>-{product.discount}%</span>}
-        </div>
-        <h3 className="book-name">{product.BookName}</h3>
-        <p className="author">{product.Author}</p>
-        <StarRating rating={product.star} reviewCount={product.viewNumber} />
-        <div className="price-cart">
-          <p className="price">RM{product.Price.toFixed(2)}</p>
-          <MdShoppingCart className="icon" />
-        </div>
-      </Card>
+      <Link to={`/product_detail/${product.id}`}  style={{ textDecoration: "none", color: "inherit" }}>
+        <Card className="card-product">
+          <div className="discount_img">
+            <img src={product.img} className="product_img" />
+            {product.discount > 0 && <span>-{product.discount}%</span>}
+          </div>
+          <h3 className="book-name">{product.BookName}</h3>
+          <p className="author">{product.Author}</p>
+          <StarRating rating={product.star} reviewCount={product.viewNumber} />
+          <div className="price-cart">
+            <p className="price">RM{product.Price.toFixed(2)}</p>
+            <MdShoppingCart className="icon" />
+          </div>
+        </Card>
+      </Link>
     </>
   );
 }
 
 CardProduct.propTypes = {
   product: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     img: PropTypes.string.isRequired,
     BookName: PropTypes.string.isRequired,
     Author: PropTypes.string.isRequired,
@@ -63,6 +67,6 @@ CardProduct.propTypes = {
     viewNumber: PropTypes.number.isRequired,
     Price: PropTypes.number.isRequired,
     discount: PropTypes.number,
-    categoty : PropTypes.string,
+    categoty: PropTypes.string,
   }).isRequired,
 };

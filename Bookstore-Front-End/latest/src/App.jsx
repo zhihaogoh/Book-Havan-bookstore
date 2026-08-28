@@ -23,7 +23,7 @@ function App() {
       element: <FliterProduct />,
     },
     {
-      path: "/product_detail",
+      path: "/product_detail/:productId",
       element: <ProductDetail />,
     },
   ]);
