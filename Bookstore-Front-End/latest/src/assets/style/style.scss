@@ -537,11 +537,15 @@
         line-height: 1rem;
         font-weight: bold;
       }
-      span {
+      .clear-filter {
         color: black;
         font-size: 1rem;
         line-height: 1rem;
         font-weight: 300;
+        border: none;
+        &:disabled {
+          color: #777;
+        }
       }
     }
   }
