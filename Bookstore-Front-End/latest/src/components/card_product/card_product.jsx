@@ -63,5 +63,6 @@ CardProduct.propTypes = {
     viewNumber: PropTypes.number.isRequired,
     Price: PropTypes.number.isRequired,
     discount: PropTypes.number,
+    categoty : PropTypes.string,
   }).isRequired,
 };

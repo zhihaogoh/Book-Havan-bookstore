@@ -21,6 +21,12 @@ export default function FliterProduct() {
                   {
                     category: "Business",
                   },
+                  {
+                    category: "Scinece & Tech",
+                  },
+                  {
+                    category: "Romance",
+                  },
                 ]}
                 rating={[
                   {
@@ -49,6 +55,7 @@ export default function FliterProduct() {
                     img: "../src/assets/Image/Product/Product6.jpg",
                     viewNumber: 1000,
                     star: 4.5,
+                    category: "Fiction",
                   },
                   {
                     id: 2,
@@ -58,6 +65,7 @@ export default function FliterProduct() {
                     img: "../src/assets/Image/Product/Product5.jpg",
                     viewNumber: 800,
                     star: 4.3,
+                    category: "Non Fiction",
                   },
                   {
                     id: 3,
@@ -67,6 +75,7 @@ export default function FliterProduct() {
                     img: "../src/assets/Image/Product/Product4.jpg",
                     viewNumber: 1200,
                     star: 4.7,
+                    category: "Non Fiction",
                   },
                   {
                     id: 4,
@@ -76,6 +85,7 @@ export default function FliterProduct() {
                     img: "../src/assets/Image/Product/Product3.jpg",
                     viewNumber: 900,
                     star: 4.6,
+                     category: "Business",
                   },
                   {
                     id: 5,
@@ -85,6 +95,7 @@ export default function FliterProduct() {
                     img: "../src/assets/Image/Product/Product2.jpg",
                     viewNumber: 1100,
                     star: 4.4,
+                     category: "Business",
                   },
                   {
                     id: 6,
@@ -94,6 +105,7 @@ export default function FliterProduct() {
                     img: "../src/assets/Image/Product/Product1.jpg",
                     viewNumber: 1000,
                     star: 4.5,
+                    category: "Scinece & Tech",
                   },
                   {
                     id: 7,
@@ -104,6 +116,7 @@ export default function FliterProduct() {
                     viewNumber: 1000,
                     star: 4.5,
                     discount: 10,
+                    category: "Scinece & Tech",
                   },
                   {
                     id: 8,
@@ -114,6 +127,7 @@ export default function FliterProduct() {
                     viewNumber: 800,
                     star: 4.3,
                     discount: 15,
+                    category: "Scinece & Tech",
                   },
                   {
                     id: 9,
@@ -124,6 +138,7 @@ export default function FliterProduct() {
                     viewNumber: 1200,
                     star: 4.7,
                     discount: 15,
+                     category: "Romance",
                   },
                   {
                     id: 10,
@@ -134,6 +149,7 @@ export default function FliterProduct() {
                     viewNumber: 900,
                     star: 4.6,
                     discount: 15,
+                     category: "Romance",
                   },
                   {
                     id: 11,
@@ -144,6 +160,7 @@ export default function FliterProduct() {
                     viewNumber: 1100,
                     star: 4.4,
                     discount: 15,
+                     category: "Romance",
                   },
                   {
                     id: 12,
@@ -154,6 +171,7 @@ export default function FliterProduct() {
                     viewNumber: 1000,
                     star: 4.5,
                     discount: 15,
+                    category: "Non Fiction",
                   },
                 ]}
               />

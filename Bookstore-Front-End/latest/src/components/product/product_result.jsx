@@ -23,7 +23,7 @@ export default function ProductResult({ products }) {
         <div className="listing_product py-3">
           <Row>
             {products.map((item, index) => (
-              <Col xs={6} md={6} lg={4} key={index} className="mb-3">
+              <Col xs={6} md={6} lg={4} xl={3} key={index} className="mb-3">
                 <CardProduct product={item} />
               </Col>
             ))}

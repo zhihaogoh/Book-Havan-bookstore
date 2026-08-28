@@ -1,10 +1,9 @@
 import CardProduct from "../card_product/card_product";
 import PropTypes from "prop-types";
-import 'swiper/css';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from 'swiper/modules';
-
+import { Navigation } from "swiper/modules";
 
 export default function ListProduct({ title, viewAllLink, products }) {
   return (
@@ -20,6 +19,7 @@ export default function ListProduct({ title, viewAllLink, products }) {
             320: { slidesPerView: 2, spaceBetween: 8 },
             768: { slidesPerView: 3, spaceBetween: 16 },
             1024: { slidesPerView: 4, spaceBetween: 20 },
+            1440: { slidesPerView: 5, spaceBetween: 20 },
           }}
           navigation={true}
           modules={[Navigation]}
@@ -46,7 +46,7 @@ ListProduct.propTypes = {
       star: PropTypes.number.isRequired,
       viewNumber: PropTypes.number.isRequired,
       Price: PropTypes.number.isRequired,
-      discount: PropTypes.number
-    })
+      discount: PropTypes.number,
+    }),
   ).isRequired,
 };

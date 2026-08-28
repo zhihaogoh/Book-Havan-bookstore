@@ -29,13 +29,13 @@ export default function Fliter({ check_categories}) {
             </div>
             <Form>
               <Row>
-                <Col lg={5}>
+                <Col lg={5} className="pe-0">
                   <FormControl type="number" placeholder="RM Min" />
                 </Col>
-                <Col lg={1} className="text-center">
+                <Col lg={1} className="text-center p-0">
                   <span>-</span>
                 </Col>
-                <Col lg={5}>
+                <Col lg={5} className="p-0">
                   <FormControl type="number" placeholder="RM Max" />
                 </Col>
               </Row>
