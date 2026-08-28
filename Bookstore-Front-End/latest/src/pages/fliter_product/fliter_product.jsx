@@ -159,29 +159,31 @@ export default function FliterProduct() {
         : [...currentCategories, category],
     );
   };
+    //交互categories end
 
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
       selectedCategories.length === 0 ||
-      selectedCategories.includes(product.category);
+      selectedCategories.includes(product.category); //选择一个以上的书类
     const matchesMinPrice =
-      minPrice === "" || product.Price >= Number(minPrice);
+      minPrice === "" || product.Price >= Number(minPrice); //设置至少的价钱
     const matchesMaxPrice =
-      maxPrice === "" || product.Price <= Number(maxPrice);
-    const matchesStock = !inStockOnly || product.stock;
+      maxPrice === "" || product.Price <= Number(maxPrice);//设置至多的价钱
+    const matchesStock = !inStockOnly || product.stock; // 设置佣有货
 
     return (
-      matchesCategory && matchesMinPrice && matchesMaxPrice && matchesStock
+      matchesCategory && matchesMinPrice && matchesMaxPrice && matchesStock 
     );
   });
 
+  //清除所有
   const handleClearAll = () => {
     setSelectedCategories([]);
     setMinPrice("");
     setMaxPrice("");
     setInStockOnly(false);
   };
-  //交互categories end
+
   return (
     <>
       <Layout>
