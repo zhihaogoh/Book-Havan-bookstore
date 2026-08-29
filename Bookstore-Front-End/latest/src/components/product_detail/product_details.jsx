@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdCheckCircle, MdOutlineFavorite } from "react-icons/md";
+import { useNavigate } from "react-router";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -10,6 +11,10 @@ import { Grid, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 export default function ProductDetails({ product }) {
   const [num, setNumber] = useState(1);
+  const navigate = useNavigate();
+  function toShoppingCart(){
+    navigate('/shopping_cart')
+  }
   return (
     <>
       <div className="product_detail">
@@ -89,7 +94,7 @@ export default function ProductDetails({ product }) {
                       </div>
                     </Col>
                     <Col className="p-1" sm={2} md={6} lg={6}>
-                      <Button className="cart">
+                      <Button className="cart" onClick={toShoppingCart}> 
                         <FaShoppingCart /> Add to Cart
                       </Button>
                     </Col>

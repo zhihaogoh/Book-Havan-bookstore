@@ -6,6 +6,7 @@ import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import FliterProduct from "./pages/fliter_product/fliter_product";
 import ProductDetail from "./pages/product_detail/product_detial";
+import ShoppingCart from "./pages/Cart/shopping_cart";
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -25,6 +26,10 @@ function App() {
     {
       path: "/product_detail/:productId",
       element: <ProductDetail />,
+    },
+    {
+      path: "/shopping_cart",
+      element: <ShoppingCart/>,
     },
   ]);
   return (
