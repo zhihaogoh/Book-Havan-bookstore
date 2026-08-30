@@ -864,9 +864,10 @@
     margin: 1rem 0;
     .cart {
       padding: 1rem;
+      margin-top: 1rem;
       img {
-        width: 75%;
-        height: 200px;
+        width: 100%;
+        height: 250px;
         object-fit: cover;
       }
       .name_price {
@@ -876,7 +877,7 @@
         align-items: center;
         h3 {
           color: black;
-          font-size: 2rem;
+          font-size: 1rem;
           line-height: 1;
           font-weight: bold;
           padding-top: 0.5rem;
@@ -920,7 +921,7 @@
         }
 
         .btn-light {
-          width: 25%;
+          width: 100%;
           height: 100%;
           color: black;
           font-size: 1rem;
@@ -928,7 +929,7 @@
           font-weight: 300;
         }
         .number {
-          width: 25%;
+          width: 100%;
           height: 100%;
           text-align: center;
           font-size: 1rem;
@@ -938,5 +939,100 @@
         }
       }
     }
+  }
+  .summary_price {
+    .title {
+      padding: 1rem 0;
+      border-bottom: 1px solid #ddd;
+      h3 {
+        color: black;
+        font-size: 1.5rem;
+        line-height: 1;
+        font-weight: bold;
+      }
+    }
+    .calculate_price {
+      padding: 1rem 0;
+      border-bottom: 1px solid #ddd;
+
+      .list_price {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        .detail {
+          color: black;
+          font-size: 1rem;
+          line-height: 1;
+          font-weight: 300;
+        }
+        .price {
+          color: black;
+          font-size: 1rem;
+          line-height: 1;
+          font-weight: 300;
+        }
+      }
+    }
+    .subtotal {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 1rem 0;
+      .detail {
+        color: black;
+        font-size: 1.5rem;
+        line-height: 1;
+        font-weight: 500;
+      }
+      .price {
+        color: black;
+        font-size: 1.5rem;
+        line-height: 1;
+        font-weight: 500;
+      }
+    }
+    .promo_code {
+      .title {
+        padding-bottom: 0.25rem;
+        border-bottom: 0;
+        h3 {
+          color: black;
+          font-size: 1rem;
+          line-height: 1;
+          font-weight: 400;
+        }
+      }
+      .promo_form {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        .form-control {
+          color: black;
+          font-size: 1rem;
+          line-height: 1;
+        }
+        .btn-light {
+          border-radius: 0;
+          border: none;
+          width: 50%;
+          color: black;
+          font-size: 1rem;
+          line-height: 1;
+          background-color: #fff;
+        }
+      }
+    }
+    .check_out {
+        .btn-light {
+          width: 100%;
+          color: black;
+          font-size: 1rem;
+          line-height: 1;
+          font-weight: 300;
+        }
+      }
   }
 }
