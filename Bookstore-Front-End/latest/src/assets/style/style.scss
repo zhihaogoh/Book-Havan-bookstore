@@ -1119,7 +1119,7 @@
 //form address end
 
 //address form start
-.address_form {
+.check_out_form {
   padding: 1rem ;
   background-color: white;
   border: 1px solid #ddd;
@@ -1140,6 +1140,7 @@
   width: 100%;
   margin-top: 1rem;
   .btn-light {
+    width: 100%;
     height: 100%;
     padding: 1rem ;
     color: black !important;
@@ -1156,6 +1157,7 @@
     }
   }
   .btn-primary{
+    width: 100%;
     height: 100%;
     padding: 1rem ;
     color: white;

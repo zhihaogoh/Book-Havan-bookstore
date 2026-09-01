@@ -10,7 +10,7 @@ export default function AddressForm({ setStep }) {
   }
   return (
     <>
-      <div className="address_form">
+      <div className="check_out_form">
         <div className="title">
           <h3>Shipping Information</h3>
         </div>
@@ -18,12 +18,12 @@ export default function AddressForm({ setStep }) {
       </div>
       <div className="btn_group">
         <Row>
-          <Col lg={6}>
-            <Button className="btn-light"
+          <Col md={12} lg={6}>
+            <Button className="btn-light "
              onClick={handleBackToShoppingCart}
             >Back to Shopping Cart</Button>
           </Col>
-          <Col lg={6} className="text-end">
+          <Col md={12} lg={6} className="text-end pt-3">
             <Button
               variant="primary"
               type="submit"
