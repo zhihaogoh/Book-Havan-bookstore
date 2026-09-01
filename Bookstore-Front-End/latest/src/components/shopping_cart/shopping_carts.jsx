@@ -2,11 +2,13 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { MdDelete, MdFavorite, MdKeyboardArrowRight } from "react-icons/md";
+import { useNavigate } from "react-router";
 
 export default function ShoppingCarts({ carts }) {
   const [quantities, setQuantities] = useState({});
   const shippingFee = 5;
   const getQuantity = (id) => quantities[id] ?? 1;
+  const navigate = useNavigate()
 
   const updateQuantity = (id, change) => {
     setQuantities((currentQuantities) => ({
@@ -26,9 +28,12 @@ export default function ShoppingCarts({ carts }) {
   );
 
   const total = subtotal + shippingFee;
+  const handleProceedToCheckout = () => {
+    navigate("/check_out");
+  }
 
   return (
-    <>
+    <>``
       <div className="shopping_cart">
         {carts.length === 0 ? (
           <div className="title">
@@ -137,7 +142,9 @@ export default function ShoppingCarts({ carts }) {
                       </Form>
                     </div>
                     <div className="check_out py-3">
-                      <Button className="btn-light">Proceed to Check Out <MdKeyboardArrowRight /></Button>
+                      <Button className="btn-light" onClick={handleProceedToCheckout}>
+                        Proceed to Check Out <MdKeyboardArrowRight />
+                      </Button>
                     </div>
                   </Card>
                 </Col>

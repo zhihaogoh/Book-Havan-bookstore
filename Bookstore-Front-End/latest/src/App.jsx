@@ -7,6 +7,7 @@ import About from "./pages/About/About";
 import FliterProduct from "./pages/fliter_product/fliter_product";
 import ProductDetail from "./pages/product_detail/product_detial";
 import ShoppingCart from "./pages/Cart/shopping_cart";
+import CheckOut from "./pages/check_out/check_out";
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -30,6 +31,10 @@ function App() {
     {
       path: "/shopping_cart",
       element: <ShoppingCart/>,
+    },
+    {
+      path: "/check_out",
+      element: <CheckOut />,
     },
   ]);
   return (
