@@ -146,6 +146,7 @@ export const cart = [
     Author: "Taylor Jenkins Reid",
     Price: 7.5,
     img: "../src/assets/Image/Product/Product1.jpg",
+    quantity: 1,
     status: true
   },
   {
@@ -154,6 +155,7 @@ export const cart = [
     Author: "Erin Morgenstern",
     Price: 7.0,
     img: "../src/assets/Image/Product/Product2.jpg",
+    quantity: 1,
     status: false
   },
   {
@@ -162,6 +164,7 @@ export const cart = [
     Author: "Alex Michaelides",
     Price: 8.0,
     img: "../src/assets/Image/Product/Product6.jpg",
+    quantity: 1,
     status: false
   }
 ]
