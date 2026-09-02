@@ -59,7 +59,7 @@ export default function Header() {
               <MdFavoriteBorder className="icon-menu" />
             </Nav.Link>
 
-            <Nav.Link className="menu" href="#action2">
+            <Nav.Link className="menu" href="/shopping_cart">
               <MdOutlineShoppingBag className="icon-menu" />
             </Nav.Link>
             {/*have already login redirect to profile page if haven't login redirect to login page */}
@@ -84,24 +84,14 @@ export default function Header() {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className="me-3" eventKey="link-2">
+           <RouterNavLink
+            className={({ isActive }) =>
+              `nav-link me-3${isActive ? " fw-bold" : ""}`
+            }
+            to="/fliter_product"
+          >
             Product
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link className="me-3" eventKey="link-3">
-            Bestseller
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link className="me-3" eventKey="link-4">
-            New Arrival
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link className="me-3" eventKey="link-5">
-            Deals
-          </Nav.Link>
+          </RouterNavLink>
         </Nav.Item>
         <Nav.Item>
           <RouterNavLink

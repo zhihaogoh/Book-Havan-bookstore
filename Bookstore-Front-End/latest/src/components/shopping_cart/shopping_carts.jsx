@@ -33,7 +33,7 @@ export default function ShoppingCarts({ carts }) {
   }
 
   return (
-    <>``
+    <>
       <div className="shopping_cart">
         {carts.length === 0 ? (
           <div className="title">
