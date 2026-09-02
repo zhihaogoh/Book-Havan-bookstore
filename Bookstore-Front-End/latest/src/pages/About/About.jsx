@@ -1,6 +1,6 @@
 import AboutContent from "../../components/about/about_content";
 import AboutPrimary from "../../components/about/about_primary";
-import Pillar from "../../components/about/Pillar";
+import Pillar from "../../components/about/pillar";
 import Scholars from "../../components/about/scholars";
 import Layout from "../../layout/Layout";
 

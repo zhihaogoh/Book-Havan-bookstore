@@ -51,7 +51,7 @@ export default function Header() {
               </button>
             </Form>
             {/* sub menu  */}
-            <Nav.Link className="menu">
+            <Nav.Link className="menu" href="/login">
               <MdPerson className="icon-menu" />
             </Nav.Link>
 

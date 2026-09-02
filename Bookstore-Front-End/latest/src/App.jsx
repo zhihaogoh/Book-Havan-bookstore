@@ -9,6 +9,8 @@ import ProductDetail from "./pages/product_detail/product_detial";
 import ShoppingCart from "./pages/Cart/shopping_cart";
 import CheckOut from "./pages/check_out/check_out";
 import Favoutite from "./pages/favourite/favourite";
+import Login from "./pages/login/login";
+import ForgotPassword from "./pages/forgot_password/forgot_password";
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -31,7 +33,7 @@ function App() {
     },
     {
       path: "/shopping_cart",
-      element: <ShoppingCart/>,
+      element: <ShoppingCart />,
     },
     {
       path: "/check_out",
@@ -39,8 +41,17 @@ function App() {
     },
     {
       path: "/favourite",
-      element: <Favoutite />
+      element: <Favoutite />,
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/forgot_password",
+      element: <ForgotPassword />
     }
+
   ]);
   return (
     <>
