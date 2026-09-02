@@ -55,7 +55,7 @@ export default function Header() {
               <MdPerson className="icon-menu" />
             </Nav.Link>
 
-            <Nav.Link className="menu">
+            <Nav.Link className="menu" href="/favourite">
               <MdFavoriteBorder className="icon-menu" />
             </Nav.Link>
 

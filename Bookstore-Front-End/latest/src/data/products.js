@@ -9,6 +9,7 @@ export const products = [
     star: 4.5,
     category: "Fiction",
     stock: true,
+    favorite: true,
   },
   {
     id: 2,
@@ -20,6 +21,8 @@ export const products = [
     star: 4.3,
     category: "Non Fiction",
     stock: true,
+    favorite: true,
+
   },
   {
     id: 3,
@@ -31,6 +34,8 @@ export const products = [
     star: 4.7,
     category: "Non Fiction",
     stock: true,
+    favorite: true,
+
   },
   {
     id: 4,
@@ -42,6 +47,8 @@ export const products = [
     star: 4.6,
     category: "Business",
     stock: true,
+    favorite: false,
+
   },
   {
     id: 5,
@@ -53,6 +60,8 @@ export const products = [
     star: 4.4,
     category: "Business",
     stock: true,
+    favorite: true,
+
   },
   {
     id: 6,
@@ -64,6 +73,8 @@ export const products = [
     star: 4.5,
     category: "Scinece & Tech",
     stock: true,
+    favorite: false,
+
   },
   {
     id: 7,
@@ -76,6 +87,8 @@ export const products = [
     discount: 10,
     category: "Scinece & Tech",
     stock: true,
+    favorite: false,
+
   },
   {
     id: 8,
@@ -88,6 +101,8 @@ export const products = [
     discount: 15,
     category: "Scinece & Tech",
     stock: true,
+    favorite: false,
+
   },
   {
     id: 9,
@@ -100,6 +115,8 @@ export const products = [
     discount: 15,
     category: "Romance",
     stock: true,
+    favorite: false,
+
   },
   {
     id: 10,
@@ -112,6 +129,8 @@ export const products = [
     discount: 15,
     category: "Romance",
     stock: true,
+    favorite: false,
+
   },
   {
     id: 11,
@@ -124,6 +143,8 @@ export const products = [
     discount: 15,
     category: "Romance",
     stock: true,
+    favorite: false,
+
   },
   {
     id: 12,
@@ -136,6 +157,8 @@ export const products = [
     discount: 15,
     category: "Non Fiction",
     stock: false,
+    favorite: false,
+
   },
 ];
 

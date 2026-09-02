@@ -1,8 +1,13 @@
 import PropTypes from "prop-types";
 import FormReview from "../form/form_review";
 import { Button, Col, Row } from "react-bootstrap";
+import { useNavigate } from "react-router";
 
 export default function ReviewForm({ setStep, carts }) {
+    const navigate = useNavigate();
+  const handleBackToHome = () => {
+    navigate("/");
+  }
   return (
     <>
       <div className="check_out_form">
@@ -28,7 +33,7 @@ export default function ReviewForm({ setStep, carts }) {
                 variant="primary"
                 type="submit"
                 onClick={() => {
-                  setStep(4);
+                  handleBackToHome();
                 }}
               >
                 Continue to Payment
