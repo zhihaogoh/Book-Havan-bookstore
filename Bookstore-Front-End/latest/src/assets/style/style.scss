@@ -46,11 +46,12 @@
       font-weight: 400;
     }
     .form-control{
-      
+      padding: 1rem;
       color: black;
       font-size: 1rem;
       line-height: 1;
       font-weight: 400;
+      border-radius: 2px;
       &:focus{
         border-color: #006400;
         box-shadow: none;

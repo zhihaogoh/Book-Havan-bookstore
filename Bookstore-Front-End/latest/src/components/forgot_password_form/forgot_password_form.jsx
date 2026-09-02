@@ -1,4 +1,4 @@
-import { Button, Form, FormCheck } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router";
 
 export default function ForgotPasswordForm() {
@@ -16,7 +16,7 @@ export default function ForgotPasswordForm() {
         <Button className="btn-success my-3" type="submit">
           Send Reset Link
         </Button>
-        <Button className="btn-light my-3" type="submit" onClick={back}>
+        <Button className="btn-light my-3" onClick={back}>
           Back
         </Button>
       </Form>
