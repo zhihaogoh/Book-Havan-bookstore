@@ -191,3 +191,38 @@ export const cart = [
     status: false
   }
 ]
+export const order = [
+  {
+    id: 1,
+    BookName: "The Seven Husbands of Evelyn Hugo",
+    Author: "Taylor Jenkins Reid",
+    Price: 7.5,
+    img: "../src/assets/Image/Product/Product1.jpg",
+    quantity: 1,
+    order_date : "01/09/2026",
+    process_status: "Delivered",
+    status: true
+  },
+  {
+    id: 2,
+    BookName: "The Night Circus",
+    Author: "Erin Morgenstern",
+    Price: 7.0,
+    img: "../src/assets/Image/Product/Product2.jpg",
+    quantity: 1,
+    order_date : "01/09/2026",
+    process_status: "Packing",
+    status: false
+  },
+  {
+    id: 3,
+    BookName: "The Silent Patient",
+    Author: "Alex Michaelides",
+    Price: 8.0,
+    img: "../src/assets/Image/Product/Product6.jpg",
+    quantity: 1,
+    order_date : "01/09/2026",
+    process_status: "Delivered",
+    status: false
+  }
+]

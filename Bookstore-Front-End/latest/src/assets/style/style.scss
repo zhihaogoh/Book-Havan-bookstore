@@ -1,17 +1,15 @@
 .title {
-  padding: 0.5rem 0;
-  text-align: center;
   h3 {
     color: black;
     font-size: 1.5rem;
     line-height: 1;
     font-weight: bold;
   }
-  p {
+  span {
     color: black;
     font-size: 1rem;
     line-height: 1;
-    font-weight: 400;
+    font-weight: 300;
   }
 }
 .login_img {
@@ -19,7 +17,7 @@
   height: 500px;
   object-fit: cover;
 }
-//login
+//login start
 .login {
   .nav-item {
     text-align: center;
@@ -39,24 +37,24 @@
   }
 }
 .login_form {
-      .form-label{
-      color: black;
-      font-size: 1rem;
-      line-height: 1;
-      font-weight: 400;
+  .form-label {
+    color: black;
+    font-size: 1rem;
+    line-height: 1;
+    font-weight: 400;
+  }
+  .form-control {
+    padding: 1rem;
+    color: black;
+    font-size: 1rem;
+    line-height: 1;
+    font-weight: 400;
+    border-radius: 2px;
+    &:focus {
+      border-color: #006400;
+      box-shadow: none;
     }
-    .form-control{
-      padding: 1rem;
-      color: black;
-      font-size: 1rem;
-      line-height: 1;
-      font-weight: 400;
-      border-radius: 2px;
-      &:focus{
-        border-color: #006400;
-        box-shadow: none;
-      }
-    }
+  }
   .check_forgot {
     display: flex;
     flex-direction: row;
@@ -83,6 +81,7 @@
     width: 100%;
   }
 }
+//ogin end
 //header
 .container {
   .Header_logo {
@@ -468,7 +467,6 @@
     }
   }
 }
-
 .scholars {
   .title {
     margin: 0 0 4rem 0;
@@ -734,7 +732,7 @@
 }
 //fliter product end
 
-//result product
+//result product start
 .result_product {
   .pagination {
     --bs-pagination-color: black;
@@ -742,6 +740,7 @@
     --bs-pagination-active-bg: black;
   }
 }
+//result product end
 //product detail start
 .product_detail {
   padding: 1rem 0;
@@ -768,6 +767,7 @@
       }
     }
   }
+
   .product_detail_content {
     .title_books {
       h3 {
@@ -1026,6 +1026,8 @@
     }
   }
 }
+//shoppee cart end
+//summary price start
 .summary_price {
   .title {
     padding: 1rem 0;
@@ -1123,21 +1125,8 @@
     }
   }
 }
+//summary price end
 
-.title {
-  h3 {
-    color: black;
-    font-size: 1.5rem;
-    line-height: 1;
-    font-weight: bold;
-  }
-  span {
-    color: black;
-    font-size: 1rem;
-    line-height: 1;
-    font-weight: 300;
-  }
-}
 //check out page start
 .check_out_process {
   padding: 1rem 0;
@@ -1219,7 +1208,7 @@
     }
   }
 }
-
+//address form end
 //btn-group start
 .btn_group {
   width: 100%;
@@ -1259,6 +1248,8 @@
     }
   }
 }
+//btnGroup end
+//review start
 .form_review {
   padding-top: 1rem;
   .review_address {
@@ -1335,6 +1326,174 @@
         font-size: 1rem;
         line-height: 1;
         font-weight: 300;
+      }
+    }
+  }
+}
+//review end
+
+//account liat start
+.account {
+  .account_menu {
+    padding: 0.5rem;
+    .nav-link {
+      padding: 1rem;
+      color: #000;
+      font-size: 1rem;
+      line-height: 1;
+      font-weight: 400;
+    }
+    .active {
+      font-weight: bold;
+      background-color: #006400;
+      color: #fff;
+    }
+  }
+}
+//account list end
+
+//profile_information start
+.profile_information {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ddd;
+    h3 {
+      font-size: 1rem;
+      line-height: 1;
+      color: #000;
+      font-weight: 500;
+    }
+    span {
+      font-size: 1rem;
+      line-height: 1;
+      color: #006400;
+      font-weight: 400;
+      text-decoration: underline;
+    }
+  }
+  .profile {
+    padding: 1rem 0;
+    .information {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      span {
+        font-size: 1rem;
+        line-height: 1;
+        font-weight: 400;
+        color: #000;
+      }
+    }
+  }
+}
+
+//profile_information end
+
+//recent-order
+.recent_order {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ddd;
+    h3 {
+      font-size: 1rem;
+      line-height: 1;
+      color: #000;
+      font-weight: 500;
+    }
+    span {
+      font-size: 1rem;
+      line-height: 1;
+      color: #006400;
+      font-weight: 400;
+      text-decoration: underline;
+    }
+  }
+  .card_order {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom:1px solid #ddd ;
+    .order_name {
+      text-align: start;
+      h3 {
+        font-size: 1rem;
+        line-height: 1;
+        color: #777;
+        font-weight: 500;
+      }
+      span {
+        font-size: 1rem;
+        line-height: 1;
+        color: #000;
+        font-weight: 400;
+      }
+    }
+    .order_price {
+      text-align: end;
+      h3 {
+        color: #000;
+        line-height: 1;
+        font-size: 1rem;
+        font-weight: bold;
+      }
+      .status {
+        padding: 0.25rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        span {
+          color: #000;
+          line-height: 1;
+          font-size: 1rem;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .order_detail {
+    padding: 1rem ;
+    .product_img {
+      img {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+      }
+    }
+    .detail{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      h3{
+        font-size: 1rem;
+        color: #000;
+        line-height: 1;
+        font-weight: bold;
+        white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis; // a...
+      }
+      span{
+        padding: 0.5rem 0;
+         font-size: 1rem;
+        color: #000;
+        line-height: 1;
+        font-weight: 400;
       }
     }
   }

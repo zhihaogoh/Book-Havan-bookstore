@@ -11,6 +11,7 @@ import CheckOut from "./pages/check_out/check_out";
 import Favoutite from "./pages/favourite/favourite";
 import Login from "./pages/login/login";
 import ForgotPassword from "./pages/forgot_password/forgot_password";
+import Profile from "./pages/profile/profile";
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -49,9 +50,12 @@ function App() {
     },
     {
       path: "/forgot_password",
-      element: <ForgotPassword />
-    }
-
+      element: <ForgotPassword />,
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
+    },
   ]);
   return (
     <>

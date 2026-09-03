@@ -2,9 +2,13 @@ import { Button, Form, FormCheck, Tab, Tabs } from "react-bootstrap";
 import { Link, useNavigate } from "react-router";
 
 export default function FormLogin() {
+    
     const navigate = useNavigate()
     const toForgotPassword = ()=>{
         navigate("/forgot_password");
+    }
+    const toProfile =() =>{
+      navigate("/profile")
     }
   return (
     <>
@@ -23,7 +27,7 @@ export default function FormLogin() {
               <FormCheck label="Remember for 30 days" />
               <Link className="forgot_password" onClick={toForgotPassword} >Forgot Password</Link>
             </div>
-            <Button className="btn-success my-3" type="submit">
+            <Button className="btn-success my-3" onClick={toProfile}>
               Sign Up
             </Button>
           </Form>

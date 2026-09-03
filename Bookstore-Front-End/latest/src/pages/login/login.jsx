@@ -9,7 +9,7 @@ export default function Login() {
         <div className="container p-3">
           <Row>
             <Col md={6} lg={6}>
-              <div className="title">
+              <div className="title py-2 text-center">
                 <h3>Havan Bookstore</h3>
                 <p>Welcome back. Please enter your details.</p>
               </div>
