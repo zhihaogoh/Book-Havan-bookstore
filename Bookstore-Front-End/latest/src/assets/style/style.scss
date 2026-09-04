@@ -1500,7 +1500,7 @@
 }
 
 //recent order end
-
+//address list atart
 .address_list {
   .title {
     padding: 1rem 0;
@@ -1624,3 +1624,41 @@
     }
   }
 }
+//address list end
+
+// dashbosrd_favourite start
+.dashboard_favourite{
+  .result_favourite{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ddd;
+  }
+  .sort{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+   
+        span {
+          color: black;
+          font-size: 1rem;
+          line-height: 1rem;
+          font-weight: 300;
+          padding-right: 0.5rem;
+        }
+        .form-select {
+          color: black;
+          font-size: 1rem;
+          line-height: 1rem;
+          font-weight: 300;
+          &:focus {
+            box-shadow: none;
+          }
+        }
+      }
+  }
+
+// dashboard_favourite end

@@ -10,10 +10,10 @@ export default function Profile() {
       <Layout>
         <div className="container">
           <Row>
-            <Col md={3} lg={3} className="d-none d-md-block">
+            <Col md={4} lg={3} className="d-none d-md-block">
               <Listing />
             </Col>
-            <Col md={9} lg={9}>
+            <Col md={8} lg={9}>
               <ProfilePage />
               <RecentOrder />
             </Col>
