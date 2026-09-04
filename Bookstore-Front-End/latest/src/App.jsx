@@ -14,6 +14,7 @@ import ForgotPassword from "./pages/forgot_password/forgot_password";
 import Profile from "./pages/profile/profile";
 import Address from "./pages/Address/address";
 import ProfileFavourite from "./pages/profile/profile_favourite";
+import ListOrder from "./pages/profile/list_order";
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -65,6 +66,10 @@ function App() {
     {
       path:"profile_favourite",
       element: <ProfileFavourite />
+    },
+    {
+      path:"/list_order",
+      element: <ListOrder />
     }
   ]);
   return (
