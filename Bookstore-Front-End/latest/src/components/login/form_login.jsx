@@ -13,7 +13,7 @@ export default function FormLogin() {
   return (
     <>
       <Tabs className="login mb-3" defaultActiveKey="login" fill>
-        <Tab eventKey="login" title="login">
+        <Tab eventKey="login" title="Login">
           <Form className="login_form">
             <Form.Group className="mb-3">
               <Form.Label>Email Address</Form.Label>
@@ -32,7 +32,7 @@ export default function FormLogin() {
             </Button>
           </Form>
         </Tab>
-        <Tab eventKey="register" title="register">
+        <Tab eventKey="register" title="Register">
           <Form className="login_form">
             <Form.Group className="mb-3">
               <Form.Label>Email Address</Form.Label>

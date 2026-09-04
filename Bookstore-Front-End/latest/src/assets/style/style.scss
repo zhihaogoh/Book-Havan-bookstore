@@ -1397,7 +1397,7 @@
 
 //profile_information end
 
-//recent-order
+//recent-order start
 .recent_order {
   padding: 1rem;
   border: 1px solid #ddd;
@@ -1429,7 +1429,7 @@
     flex-direction: row;
     justify-content: space-between;
     padding: 1rem 0;
-    border-bottom:1px solid #ddd ;
+    border-bottom: 1px solid #ddd;
     .order_name {
       text-align: start;
       h3 {
@@ -1467,7 +1467,7 @@
     }
   }
   .order_detail {
-    padding: 1rem ;
+    padding: 1rem;
     .product_img {
       img {
         width: 100%;
@@ -1475,24 +1475,150 @@
         object-fit: cover;
       }
     }
-    .detail{
+    .detail {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      h3{
+      h3 {
         font-size: 1rem;
         color: #000;
         line-height: 1;
         font-weight: bold;
         white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis; // a...
+        overflow: hidden;
+        text-overflow: ellipsis; // a...
       }
-      span{
+      span {
         padding: 0.5rem 0;
-         font-size: 1rem;
+        font-size: 1rem;
         color: #000;
         line-height: 1;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+//recent order end
+
+.address_list {
+  .title {
+    padding: 1rem 0;
+    border-bottom: 1px solid #ddd;
+    .content {
+      span {
+        width: 100%;
+        font-size: 1rem;
+        line-height: 1;
+        color: #000;
+        font-weight: 400;
+      }
+      .btn {
+        width: 100%;
+        padding: 1rem 0.5rem;
+        background-color: #006400;
+        font-size: 1rem;
+        line-height: 1;
+        font-weight: 400;
+        color: #fff;
+      }
+    }
+  }
+  .listing {
+    padding: 1rem 0;
+    .card {
+      padding: 1rem;
+      width: 100%;
+      border: 1px solid #ddd;
+
+      .default {
+        padding: 0.5rem;
+        text-align: end;
+        span {
+          font-size: 1rem;
+          line-height: 1;
+          color: #000;
+          font-weight: 400;
+        }
+      }
+      .type_address {
+        h3 {
+          font-size: 1.5rem;
+          line-height: 1;
+          color: #000;
+          font-weight: 500;
+        }
+      }
+      .name {
+        padding: 0.5rem 0;
+        span {
+          font-size: 1rem;
+          line-height: 1;
+          color: #000;
+          font-weight: 400;
+        }
+      }
+      .address {
+        span {
+          font-size: 1rem;
+          line-height: 1;
+          color: #000;
+          font-weight: 400;
+        }
+      }
+      .phone_number {
+        padding: 1rem 0;
+        border-bottom: 1px solid #ddd;
+        span {
+          font-size: 1rem;
+          line-height: 1;
+          color: #000;
+          font-weight: 400;
+        }
+      }
+      .button_group {
+        padding: 1rem 0;
+        .edit {
+          background-color: #fff;
+          font-size: 1rem;
+          line-height: 1;
+          color: #000;
+          font-weight: 400;
+          border: none;
+          padding-right: 1rem;
+        }
+        .delete {
+          background-color: #fff;
+          font-size: 1rem;
+          line-height: 1;
+          color: red;
+          font-weight: 400;
+          border: none;
+          padding-left: 1rem;
+        }
+      }
+    }
+    .new_address {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem;
+      border: 2px dashed #ddd;
+      .icon {
+        font-size: 3rem;
+      }
+      h3 {
+        font-size: 1.5rem;
+        line-height: 1;
+        color: #000;
+        font-weight: 500;
+      }
+      span {
+        text-align: center;
+        font-size: 1rem;
+        line-height: 1;
+        color: #000;
         font-weight: 400;
       }
     }

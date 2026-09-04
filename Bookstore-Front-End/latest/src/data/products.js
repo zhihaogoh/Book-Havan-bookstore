@@ -226,3 +226,31 @@ export const order = [
     status: false
   }
 ]
+
+export const address = [
+  {
+    id:1,
+    Name: "G",
+    Address: "123 Example 9 Taman Example",
+    postcode:"12356",
+    city:"taman",
+    state: "example",
+    country: "Malaysia",
+    type:"Home",
+    phone_number: "012-3456789",
+    status:true
+  },
+   {
+    id:2,
+    Name: "G",
+    Address: "123 Example 9 Taman Example",
+    postcode:"12356",
+    city:"taman",
+    state: "example",
+    country: "Malaysia",
+    type:"Office",
+    phone_number: "012-3456789",
+    status:false
+  }
+ 
+]
