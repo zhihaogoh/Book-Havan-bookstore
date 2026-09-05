@@ -199,7 +199,7 @@ export const order = [
     Price: 7.5,
     img: "../src/assets/Image/Product/Product1.jpg",
     quantity: 1,
-    order_date : "01/09/2026",
+    order_date : "31/08/2026",
     process_status: "Delivered",
     status: true
   },
@@ -210,7 +210,7 @@ export const order = [
     Price: 7.0,
     img: "../src/assets/Image/Product/Product2.jpg",
     quantity: 1,
-    order_date : "01/09/2026",
+    order_date : "10/09/2026",
     process_status: "Packing",
     status: false
   },
@@ -221,10 +221,22 @@ export const order = [
     Price: 8.0,
     img: "../src/assets/Image/Product/Product6.jpg",
     quantity: 1,
-    order_date : "01/09/2026",
+    order_date : "06/08/2026",
     process_status: "Delivered",
     status: false
+  },
+    {
+    id: 4,
+    BookName: "The Silent Patient",
+    Author: "Alex Michaelides",
+    Price: 8.0,
+    img: "../src/assets/Image/Product/Product6.jpg",
+    quantity: 2,
+    order_date : "04/09/2026",
+    process_status: "Canceled",
+    status: false
   }
+  
 ]
 
 export const address = [

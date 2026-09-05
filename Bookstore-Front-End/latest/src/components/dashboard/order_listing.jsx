@@ -1,8 +1,10 @@
-import { Card, Col, Form, Nav, NavItem, Row, Tab } from "react-bootstrap";
+import { Card, Col, Nav, NavItem, Row, Tab } from "react-bootstrap";
 import { order } from "../../data/products";
+import { getSortOrders } from "../../routes/getSortOrder";
 
 export default function OrderListing() {
   const orders = order;
+  const sortOrders = getSortOrders(orders,3);
   return (
     <>
       <div className="order_listing">
@@ -27,23 +29,11 @@ export default function OrderListing() {
                 <Nav.Link eventKey={3}>Cancel</Nav.Link>
               </NavItem>
             </Nav>
-         
-          <div className="sort">
-            <span className="pe-3">Sort By : </span>
-            <Form>
-              <Form.Group controlId="formGridState">
-                <Form.Select defaultValue="Most Popular">
-                  <option>Most Popular</option>
-                  <option>Default</option>
-                </Form.Select>
-              </Form.Group>
-            </Form>
-          </div>
         </div>
         <div className="listing">
           <Tab.Content>
             <Tab.Pane eventKey={1}>
-              {orders.map((item, index) =>(
+              {sortOrders.map((item, index) =>(
                 <>
                 <Card className="my-3">
                   <div className="card_order p-3" key={index}>
@@ -77,6 +67,82 @@ export default function OrderListing() {
                 </Card>
                 </>
              ) )}
+            </Tab.Pane>
+            <Tab.Pane eventKey={2}>
+              {sortOrders.filter((item) => item.process_status === "Delivered")
+              .map((item,index) =>(
+                <>
+                 <Card className="my-3">
+                  <div className="card_order p-3" key={item.id ?? index}>
+                    <div className="order_name">
+                      <h3>{item.id}</h3>
+                      <span>{item.order_date}</span>
+                    </div>
+                    <div className="order_price">
+                      <h3>RM{item.Price.toFixed(2)}</h3>
+                      <div className="status">
+                        <span>{item.process_status}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="order_detail">
+                    <Row>
+                      <Col xs={3} md={3} lg={3}>
+                        <div className="product_img">
+                          <img src={item.img} alt={item.img} />
+                        </div>
+                      </Col>
+                      <Col xs={9} md={9} lg={9}>
+                        <div className="detail">
+                          <h3>{item.BookName}</h3>
+                          <span>Author : {item.Author}</span>
+                          <span>Quantity : {item.quantity}</span>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                </Card>
+                </>
+              ))
+              }
+            </Tab.Pane>
+             <Tab.Pane eventKey={3}>
+              {sortOrders.filter((item) => item.process_status === "Canceled")
+              .map((item,index) =>(
+                <>
+                 <Card className="my-3">
+                  <div className="card_order p-3" key={item.id ?? index}>
+                    <div className="order_name">
+                      <h3>{item.id}</h3>
+                      <span>{item.order_date}</span>
+                    </div>
+                    <div className="order_price">
+                      <h3>RM{item.Price.toFixed(2)}</h3>
+                      <div className="status">
+                        <span>{item.process_status}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="order_detail">
+                    <Row>
+                      <Col xs={3} md={3} lg={3}>
+                        <div className="product_img">
+                          <img src={item.img} alt={item.img} />
+                        </div>
+                      </Col>
+                      <Col xs={9} md={9} lg={9}>
+                        <div className="detail">
+                          <h3>{item.BookName}</h3>
+                          <span>Author : {item.Author}</span>
+                          <span>Quantity : {item.quantity}</span>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                </Card>
+                </>
+              ))
+              }
             </Tab.Pane>
           </Tab.Content>
         </div>
