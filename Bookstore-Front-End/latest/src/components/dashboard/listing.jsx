@@ -8,7 +8,6 @@ import {
   MdShoppingBasket,
 } from "react-icons/md";
 import { NavLink as RouterNavLink } from "react-router";
-
 export default function Listing() {
   return (
     <>
@@ -33,7 +32,7 @@ export default function Listing() {
               className={({ isActive }) =>
                 `nav-link ${isActive ? "fw-bold" : ""}`
               }
-             
+              to="/change_password"
             >
               <MdSecurity /> Change Password
             </RouterNavLink>

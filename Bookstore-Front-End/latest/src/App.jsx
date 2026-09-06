@@ -15,6 +15,7 @@ import Profile from "./pages/profile/profile";
 import Address from "./pages/Address/address";
 import ProfileFavourite from "./pages/profile/profile_favourite";
 import ListOrder from "./pages/profile/list_order";
+import ChangePassword from "./pages/profile/change_password";
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -60,17 +61,21 @@ function App() {
       element: <Profile />,
     },
     {
-      path:"/address",
-      element: <Address />
+      path: "/address",
+      element: <Address />,
     },
     {
-      path:"profile_favourite",
-      element: <ProfileFavourite />
+      path: "profile_favourite",
+      element: <ProfileFavourite />,
     },
     {
-      path:"/list_order",
-      element: <ListOrder />
-    }
+      path: "/list_order",
+      element: <ListOrder />,
+    },
+    {
+      path: "/change_password",
+      element: <ChangePassword />,
+    },
   ]);
   return (
     <>
