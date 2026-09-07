@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import { Fragment, useState } from "react";
+import { Button, Card, Form } from "react-bootstrap";
 import {
   FiCheckCircle,
   FiEye,
@@ -42,7 +42,7 @@ export default function ChangePasswordForm() {
       : score < 5
         ? "Medium"
         : "Strong";
-  
+
   const fields = [
     {
       id: 1,
@@ -79,14 +79,13 @@ export default function ChangePasswordForm() {
           <Form className="password-card">
             {fields.map((item, index) => (
               <>
-                <Form.Label column sm={12}>
-                  {item.label}
-                </Form.Label>
-                <Form.Group className="group_input" as={Row} key={index}>
-                  <Col sm={1}>
-                    <item.Icon className="icon" />
-                  </Col>
-                  <Col sm={9}>
+                <Fragment key={index}>
+                  <Form.Label column sm={12}>
+                    {item.label}
+                  </Form.Label>
+                  <Form.Group className="group_input">
+                    <item.Icon className="icon" aria-hidden="true" />
+
                     <Form.Control
                       id={`password-${item.name}`}
                       className={
@@ -122,8 +121,7 @@ export default function ChangePasswordForm() {
                       }}
                       required
                     />
-                  </Col>
-                  <Col sm={2}>
+
                     <Button
                       type="button"
                       className="password-visibility"
@@ -142,30 +140,32 @@ export default function ChangePasswordForm() {
                         <FiEyeOff aria-hidden="true" />
                       )}
                     </Button>
-                  </Col>
-                </Form.Group>
-                {item.name === "next" && (
-                  <div
-                    className="password-strength"
-                    data-strength={strength.toLowerCase()}
-                  >
-                    <span id="password-strength">
-                      Password Strength: {strength}
-                    </span>
-                    <div className="password-strength-track" aria-hidden="true">
+                  </Form.Group>
+                  {item.name === "next" && (
+                    <div
+                      className="password-strength"
+                      data-strength={strength.toLowerCase()}
+                    >
+                      <span id="password-strength">
+                        Password Strength: {strength}
+                      </span>
                       <div
-                        style={{
-                          width: `${passwords.next ? Math.max(score, 1) * 20 : 0}%`,
-                        }}
-                      />
+                        className="password-strength-track"
+                        aria-hidden="true"
+                      >
+                        <div
+                          style={{
+                            width: `${passwords.next ? Math.max(score, 1) * 20 : 0}%`,
+                          }}
+                        />
                       </div>
                       <p id="password-hint">
                         Use 8 or more characters with a mix of letters, numbers
                         &amp; symbols.
                       </p>
-                    
-                  </div>
-                )}
+                    </div>
+                  )}
+                </Fragment>
               </>
             ))}
             {message && (

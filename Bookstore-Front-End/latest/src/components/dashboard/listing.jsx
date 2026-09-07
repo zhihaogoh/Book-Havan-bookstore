@@ -30,7 +30,7 @@ export default function Listing() {
           <Nav.Item>
             <RouterNavLink
               className={({ isActive }) =>
-                `nav-link ${isActive ? "fw-bold" : ""}`
+                `nav-link ${isActive ? "active" : ""}`
               }
               to="/change_password"
             >
