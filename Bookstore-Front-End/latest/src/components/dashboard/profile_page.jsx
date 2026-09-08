@@ -1,12 +1,17 @@
 import { Col, Row } from "react-bootstrap";
+import { useNavigate } from "react-router";
 
 export default function ProfilePage() {
+  const navigate= useNavigate();
+  const toEditProfile = () =>{
+    navigate("/edit_profile")
+  }
   return (
     <>
       <div className="profile_information">
         <div className="title">
           <h3>Profile Information</h3>
-          <span>Edit</span>
+          <span onClick={toEditProfile}>Edit</span>
         </div>
         <div className="profile">
           <Row className="py-3">

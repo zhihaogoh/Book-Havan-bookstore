@@ -16,6 +16,7 @@ import Address from "./pages/Address/address";
 import ProfileFavourite from "./pages/profile/profile_favourite";
 import ListOrder from "./pages/profile/list_order";
 import ChangePassword from "./pages/profile/change_password";
+import EditProfile from "./pages/profile/edit_profile";
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -76,6 +77,10 @@ function App() {
       path: "/change_password",
       element: <ChangePassword />,
     },
+    {
+      path: "/edit_profile",
+      element: <EditProfile />
+    }
   ]);
   return (
     <>

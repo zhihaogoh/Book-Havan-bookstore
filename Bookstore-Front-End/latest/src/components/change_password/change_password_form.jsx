@@ -42,7 +42,7 @@ export default function ChangePasswordForm() {
       : score < 5
         ? "Medium"
         : "Strong";
-
+  const [errors, setErrors] = useState({});
   const fields = [
     {
       id: 1,
@@ -66,6 +66,42 @@ export default function ChangePasswordForm() {
       Icon: FiCheckCircle,
     },
   ];
+  function handleChangePassword(event) {
+    event.preventDefault();
+    const nextErrors = {};
+    if (!passwords.current) {
+      nextErrors.current = "Please enter your current password";
+    }
+
+    if (!passwords.next) {
+      nextErrors.next = "Please enter your new password ";
+    }  else if (passwords.next >8 && passwords >12 ){
+      nextErrors.next = "Please neter length 8 character and more than 12 character new password"
+    } else if (passwords.next === passwords.current) {
+      nextErrors.next =
+        "Please choose a password different from your current password. ";
+    }
+
+    if (!passwords.confirm) {
+      nextErrors.confirm = "Please enter your confrim password";
+    }
+    else if (passwords.next !== passwords.confirm) {
+      nextErrors.confirm = "Your new passwords do not match.";
+    } 
+      // 更新字段错误，用于显示红框和对应的 message
+    setErrors(nextErrors);
+      // 存在输入错误，立即停止，不调用接口
+    if(Object.keys(nextErrors).length>0){
+      return;
+    }
+    try {
+       setMessage(
+      "Form validated. The server is not connected. Your password has not been changed."
+    );
+    } catch {
+      setMessage("Unable to change your password. Please try again.");
+    }
+  }
   return (
     <>
       <div className="change_password">
@@ -76,7 +112,7 @@ export default function ChangePasswordForm() {
           </span>
         </div>
         <Card className="my-3">
-          <Form className="password-card">
+          <Form className="password-card" onSubmit={handleChangePassword}>
             {fields.map((item, index) => (
               <>
                 <Fragment key={index}>
@@ -95,6 +131,7 @@ export default function ChangePasswordForm() {
                             ? "new_password"
                             : "confrim_password"
                       }
+                     
                       type={visible[item.name] ? "text" : "password"}
                       autoComplete={
                         item.name === "current"
@@ -117,9 +154,12 @@ export default function ChangePasswordForm() {
                           ...prev,
                           [item.name]: value,
                         }));
-                        setMessage("");
+                        // 用户修改当前字段时，清除该字段旧的错误提示
+                        setErrors((prev) =>({
+                          ...prev,
+                          [item.name]: "",
+                        }));
                       }}
-                      required
                     />
 
                     <Button
@@ -141,6 +181,16 @@ export default function ChangePasswordForm() {
                       )}
                     </Button>
                   </Form.Group>
+                  {/* 提示放在定位容器外，防止图标跟着错误文字向下偏移 */}
+                  {errors[item.name] &&(
+                    <Form.Control.Feedback
+                      type="invalid"
+                      className="d-block"
+                      id={`error-${item.name}`}
+                      role="alert">
+                        {errors[item.name]}
+                      </Form.Control.Feedback>
+                  )}
                   {item.name === "next" && (
                     <div
                       className="password-strength"
