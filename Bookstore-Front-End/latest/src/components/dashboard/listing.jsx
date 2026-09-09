@@ -23,7 +23,7 @@ export default function Listing() {
               }
               to="/profile"
             >
-              <MdAccountCircle /> profile
+              <MdAccountCircle /> Profile
             </RouterNavLink>
           </Nav.Item>
 

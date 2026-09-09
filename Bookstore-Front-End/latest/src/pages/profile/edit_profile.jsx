@@ -29,7 +29,7 @@ export default function EditProfile() {
                   },
                   {
                     name: "IC_Passport",
-                    type: "number",
+                    type: "text",
                     label: "IC or Passport",
                     placeholder: "Enter your IC or Passport",
                   },

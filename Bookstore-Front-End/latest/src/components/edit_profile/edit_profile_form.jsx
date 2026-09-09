@@ -6,7 +6,7 @@ import { MdContactMail, MdInfo } from "react-icons/md";
 import { useNavigate } from "react-router";
 
 export default function EditProfileForm({ fields_basic, fields_contact }) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [data, setData] = useState({
     first_name: "",
     last_name: "",
@@ -25,7 +25,7 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
   //     [name]: value,
   //   }));
   // };
-  function handleEditProfile (event) {
+  function handleEditProfile(event) {
     event.preventDefault();
     const nextErrors = {};
     if (!data.first_name) {
@@ -34,8 +34,10 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
     if (!data.last_name) {
       nextErrors.last_name = "Please enter your last name";
     }
-    if (!data.IC_Passport) {
+    if (!data.IC_Passport.trim()) {
       nextErrors.IC_Passport = "Please enter your IC or Passport";
+    } else if (!/^[A-Za-z0-9]+$/.test(data.IC_Passport.trim())) {
+      nextErrors.IC_Passport = "Only letters and numbers are allowed";
     }
     if (!data.gender) {
       nextErrors.gender = "Please select your gender";
@@ -43,37 +45,38 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
     if (!data.date_of_birth) {
       nextErrors.date_of_brith = "Please select your date or birth";
     }
-    if (!data.contact_number) {
+    if (!data.contact_number.trim()) {
       nextErrors.contact_number = "Please sleect your contact number";
+    } else if (!/^\+[1-9]\d{0,2}-\d{6,12}$/.test(data.contact_number.trim())) {
+      nextErrors.contact_number = "Use the format +60-123456789";
     }
-    if (!data.email) {
+    if (!data.email.trim()) {
       nextErrors.email = "Please enter your email";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) {
+      nextErrors.email = "Please enter a valid email, e.g. name@gmail.com";
     }
     // 更新字段错误，用于显示红框和对应的 message
     setError(nextErrors);
-   
+
     // 存在输入错误，立即停止，不调用接口
     if (Object.keys(nextErrors).length > 0) {
       return;
     }
     try {
-     
       setMessage(
         "Form validated. The server is not connected. Your password has not been changed.",
       );
-
     } catch {
-      
       setMessage("Unable to change your password. Please try again.");
     }
-  };
+  }
   return (
     <>
-    {message && (
-              <p className="password-message" role="status">
-                {message}
-              </p>
-            )}
+      {message && (
+        <p className="password-message" role="status">
+          {message}
+        </p>
+      )}
       <div className="edit_profile">
         <div className="title">
           <h3>Edit Profile</h3>
@@ -108,7 +111,7 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
                 <Fragment key={index}>
                   <Col md={6}>
                     <Form.Group
-                      className="group_input p-3"
+                      className="group_input px-3 py-2"
                       controlId={`form-${item.name}`}
                     >
                       {item.type === "select" ? (
@@ -162,7 +165,7 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
                     {error[item.name] && (
                       <Form.Control.Feedback
                         type="invalid"
-                        className="d-block"
+                        className="d-block ps-3"
                         id={`error-${item.name}`}
                         role="alert"
                       >
@@ -198,7 +201,7 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
                 <Fragment key={index}>
                   <Col md={6}>
                     <Form.Group
-                      className="group_input p-3"
+                      className="group_input px-3 py-2"
                       controlId={`form-${item.name}`}
                     >
                       <Form.Label>{item.label}</Form.Label>
@@ -223,7 +226,7 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
                     {error[item.name] && (
                       <Form.Control.Feedback
                         type="invalid"
-                        className="d-block"
+                        className="d-block ps-3"
                         id={`error-${item.name}`}
                         role="alert"
                       >
@@ -240,7 +243,11 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
               All required reader details have been verified and are ready to
               save.
             </span>
-            <Button type="button" className="edit_cancel" onClick={() => navigate("/profile")}>
+            <Button
+              type="button"
+              className="edit_cancel"
+              onClick={() => navigate("/profile")}
+            >
               Discard Changes
             </Button>
             <Button type="submit" className="submit">
