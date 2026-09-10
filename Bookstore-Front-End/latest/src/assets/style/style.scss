@@ -1971,7 +1971,7 @@
       color: #000;
 
       .form-control {
-        padding: 0.5rem 1rem ;
+        padding: 0.5rem 1rem;
         border: 1px solid #ddd;
         border-radius: 10px;
         font-size: 1rem;
@@ -1983,8 +1983,8 @@
           box-shadow: none;
         }
       }
-      .form-select{
-          padding: 0.5rem 1rem ;
+      .form-select {
+        padding: 0.5rem 1rem;
         border: 1px solid #ddd;
         border-radius: 10px;
         font-size: 1rem;
@@ -2041,3 +2041,209 @@
   }
 }
 //edit profile end
+
+//edit address start
+.customer_record {
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #ddd;
+
+  border-radius: 8px;
+  .customer_address_purpose {
+    background: #f0f0f0;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: #000;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    gap: 1rem;
+    legend {
+      float: none;
+      width: auto;
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0;
+      padding: 0 0.25rem;
+    }
+    p {
+      margin: 0 0 0.75rem;
+      font-size: 1rem;
+    }
+    .customer_address_choice {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem 1.5rem;
+      flex-wrap: wrap;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      .form-check-input:checked {
+        background-color: #006400;
+        border-color: #006400;
+      }
+    }
+  }
+  .customer_address_grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem 1.25rem;
+  }
+  .customer_address_field_half {
+    grid-column: span 2;
+  }
+  .customer_address_field_street {
+    grid-column: span 3;
+  }
+  .customer_address_field {
+    .form-label {
+      display: block;
+      font-size: 1rem;
+      margin: 0 0 0.5rem;
+    }
+    .form-control {
+      width: 100%;
+      min-height: 3rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: fff;
+      padding: 0.75rem;
+      color: #172331;
+      &::placeholder {
+        color: #777;
+        font-size: 0.75rem;
+      }
+    }
+    small {
+      display: block;
+      margin: 0.25rem 0 0 0;
+      font-size: 0.75rem;
+    }
+    .form-control[aria-invalid="true"] {
+      border-color: #ae2639;
+    }
+    .customer_address_error {
+      color: #ae2639 !important;
+    }
+  }
+  .customer_address_default {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+    background: #f5f5f5;
+    cursor: pointer;
+    .icon {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      padding: 1rem;
+      border-radius: 10px;
+      background: #e7e3e0;
+    }
+    strong {
+      font-size: 1rem;
+      display: block;
+    }
+    small {
+      display: block;
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+    }
+    // 保留原生 checkbox 的键盘操作能力，外观显示为开关。
+    .form-check-input {
+      appearance: none;
+      flex-shrink: 0;
+      width: 46px;
+      height: 25px;
+      border-radius: 20px;
+      background: #006400;
+      margin-left: auto;
+      cursor: pointer;
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        width: 19px;
+        height: 19px;
+        top: 3px;
+        left: 3px;
+        border-radius: 50%;
+        background: #fff;
+        transition: 0.15s;
+      }
+      &:checked {
+        background: #006400;
+        &::after {
+          transform: translateX(21px);
+        }
+      }
+    }
+  }
+  @media (max-width: 1199px) {
+    .customer_address_grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .customer_address_field_half {
+      grid-column: span 1;
+    }
+    .customer_address_field_street {
+      grid-column: span 1;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .customer_address_grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .product_action {
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    span {
+      font-size: 1rem;
+      line-height: 1;
+      font-weight: 400;
+      color: #000;
+    }
+    .btn {
+      padding: 0.5rem 2rem;
+      font-size: 1rem;
+      line-height: 1;
+      font-weight: 400;
+      color: #000;
+    }
+    .edit_cancel {
+      background: #fff;
+      border: 1px solid #ddd;
+      color: #000;
+      &:hover {
+        background: #f4f2f2;
+      }
+    }
+    .submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: #347c55;
+      color: #fff;
+      font-weight: 400;
+      border: 1px solid #ddd;
+      &:hover {
+        background: #006400;
+      }
+    }
+  }
+}

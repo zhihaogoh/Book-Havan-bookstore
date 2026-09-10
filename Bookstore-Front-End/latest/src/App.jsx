@@ -13,6 +13,7 @@ import Login from "./pages/login/login";
 import ForgotPassword from "./pages/forgot_password/forgot_password";
 import Profile from "./pages/profile/profile";
 import Address from "./pages/Address/address";
+import AddressDetail from "./pages/profile/address_detail";
 import ProfileFavourite from "./pages/profile/profile_favourite";
 import ListOrder from "./pages/profile/list_order";
 import ChangePassword from "./pages/profile/change_password";
@@ -64,6 +65,10 @@ function App() {
     {
       path: "/address",
       element: <Address />,
+    },
+    {
+      path: "/address/new",
+      element: <AddressDetail />,
     },
     {
       path: "profile_favourite",

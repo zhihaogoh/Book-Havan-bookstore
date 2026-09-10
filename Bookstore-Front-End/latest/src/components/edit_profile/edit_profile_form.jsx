@@ -18,13 +18,6 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
   });
   const [message, setMessage] = useState("");
   const [error, setError] = useState({});
-  // const handleChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setData((prev) => ({
-  //     ...prev,
-  //     [name]: value,
-  //   }));
-  // };
   function handleEditProfile(event) {
     event.preventDefault();
     const nextErrors = {};
