@@ -10,6 +10,9 @@ export default function RecentOrder() {
   const toListOrder = () => {
     navigate("/list_order");
   };
+  const toOrderDetial = () =>{
+    navigate("/order_detial");
+  }
   return (
     <>
       <div className="recent_order mt-3">
@@ -19,7 +22,7 @@ export default function RecentOrder() {
         </div>
         <div className="list_order">
           {recentOrders.map((item, index) => (
-            <Card className="my-3" key={index}>
+            <Card className="my-3" key={index} onClick={toOrderDetial} >
               <div className="card_order p-3">
                 <div className="order_name">
                   <h3>{item.id}</h3>
