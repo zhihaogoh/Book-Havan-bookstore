@@ -4,7 +4,8 @@ import { getSortOrders } from "../../routes/getSortOrder";
 
 export default function OrderListing() {
   const orders = order;
-  const sortOrders = getSortOrders(orders,3);
+  const sortOrders = getSortOrders(orders, 3);
+  
   return (
     <>
       <div className="order_listing">
@@ -16,8 +17,7 @@ export default function OrderListing() {
           </span>
         </div>
         <Tab.Container defaultActiveKey={1}>
-        <div className="order_status">
-          
+          <div className="order_status">
             <Nav variant="pills">
               <NavItem>
                 <Nav.Link eventKey={1}>All Order</Nav.Link>
@@ -29,124 +29,164 @@ export default function OrderListing() {
                 <Nav.Link eventKey={3}>Cancel</Nav.Link>
               </NavItem>
             </Nav>
-        </div>
-        <div className="listing">
-          <Tab.Content>
-            <Tab.Pane eventKey={1}>
-              {sortOrders.map((item, index) =>(
-                <>
-                <Card className="my-3">
-                  <div className="card_order p-3" key={index}>
-                    <div className="order_name">
-                      <h3>{item.id}</h3>
-                      <span>{item.order_date}</span>
-                    </div>
-                    <div className="order_price">
-                      <h3>RM{item.Price.toFixed(2)}</h3>
-                      <div className="status">
-                        <span>{item.process_status}</span>
+          </div>
+          <div className="listing">
+            <Tab.Content>
+              <Tab.Pane eventKey={1}>
+                {sortOrders.map((item) => (
+                  <Card className="my-3" key={item.id}>
+                    <div className="card_order p-3">
+                      <div className="order_name">
+                        <h3>{item.id}</h3>
+                        <span>{item.order_date}</span>
+                      </div>
+                      <div className="order_price">
+                        <h3>
+                          RM
+                          {item.product
+                            .reduce(
+                              (total, product) =>
+                                total + product.Price * product.quantity,
+                              0,
+                            )
+                            .toFixed(2)}
+                        </h3>
+                        <div className="status">
+                          <span>{item.process_status}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="order_detail">
-                    <Row>
-                      <Col xs={3} md={3} lg={3}>
-                        <div className="product_img">
-                          <img src={item.img} alt={item.img} />
-                        </div>
-                      </Col>
-                      <Col xs={9} md={9} lg={9}>
-                        <div className="detail">
-                          <h3>{item.BookName}</h3>
-                          <span>Author : {item.Author}</span>
-                          <span>Quantity : {item.quantity}</span>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                </Card>
-                </>
-             ) )}
-            </Tab.Pane>
-            <Tab.Pane eventKey={2}>
-              {sortOrders.filter((item) => item.process_status === "Delivered")
-              .map((item,index) =>(
-                <>
-                 <Card className="my-3">
-                  <div className="card_order p-3" key={item.id ?? index}>
-                    <div className="order_name">
-                      <h3>{item.id}</h3>
-                      <span>{item.order_date}</span>
+                    <div className="order_detail">
+                      {item.product.map((product) => (
+                        <Row className="my-3" key={product.id}>
+                          <Col xs={3} md={3} lg={3}>
+                            <div className="product_img">
+                              <img src={product.img} alt={product.BookName} />
+                            </div>
+                          </Col>
+                          <Col xs={9} md={9} lg={9}>
+                            <div className="detail">
+                              <h3>{product.BookName}</h3>
+                              <span>Author : {product.Author}</span>
+                              <div className="d-flex flex-row justify-content-between">
+                                <span>Quantity : {product.quantity}</span>
+                                <span>Price :{product.Price.toFixed(2)} </span>
+                              </div>
+                            </div>
+                          </Col>
+                        </Row>
+                      ))}
                     </div>
-                    <div className="order_price">
-                      <h3>RM{item.Price.toFixed(2)}</h3>
-                      <div className="status">
-                        <span>{item.process_status}</span>
+                  </Card>
+                ))}
+              </Tab.Pane>
+              <Tab.Pane eventKey={2}>
+                {sortOrders
+                  .filter((item) => item.process_status === "Delivered")
+                  .map((item) => (
+                    <Card className="my-3" key={item.id}>
+                      <div className="card_order p-3">
+                        <div className="order_name">
+                          <h3>{item.id}</h3>
+                          <span>{item.order_date}</span>
+                        </div>
+                        <div className="order_price">
+                          <h3>
+                            RM
+                            {item.product
+                              .reduce(
+                                (total, product) =>
+                                  total + product.Price * product.quantity,
+                                0,
+                              )
+                              .toFixed(2)}
+                          </h3>
+                          <div className="status">
+                            <span>{item.process_status}</span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="order_detail">
-                    <Row>
-                      <Col xs={3} md={3} lg={3}>
-                        <div className="product_img">
-                          <img src={item.img} alt={item.img} />
-                        </div>
-                      </Col>
-                      <Col xs={9} md={9} lg={9}>
-                        <div className="detail">
-                          <h3>{item.BookName}</h3>
-                          <span>Author : {item.Author}</span>
-                          <span>Quantity : {item.quantity}</span>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                </Card>
-                </>
-              ))
-              }
-            </Tab.Pane>
-             <Tab.Pane eventKey={3}>
-              {sortOrders.filter((item) => item.process_status === "Canceled")
-              .map((item,index) =>(
-                <>
-                 <Card className="my-3">
-                  <div className="card_order p-3" key={item.id ?? index}>
-                    <div className="order_name">
-                      <h3>{item.id}</h3>
-                      <span>{item.order_date}</span>
-                    </div>
-                    <div className="order_price">
-                      <h3>RM{item.Price.toFixed(2)}</h3>
-                      <div className="status">
-                        <span>{item.process_status}</span>
+                      <div className="order_detail">
+                        {item.product.map((product) => (
+                          <Row className="my-3" key={product.id}>
+                            <Col xs={3} md={3} lg={3}>
+                              <div className="product_img">
+                                <img src={product.img} alt={product.BookName} />
+                              </div>
+                            </Col>
+                            <Col xs={9} md={9} lg={9}>
+                              <div className="detail">
+                                <h3>{product.BookName}</h3>
+                                <span>Author : {product.Author}</span>
+                                <div className="d-flex flex-row justify-content-between">
+                                  <span>Quantity : {product.quantity}</span>
+                                  <span>
+                                    Price :{product.Price.toFixed(2)}{" "}
+                                  </span>
+                                </div>
+                              </div>
+                            </Col>
+                          </Row>
+                        ))}
                       </div>
-                    </div>
-                  </div>
-                  <div className="order_detail">
-                    <Row>
-                      <Col xs={3} md={3} lg={3}>
-                        <div className="product_img">
-                          <img src={item.img} alt={item.img} />
+                    </Card>
+                  ))}
+              </Tab.Pane>
+              <Tab.Pane eventKey={3}>
+                {sortOrders
+                  .filter((item) => item.process_status === "Canceled")
+                  .map((item) => (
+                    <Card className="my-3" key={item.id}>
+                      <div className="card_order p-3">
+                        <div className="order_name">
+                          <h3>{item.id}</h3>
+                          <span>{item.order_date}</span>
                         </div>
-                      </Col>
-                      <Col xs={9} md={9} lg={9}>
-                        <div className="detail">
-                          <h3>{item.BookName}</h3>
-                          <span>Author : {item.Author}</span>
-                          <span>Quantity : {item.quantity}</span>
+                        <div className="order_price">
+                          <h3>
+                            RM
+                            {item.product
+                              .reduce(
+                                (total, product) =>
+                                  total + product.Price * product.quantity,
+                                0,
+                              )
+                              .toFixed(2)}
+                          </h3>
+                          <div className="status">
+                            <span>{item.process_status}</span>
+                          </div>
                         </div>
-                      </Col>
-                    </Row>
-                  </div>
-                </Card>
-                </>
-              ))
-              }
-            </Tab.Pane>
-          </Tab.Content>
-        </div>
-         </Tab.Container>
+                      </div>
+                      <div className="order_detail">
+                        {item.product.map((product) => (
+                          <Row key={product.id}>
+                            <Col xs={3} md={3} lg={3}>
+                              <div className="product_img">
+                                <img src={product.img} alt={product.BookName} />
+                              </div>
+                            </Col>
+                            <Col xs={9} md={9} lg={9}>
+                              <div className="detail">
+                                <h3>{product.BookName}</h3>
+                                <span>Author : {product.Author}</span>
+                                <div className="d-flex flex-row justify-content-between">
+                                  <span>Quantity : {product.quantity}</span>
+                                  <span>
+                                    Price :{product.Price.toFixed(2)}{" "}
+                                  </span>
+                                </div>
+                              </div>
+                            </Col>
+                          </Row>
+                        ))}
+                      </div>
+                    </Card>
+                  ))}
+              </Tab.Pane>
+            </Tab.Content>
+          </div>
+        </Tab.Container>
       </div>
     </>
   );

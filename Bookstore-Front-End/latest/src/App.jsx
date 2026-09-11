@@ -18,7 +18,8 @@ import ProfileFavourite from "./pages/profile/profile_favourite";
 import ListOrder from "./pages/profile/list_order";
 import ChangePassword from "./pages/profile/change_password";
 import EditProfile from "./pages/profile/edit_profile";
-import OrderDetial from "./pages/profile/order_detail";
+import OrderDetail from "./pages/profile/order_detail";
+
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -88,8 +89,8 @@ function App() {
       element: <EditProfile />
     },
     {
-      path: "/order_detial",
-      element: <OrderDetial />
+      path: "/order_detail/:orderId",
+      element: <OrderDetail />
     }
   ]);
   return (
