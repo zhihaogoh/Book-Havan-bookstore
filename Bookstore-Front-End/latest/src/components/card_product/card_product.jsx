@@ -1,5 +1,5 @@
 import { Card } from "react-bootstrap";
-import { MdShoppingCart } from "react-icons/md";
+
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { Link } from "react-router";
@@ -38,7 +38,10 @@ StarRating.propTypes = {
 export default function CardProduct({ product }) {
   return (
     <>
-      <Link to={`/product_detail/${product.id}`}  style={{ textDecoration: "none", color: "inherit" }}>
+      <Link
+        to={`/product_detail/${product.id}`}
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
         <Card className="card-product">
           <div className="discount_img">
             <img src={product.img} className="product_img" />
@@ -49,10 +52,10 @@ export default function CardProduct({ product }) {
           <StarRating rating={product.star} reviewCount={product.viewNumber} />
           <div className="price-cart">
             <p className="price">RM{product.Price.toFixed(2)}</p>
-            <MdShoppingCart className="icon" />
           </div>
         </Card>
       </Link>
+      
     </>
   );
 }

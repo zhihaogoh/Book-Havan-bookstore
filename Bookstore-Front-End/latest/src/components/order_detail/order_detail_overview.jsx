@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { FaCcVisa } from "react-icons/fa";
 import {

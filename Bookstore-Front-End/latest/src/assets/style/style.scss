@@ -2371,3 +2371,47 @@
 }
 
 //order detail end
+
+//Modal success status
+.success_status{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  .icon{
+     font-size: 2rem;
+     color: #006400;
+  }
+  .status{
+    h1{
+      color: #000;
+      font-size: 1rem;
+      font-weight: bold;
+      line-height: 1;
+      margin: 0;
+    }
+    span{
+        color: #000;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+  }
+}
+
+.continue{
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #777;
+}
+.to_cart{
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #347c55;
+}
+
+
+//Modal success status

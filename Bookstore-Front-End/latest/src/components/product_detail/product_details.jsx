@@ -3,18 +3,16 @@ import { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdCheckCircle, MdOutlineFavorite } from "react-icons/md";
-import { useNavigate } from "react-router";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Grid, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import SuccessStatus from "../Modal/success_status";
 export default function ProductDetails({ product }) {
   const [num, setNumber] = useState(1);
-  const navigate = useNavigate();
-  function toShoppingCart(){
-    navigate('/shopping_cart')
-  }
+  const [modal, setModal] = useState(false);
+ 
   return (
     <>
       <div className="product_detail">
@@ -94,7 +92,7 @@ export default function ProductDetails({ product }) {
                       </div>
                     </Col>
                     <Col className="p-1" sm={2} md={6} lg={6}>
-                      <Button className="cart" onClick={toShoppingCart}> 
+                      <Button className="cart" onClick={() => {setModal(true)}}> 
                         <FaShoppingCart /> Add to Cart
                       </Button>
                     </Col>
@@ -155,7 +153,12 @@ export default function ProductDetails({ product }) {
             </div>
           </Col>
         </Row>
+        <SuccessStatus 
+          show={modal}
+          onHide={() => {setModal(false)}}
+        />
       </div>
+      
     </>
   );
 }
