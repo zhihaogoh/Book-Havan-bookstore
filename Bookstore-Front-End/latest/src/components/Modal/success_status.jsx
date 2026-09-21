@@ -1,18 +1,19 @@
-import { Button, Modal } from "react-bootstrap";
+import { Button, Col, Modal, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router";
 
-export default function SuccessStatus(props){
+export default function SuccessStatus({ number, product, ...props }){
   const navigate = useNavigate();
   const toShoppingCart = () =>{
     navigate("/shopping_cart");
   }
+
     return(
         <>
         <Modal
       {...props}
-      size="md"
+      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -27,14 +28,23 @@ export default function SuccessStatus(props){
           </div>
         </Modal.Title>
       </Modal.Header>
-      {/* <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
-      </Modal.Body> */}
+      <Modal.Body>
+        <Row>
+          <Col md={3}>
+            <img className="modal_img" src={product.img} alt={product.img} />
+          </Col>
+          <Col md={6}>
+            <div className="d-flex flex-column align-items-start">
+              <h3>{product.BookName}</h3>
+              <span>by : {product.Author}</span>
+              <span>Qty: {number}</span>
+            </div>
+          </Col>
+          <Col md={3}>
+            <span>RM {product.Price}</span>
+          </Col>
+        </Row>
+      </Modal.Body>
       <Modal.Footer>
         <Button className="continue" onClick={props.onHide}>Continue</Button>
         <Button className="to_cart" onClick={toShoppingCart}>To Shopping Cart</Button>
@@ -45,5 +55,12 @@ export default function SuccessStatus(props){
 }
 
 SuccessStatus.propTypes ={
+  number: PropTypes.number.isRequired,
+  product: PropTypes.shape({
+    img: PropTypes.string.isRequired,
+    BookName: PropTypes.string.isRequired,
+    Author: PropTypes.string.isRequired,
+    Price: PropTypes.number.isRequired
+  }).isRequired,
   onHide: PropTypes.func.isRequired,
 }

@@ -12,7 +12,6 @@ import SuccessStatus from "../Modal/success_status";
 export default function ProductDetails({ product }) {
   const [num, setNumber] = useState(1);
   const [modal, setModal] = useState(false);
- 
   return (
     <>
       <div className="product_detail">
@@ -82,7 +81,7 @@ export default function ProductDetails({ product }) {
                         >
                           -
                         </Button>
-                        <input type="number" className="number" value={num} />
+                        <input type="number" className="number" value={num} readOnly />
                         <Button
                           className="btn-light"
                           onClick={() => setNumber(num + 1)}
@@ -155,6 +154,8 @@ export default function ProductDetails({ product }) {
         </Row>
         <SuccessStatus 
           show={modal}
+          product={product}
+          number = {num}
           onHide={() => {setModal(false)}}
         />
       </div>
