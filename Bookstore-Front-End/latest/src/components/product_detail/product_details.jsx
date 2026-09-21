@@ -60,7 +60,7 @@ export default function ProductDetails({ product }) {
                 </span>
               </div>
               <div className="price_cart mt-5 p-3">
-                <span>RM{product.Price}</span>
+                <span>RM{product.Price.toFixed(2)}</span>
                 <div className="stock">
                   {product.stock === true ? (
                     <span className="true">

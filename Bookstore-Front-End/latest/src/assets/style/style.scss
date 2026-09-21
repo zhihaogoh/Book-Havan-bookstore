@@ -589,8 +589,8 @@
     padding: 0.25rem;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    align-items: end;
+    gap: 0.5rem;
     p {
       margin-bottom: 0;
       color: black;
@@ -598,6 +598,9 @@
     }
     .icon {
       font-size: 2rem;
+    }
+    .price_del{
+      font-size: 0.75rem;
     }
   }
 }

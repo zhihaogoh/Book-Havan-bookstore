@@ -6,7 +6,7 @@ import { Link } from "react-router";
 
 function StarRating({ rating = 0, reviewCount = 0 }) {
   const normalizedRating = Math.round(Math.min(5, Math.max(0, rating)) * 2) / 2;
-
+  
   return (
     <div
       className="rating"
@@ -36,6 +36,7 @@ StarRating.propTypes = {
 };
 
 export default function CardProduct({ product }) {
+  const discount =product.Price * (1-product.discount/100);
   return (
     <>
       <Link
@@ -51,8 +52,17 @@ export default function CardProduct({ product }) {
           <p className="author">{product.Author}</p>
           <StarRating rating={product.star} reviewCount={product.viewNumber} />
           <div className="price-cart">
-            <p className="price">RM{product.Price.toFixed(2)}</p>
-          </div>
+            {product.discount ?(
+              <>
+            <p className="price text-danger fw-bold">RM{discount.toFixed(2)}</p>
+            <p className="price_del"><del>RM{product.Price.toFixed(2)}</del></p> 
+              </>
+              ):(
+               <p className="price">RM{product.Price.toFixed(2)}</p> 
+
+              )
+                          }
+            </div>
         </Card>
       </Link>
       
