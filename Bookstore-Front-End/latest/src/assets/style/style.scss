@@ -112,6 +112,7 @@
   //search form start
   .search-form {
     display: flex;
+    width: 50%;
     align-items: center;
     justify-content: center;
     align-items: center;
@@ -730,6 +731,9 @@
           }
         }
       }
+    }
+    .not_result{
+      height: 400px;
     }
   }
 }

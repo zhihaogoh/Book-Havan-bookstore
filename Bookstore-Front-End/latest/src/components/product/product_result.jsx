@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Col, Form, Pagination, Row } from "react-bootstrap";
 import CardProduct from "../card_product/card_product";
 
-export default function ProductResult({ products, selectedCategories }) {
+export default function ProductResult({ products, selectedCategories, keyword }) {
   const resultLabel = selectedCategories.length
     ? selectedCategories.join(", ")
     : "All categories";
@@ -13,7 +13,9 @@ export default function ProductResult({ products, selectedCategories }) {
         <div className="title">
           <h3>
             {products.length} {products.length === 1 ? "result" : "results"} for{" "}
-            &quot;{resultLabel}&quot;
+            &quot;
+            {keyword ? ` ${keyword}` : `${resultLabel}`}
+            &quot;
           </h3>
           <div className="sort">
             <span>Sort By : </span>
@@ -36,7 +38,7 @@ export default function ProductResult({ products, selectedCategories }) {
             ))}
             {products.length === 0 && (
               <Col>
-                <p className="text-center py-5 mb-0">
+                <p className="not_result text-center py-5 mb-0">
                   No products found in the selected category.
                 </p>
               </Col>
@@ -44,7 +46,6 @@ export default function ProductResult({ products, selectedCategories }) {
           </Row>
         </div>
         <Pagination className="justify-content-center">
-          
           <Pagination.Prev />
           <Pagination.Item active>{1}</Pagination.Item>
           <Pagination.Item>{2}</Pagination.Item>
@@ -54,7 +55,6 @@ export default function ProductResult({ products, selectedCategories }) {
           <Pagination.Ellipsis />
           <Pagination.Item>{22}</Pagination.Item>
           <Pagination.Next />
-
         </Pagination>
       </div>
     </>
@@ -76,5 +76,6 @@ ProductResult.propTypes = {
       category: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  keyword: PropTypes.string.isRequired,
   selectedCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

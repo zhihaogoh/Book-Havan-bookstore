@@ -1,4 +1,4 @@
-import { Dropdown, Form, Nav, Navbar, NavItem, NavLink } from "react-bootstrap";
+import { Form, Nav, Navbar } from "react-bootstrap";
 import { NavLink as RouterNavLink, useNavigate } from "react-router";
 import { IoSearchOutline } from "react-icons/io5";
 import {
@@ -6,12 +6,22 @@ import {
   MdOutlineShoppingBag,
   MdPerson,
 } from "react-icons/md";
+import { useState } from "react";
 
 export default function Header() {
   const navigate = useNavigate();
-  const LinkFliterProduct = () =>{
-      navigate('/fliter_product');
-  }
+  const [keyWord, setKeyWord] = useState("");
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const param = new URLSearchParams();
+    const text = keyWord.trim();
+    if (text) {
+      param.set("q", text);
+    }
+    const query = param.toString();
+    navigate(`/fliter_product${query ? `?${query}` : ""}`);
+  };
   return (
     <>
       {/* Header Start */}
@@ -29,24 +39,17 @@ export default function Header() {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             {/* search form */}
-            <Form className="d-flex search-form">
-              <Dropdown className="categories_dropdown" as={NavItem}>
-                <Dropdown.Toggle as={NavLink}>All Categories</Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item>Fiction</Dropdown.Item>
-                  <Dropdown.Item>Not Fiction</Dropdown.Item>
-                  <Dropdown.Item>Business</Dropdown.Item>
-                  <Dropdown.Item>Health</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+            <Form className="d-flex search-form" onSubmit={handleSearch}>
               <Form.Control
                 type="search"
                 placeholder="Search"
                 className="ms-2"
                 aria-label="Search"
                 id="search-input"
+                value={keyWord}
+                onChange={(event) => setKeyWord(event.target.value)}
               />
-              <button type="submit" className="search-button" onClick={LinkFliterProduct}  >
+              <button type="submit" className="search-button">
                 <IoSearchOutline className="search-icon" />
               </button>
             </Form>
@@ -84,7 +87,7 @@ export default function Header() {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-           <RouterNavLink
+          <RouterNavLink
             className={({ isActive }) =>
               `nav-link me-3${isActive ? " fw-bold" : ""}`
             }

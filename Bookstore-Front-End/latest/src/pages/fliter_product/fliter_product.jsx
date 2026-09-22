@@ -4,15 +4,15 @@ import Layout from "../../layout/Layout";
 import ProductResult from "../../components/product/product_result";
 import { useState } from "react";
 import { products } from "../../data/products";
-
-
+import { useSearchParams } from "react-router";
 
 export default function FliterProduct() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [inStockOnly, setInStockOnly] = useState(false);
-
+  const [searchParams] = useSearchParams();
+  const keyword = (searchParams.get("q") ?? "").trim().toLowerCase();
   //交互categories start
   const handleCategoryChange = (category) => {
     setSelectedCategories((currentCategories) =>
@@ -21,8 +21,8 @@ export default function FliterProduct() {
         : [...currentCategories, category],
     );
   };
-    //交互categories end
 
+  //交互categories end
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
       selectedCategories.length === 0 ||
@@ -30,11 +30,19 @@ export default function FliterProduct() {
     const matchesMinPrice =
       minPrice === "" || product.Price >= Number(minPrice); //设置至少的价钱
     const matchesMaxPrice =
-      maxPrice === "" || product.Price <= Number(maxPrice);//设置至多的价钱
+      maxPrice === "" || product.Price <= Number(maxPrice); //设置至多的价钱
     const matchesStock = !inStockOnly || product.stock; // 设置佣有货
+    const matchSearch =
+      keyword === "" ||
+      product.BookName.toLowerCase().includes(keyword) ||
+      product.Author.toLowerCase().includes(keyword);
 
     return (
-      matchesCategory && matchesMinPrice && matchesMaxPrice && matchesStock 
+      matchSearch &&
+      matchesCategory &&
+      matchesMinPrice &&
+      matchesMaxPrice &&
+      matchesStock
     );
   });
 
@@ -99,6 +107,7 @@ export default function FliterProduct() {
               <ProductResult
                 products={filteredProducts}
                 selectedCategories={selectedCategories}
+                keyword={keyword}
               />
             </Col>
           </Row>
