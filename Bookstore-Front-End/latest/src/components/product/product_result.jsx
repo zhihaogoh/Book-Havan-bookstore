@@ -1,12 +1,32 @@
 import PropTypes from "prop-types";
 import { Col, Form, Pagination, Row } from "react-bootstrap";
 import CardProduct from "../card_product/card_product";
+import { useState } from "react";
 
-export default function ProductResult({ products, selectedCategories, keyword }) {
+export default function ProductResult({
+  products,
+  selectedCategories,
+  keyword,
+}) {
   const resultLabel = selectedCategories.length
     ? selectedCategories.join(", ")
     : "All categories";
-
+  const [sortBy, setSortBy] = useState("default");
+  const sortedProduct = [...products];
+  const getFinalPrice = (product) => {
+    return product.Price * (1 - (product.discount ?? 0) / 100);
+  };
+  if (sortBy === "more") {
+    sortedProduct.sort((a, b) => getFinalPrice(b) - getFinalPrice(a));
+    console.log(sortedProduct);
+  } else if (sortBy === "less") {
+    sortedProduct.sort((a, b) => getFinalPrice(a) - getFinalPrice(b));
+    console.log(sortedProduct);
+  } else if (sortBy === "az") {
+    sortedProduct.sort((a, b) => a.BookName.localeCompare(b.BookName));
+  } else if (sortBy === "za") {
+    sortedProduct.sort((a, b) => b.BookName.localeCompare(a.BookName));
+  }
   return (
     <>
       <div className="result_product">
@@ -21,9 +41,15 @@ export default function ProductResult({ products, selectedCategories, keyword })
             <span>Sort By : </span>
             <Form>
               <Form.Group controlId="formGridState">
-                <Form.Select defaultValue="Most Popular">
-                  <option>Most Popular</option>
-                  <option>Default</option>
+                <Form.Select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                >
+                  <option value="default">Default</option>
+                  <option value="more">More to less</option>
+                  <option value="less">Less to more</option>
+                  <option value="az">A - Z</option>
+                  <option value="za">Z - A</option>
                 </Form.Select>
               </Form.Group>
             </Form>
@@ -31,12 +57,12 @@ export default function ProductResult({ products, selectedCategories, keyword })
         </div>
         <div className="listing_product py-3">
           <Row>
-            {products.map((item) => (
+            {sortedProduct.map((item) => (
               <Col xs={6} md={6} lg={4} xl={3} key={item.id} className="mb-3">
                 <CardProduct product={item} />
               </Col>
             ))}
-            {products.length === 0 && (
+            {sortedProduct.length === 0 && (
               <Col>
                 <p className="not_result text-center py-5 mb-0">
                   No products found in the selected category.
