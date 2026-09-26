@@ -1,11 +1,15 @@
 import { Card, Col, Nav, NavItem, Row, Tab } from "react-bootstrap";
 import { order } from "../../data/products";
 import { getSortOrders } from "../../routes/getSortOrder";
+import { useNavigate } from "react-router";
 
 export default function OrderListing() {
+  const navigate = useNavigate();
   const orders = order;
   const sortOrders = getSortOrders(orders, 3);
-  
+  const toOrderDetial = (orderId) => {
+    navigate(`/order_detail/${orderId}`);
+  };
   return (
     <>
       <div className="order_listing">
@@ -34,7 +38,7 @@ export default function OrderListing() {
             <Tab.Content>
               <Tab.Pane eventKey={1}>
                 {sortOrders.map((item) => (
-                  <Card className="my-3" key={item.id}>
+                  <Card className="my-3" key={item.id} onClick={() => toOrderDetial(item.id)}>
                     <div className="card_order p-3">
                       <div className="order_name">
                         <h3>{item.id}</h3>
@@ -58,7 +62,11 @@ export default function OrderListing() {
                     </div>
                     <div className="order_detail">
                       {item.product.map((product) => (
-                        <Row className="my-3" key={product.id}>
+                        <Row
+                          className="my-3"
+                          key={product.id}
+                          onClick={() => toOrderDetial(item.id)}
+                        >
                           <Col xs={3} md={3} lg={3}>
                             <div className="product_img">
                               <img src={product.img} alt={product.BookName} />
@@ -84,7 +92,11 @@ export default function OrderListing() {
                 {sortOrders
                   .filter((item) => item.process_status === "Delivered")
                   .map((item) => (
-                    <Card className="my-3" key={item.id}>
+                    <Card
+                      className="my-3"
+                      key={item.id}
+                      onClick={() => toOrderDetial(item.id)}
+                    >
                       <div className="card_order p-3">
                         <div className="order_name">
                           <h3>{item.id}</h3>
@@ -108,7 +120,10 @@ export default function OrderListing() {
                       </div>
                       <div className="order_detail">
                         {item.product.map((product) => (
-                          <Row className="my-3" key={product.id}>
+                          <Row
+                            className="my-3"
+                            key={product.id}
+                          >
                             <Col xs={3} md={3} lg={3}>
                               <div className="product_img">
                                 <img src={product.img} alt={product.BookName} />
@@ -136,7 +151,7 @@ export default function OrderListing() {
                 {sortOrders
                   .filter((item) => item.process_status === "Canceled")
                   .map((item) => (
-                    <Card className="my-3" key={item.id}>
+                    <Card className="my-3" key={item.id} onClick={() => toOrderDetial(item.id)}>
                       <div className="card_order p-3">
                         <div className="order_name">
                           <h3>{item.id}</h3>

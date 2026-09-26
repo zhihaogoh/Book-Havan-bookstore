@@ -3,6 +3,7 @@ import { Card } from "react-bootstrap";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { Link } from "react-router";
+import { MdFavorite } from "react-icons/md";
 
 function StarRating({ rating = 0, reviewCount = 0 }) {
   const normalizedRating = Math.round(Math.min(5, Math.max(0, rating)) * 2) / 2;
@@ -35,7 +36,7 @@ StarRating.propTypes = {
   reviewCount: PropTypes.number,
 };
 
-export default function CardProduct({ product }) {
+export default function CardProduct({ product,favourite }) {
   const discount =product.Price * (1-product.discount/100);
   return (
     <>
@@ -47,6 +48,7 @@ export default function CardProduct({ product }) {
           <div className="discount_img">
             <img src={product.img} className="product_img" />
             {product.discount > 0 && <span>-{product.discount}%</span>}
+            {favourite === true && <MdFavorite className="favourite" />}
           </div>
           <h3 className="book-name">{product.BookName}</h3>
           <p className="author">{product.Author}</p>
@@ -82,4 +84,5 @@ CardProduct.propTypes = {
     discount: PropTypes.number,
     categoty: PropTypes.string,
   }).isRequired,
+  favourite: PropTypes.bool
 };

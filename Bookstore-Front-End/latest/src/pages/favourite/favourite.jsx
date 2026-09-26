@@ -15,8 +15,10 @@ export default function Favoutite() {
             </div>
       <Row>
         {product.map((item,index) => (
-          <Col className="p-3" xs={6} md={4} lg={4} key={index}>
-            <CardProduct product={item} />
+          <Col className="p-3" xs={6} md={4} lg={3} key={index}>
+            <CardProduct 
+            product={item} 
+            favourite = {true} />
           </Col>
         ))}
       </Row>

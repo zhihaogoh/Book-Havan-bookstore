@@ -31,7 +31,7 @@ export default function DashboardFavourite() {
               <Row>
         {product.map((item,index) => (
           <Col className="p-3" xs={6} md={6} lg={4} key={index}>
-            <CardProduct product={item} />
+            <CardProduct product={item} favourite = {true} />
           </Col>
         ))}
       </Row>
