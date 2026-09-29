@@ -87,20 +87,7 @@ export default function FliterProduct() {
                     category: "Romance",
                   },
                 ]}
-                rating={[
-                  {
-                    rate: 5,
-                  },
-                  {
-                    rate: 4.5,
-                  },
-                  {
-                    rate: 4,
-                  },
-                  {
-                    rate: 3.5,
-                  },
-                ]}
+               
               />
             </Col>
             <Col xs={0} md={8} lg={8}>

@@ -118,9 +118,5 @@ Fliter.propTypes = {
   onMaxPriceChange: PropTypes.func.isRequired,
   onStockChange: PropTypes.func.isRequired,
   onClearAll: PropTypes.func.isRequired,
-  rating: PropTypes.arrayOf(
-    PropTypes.shape({
-      rate: PropTypes.number.isRequired,
-    }),
-  ),
+
 };

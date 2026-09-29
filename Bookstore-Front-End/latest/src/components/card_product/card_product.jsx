@@ -1,43 +1,12 @@
 import { Card } from "react-bootstrap";
-
-import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { Link } from "react-router";
 import { MdFavorite } from "react-icons/md";
-
-function StarRating({ rating = 0, reviewCount = 0 }) {
-  const normalizedRating = Math.round(Math.min(5, Math.max(0, rating)) * 2) / 2;
-  
-  return (
-    <div
-      className="rating"
-      aria-label={`${normalizedRating} out of 5 stars, ${reviewCount} reviews`}
-    >
-      <div className="stars" aria-hidden="true">
-        {[1, 2, 3, 4, 5].map((position) => {
-          if (normalizedRating >= position) {
-            return <FaStar key={position} />;
-          }
-
-          if (normalizedRating >= position - 0.5) {
-            return <FaStarHalfAlt key={position} />;
-          }
-
-          return <FaRegStar key={position} />;
-        })}
-      </div>
-      <span className="review-count">({reviewCount.toLocaleString()})</span>
-    </div>
-  );
-}
-
-StarRating.propTypes = {
-  rating: PropTypes.number,
-  reviewCount: PropTypes.number,
-};
+import StarRating from "../star_rating/star_rating";
 
 export default function CardProduct({ product,favourite }) {
   const discount =product.Price * (1-product.discount/100);
+  
   return (
     <>
       <Link

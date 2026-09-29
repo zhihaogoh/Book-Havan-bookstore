@@ -8,7 +8,9 @@ export default function SuccessStatus({ number, product, ...props }){
   const toShoppingCart = () =>{
     navigate("/shopping_cart");
   }
-
+  const back =() =>{
+    navigate(-1);
+  }
     return(
         <>
         <Modal
@@ -46,7 +48,7 @@ export default function SuccessStatus({ number, product, ...props }){
         </Row>
       </Modal.Body>
       <Modal.Footer>
-        <Button className="continue" onClick={props.onHide}>Continue</Button>
+        <Button className="continue" onClick={back}>Continue</Button>
         <Button className="to_cart" onClick={toShoppingCart}>To Shopping Cart</Button>
       </Modal.Footer>
     </Modal>
