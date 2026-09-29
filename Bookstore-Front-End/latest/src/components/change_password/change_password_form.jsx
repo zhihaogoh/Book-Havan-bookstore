@@ -114,7 +114,6 @@ export default function ChangePasswordForm() {
         <Card className="my-3">
           <Form className="password-card" onSubmit={handleChangePassword}>
             {fields.map((item, index) => (
-              <>
                 <Fragment key={index}>
                   <Form.Label column sm={12}>
                     {item.label}
@@ -216,7 +215,6 @@ export default function ChangePasswordForm() {
                     </div>
                   )}
                 </Fragment>
-              </>
             ))}
             {message && (
               <p className="password-message" role="status">
