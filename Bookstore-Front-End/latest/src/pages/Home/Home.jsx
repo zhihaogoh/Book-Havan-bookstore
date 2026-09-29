@@ -8,8 +8,23 @@ export default function Home() {
   return (
     <>
       <Layout>
-        <Banner />
-        <ServiceList />
+        <Banner
+          banner={[
+            {
+              img: "../src/assets/image/banner_1.png",
+            },
+            {
+              img: "../src/assets/image/banner_2.png",
+            },
+            {
+              img: "../src/assets/image/banner_3.png",
+            },
+          ]}
+        />
+        <ServiceList 
+          
+        
+        />
         <Categories
           categories={[
             {

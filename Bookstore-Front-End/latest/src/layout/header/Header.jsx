@@ -7,8 +7,9 @@ import {
   MdPerson,
 } from "react-icons/md";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-export default function Header() {
+export default function Header({ menu }) {
   const navigate = useNavigate();
   const [keyWord, setKeyWord] = useState("");
 
@@ -71,47 +72,29 @@ export default function Header() {
       </Navbar>
       {/* header end */}
       <Nav className="main_menu" variant="underline">
-        <Nav.Item>
-          <RouterNavLink
-            className={({ isActive }) =>
-              `nav-link me-3${isActive ? " fw-bold" : ""}`
-            }
-            to="/"
-          >
-            Home
-          </RouterNavLink>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link className="me-3" eventKey="2">
-            Categories
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <RouterNavLink
-            className={({ isActive }) =>
-              `nav-link me-3${isActive ? " fw-bold" : ""}`
-            }
-            to="/fliter_product"
-          >
-            Product
-          </RouterNavLink>
-        </Nav.Item>
-        <Nav.Item>
-          <RouterNavLink
-            className={({ isActive }) =>
-              `nav-link me-3${isActive ? " fw-bold" : ""}`
-            }
-            to="/about"
-          >
-            About Us
-          </RouterNavLink>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link className="me-3" eventKey="link-7">
-            Contact Us
-          </Nav.Link>
-        </Nav.Item>
+        {menu.map((item, index) => (
+          
+          <Nav.Item key={index}>
+            <RouterNavLink
+              className={({ isActive }) =>
+                `nav-link me-3${isActive ? " fw-bold" : ""}`
+              }
+              to={item.link}
+            >
+              {item.menu_title}
+            </RouterNavLink>
+          </Nav.Item>
+          
+        ))}
       </Nav>
     </>
   );
 }
+Header.propTypes = {
+  menu: PropTypes.arrayOf(
+    PropTypes.shape({
+      menu_title: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+    }),
+  ),
+};
