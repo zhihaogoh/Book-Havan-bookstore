@@ -20,7 +20,6 @@ import ChangePassword from "./pages/profile/change_password";
 import EditProfile from "./pages/profile/edit_profile";
 import OrderDetail from "./pages/profile/order_detail";
 
-
 function App() {
   //const [count, setCount] = useState(0)
   const router = createBrowserRouter([
@@ -73,6 +72,10 @@ function App() {
       element: <AddressDetail />,
     },
     {
+      path: "/address/new/:AddressId",
+      element: <AddressDetail />,
+    },
+    {
       path: "profile_favourite",
       element: <ProfileFavourite />,
     },
@@ -86,12 +89,12 @@ function App() {
     },
     {
       path: "/edit_profile",
-      element: <EditProfile />
+      element: <EditProfile />,
     },
     {
       path: "/order_detail/:orderId",
-      element: <OrderDetail />
-    }
+      element: <OrderDetail />,
+    },
   ]);
   return (
     <>

@@ -7,7 +7,9 @@ import { useNavigate } from "react-router";
 
 export default function AddressForm({ address_type, address_field }) {
   const navigate = useNavigate();
+  
   const [purpose, setPurpose] = useState((address_type.id = 1));
+  //没有数据
   const [value, setValue] = useState(() =>
     Object.fromEntries(address_field.map((item) => [item.name, ""])),
   );
@@ -82,17 +84,16 @@ export default function AddressForm({ address_type, address_field }) {
                   <Form.Label htmlFor={`address-${item.name}`}>
                     {item.label}
                     {!item.optional && <span className="required">*</span>}
+                 
                   </Form.Label>
                   <Form.Control
                     id={`address-${item.name}`}
                     name={item.name}
                     type={item.type}
                     autoComplete={item.autoComplete}
-                   
                     maxLength={item.name === "address" ? 200 : 100}
                     placeholder={item.placeholder}
-                    value={value[item.name]}
-                    aria-invalid={Boolean(error[item.name])}
+                    value={item.value ==="" ? (value[item.name]) : item.value}
                     aria-describedby={
                       [
                         item.hint && `${item.name}-hint`,

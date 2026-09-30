@@ -2,9 +2,13 @@ import { Col, Row } from "react-bootstrap";
 import Layout from "../../layout/Layout";
 import Listing from "../../components/dashboard/listing";
 import AddressForm from "../../components/dashboard/address_form";
+import { useParams } from "react-router";
+import { address } from "../../data/products";
 
 export default function AddressDetail() {
   // 沿用账户页布局，保持导航一致。
+  const {AddressId} = useParams();
+    const addressDetial = address.find((item) => String(item.id)=== AddressId);
   return (
     <Layout>
       <div className="container">
@@ -32,6 +36,7 @@ export default function AddressDetail() {
                   hint: "The name your delivery driver should ask for.",
                   placeholder: "e.g. Eleanor Vance",
                   width: "half",
+                  value: addressDetial?.Name ?? ""
                 },
                 {
                   name: "phone_number",
@@ -41,6 +46,7 @@ export default function AddressDetail() {
                   hint: "Include your country code for delivery updates.",
                   placeholder: "e.g. +60 12-345 6789",
                   width: "half",
+                   value: addressDetial?.phone_number ?? ""
                 },
                 {
                   name: "address",
@@ -49,6 +55,7 @@ export default function AddressDetail() {
                   hint: "Include your house or building number and street name.",
                   placeholder: "e.g. 128 Hill House Lane",
                   width: "street",
+                   value: addressDetial?.Address ?? ""
                 },
                 {
                   name: "unit",
@@ -57,18 +64,22 @@ export default function AddressDetail() {
                   hint: "Optional — floor or unit number.",
                   placeholder: "e.g. Apt 4B",
                   optional: true,
+                   value: addressDetial?.unit ?? ""
+
                 },
                 {
                   name: "city",
                   label: "City / Municipality",
                   autoComplete: "address-level2",
                   placeholder: "e.g. Kuala Lumpur",
+                   value: addressDetial?.city ?? ""
                 },
                 {
                   name: "state",
                   label: "State / Province",
                   autoComplete: "address-level1",
                   placeholder: "e.g. Kuala Lumpur",
+                   value: addressDetial?.state ?? ""
                 },
                 {
                   name: "postcode",
@@ -76,12 +87,14 @@ export default function AddressDetail() {
                   autoComplete: "postal-code",
                   placeholder: "e.g. 50450",
                   hint: "No postal code in your country? Enter N/A.",
+                   value: addressDetial?.postcode ?? ""
                 },
                 {
                   name: "country",
                   label: "Country / Territory",
                   autoComplete: "country-name",
                   placeholder: "e.g. Malaysia",
+                   value: addressDetial?.country ?? ""
                 },
               ]}
             />

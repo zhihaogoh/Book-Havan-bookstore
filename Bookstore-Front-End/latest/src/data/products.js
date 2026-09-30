@@ -228,7 +228,8 @@ export const address = [
   {
     id: 1,
     Name: "G",
-    Address: "123 Example 9 Taman Example",
+    unti:"123",
+    Address: " Example 9 Taman Example",
     postcode: "12356",
     city: "taman",
     state: "example",
@@ -240,7 +241,8 @@ export const address = [
   {
     id: 2,
     Name: "G",
-    Address: "123 Example 9 Taman Example",
+    unit:"123",
+    Address: "Example 9 Taman Example",
     postcode: "12356",
     city: "taman",
     state: "example",

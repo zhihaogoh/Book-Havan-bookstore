@@ -1,7 +1,7 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { address } from "../../data/products";
 import { MdAddCircle, MdPhone } from "react-icons/md";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { readAddresses } from "../../data/address_storage";
 
 export default function AddressList() {
@@ -11,6 +11,10 @@ export default function AddressList() {
   // 储存不可用时仍显示原有地址，并提供明确提示。
   try { savedAddresses = readAddresses(); } catch { storageError = true; }
   const address_bill = [...address, ...savedAddresses];
+  const navigate = useNavigate();
+  const toEditAddress= (AddressId) =>{
+      navigate(`/address/new/${AddressId}`);
+  }
   return (
     <>
       <div className="address_list">
@@ -58,7 +62,7 @@ export default function AddressList() {
                       </span>
                     </div>
                     <div className="button_group">
-                      <Button className="edit">Edit</Button>
+                      <Button className="edit" onClick={() => toEditAddress(item.id)}>Edit</Button>
                       <Button className="delete">Delete</Button>
                     </div>
                   </Card>

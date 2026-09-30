@@ -8,6 +8,7 @@ import {
 } from "react-icons/md";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import headerLogo from "../../assets/Image/Header_Logo.png";
 
 export default function Header({ menu }) {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export default function Header({ menu }) {
           {/* logo business */}
           <Navbar.Brand href="/">
             <img
-              src="../src/assets/image/Header_Logo.png"
+              src={headerLogo}
               className="Header_logo"
               alt="Logo"
             />
