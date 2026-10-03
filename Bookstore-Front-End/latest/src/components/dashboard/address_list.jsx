@@ -2,7 +2,7 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { address } from "../../data/products";
 import { MdAddCircle, MdPhone } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router";
-import { readAddresses } from "../../data/address_storage";
+import { readAddresses } from "../../routes/address_storage";
 
 export default function AddressList() {
   const location = useLocation();

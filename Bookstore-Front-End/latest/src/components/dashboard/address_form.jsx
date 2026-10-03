@@ -7,18 +7,20 @@ import { useNavigate } from "react-router";
 
 export default function AddressForm({ address_type, address_field }) {
   const navigate = useNavigate();
-  
+
   const [purpose, setPurpose] = useState((address_type.id = 1));
   //没有数据
   const [value, setValue] = useState(() =>
-    Object.fromEntries(address_field.map((item) => [item.name, ""])),
+    Object.fromEntries(
+      address_field.map((item) => [item.name, item.value ?? ""]),
+    ),
   );
   const [error, setErrors] = useState({});
   const [isDefault, setIsDefault] = useState(false);
   // const [saveError, setSaveError] = useState("");
 
   function handleSubmit(event) {
-    console.log(value)
+    console.log(value);
     event.preventDefault();
 
     const cleaned = Object.fromEntries(
@@ -84,7 +86,6 @@ export default function AddressForm({ address_type, address_field }) {
                   <Form.Label htmlFor={`address-${item.name}`}>
                     {item.label}
                     {!item.optional && <span className="required">*</span>}
-                 
                   </Form.Label>
                   <Form.Control
                     id={`address-${item.name}`}
@@ -93,7 +94,7 @@ export default function AddressForm({ address_type, address_field }) {
                     autoComplete={item.autoComplete}
                     maxLength={item.name === "address" ? 200 : 100}
                     placeholder={item.placeholder}
-                    value={item.value ==="" ? (value[item.name]) : item.value}
+                    value={value[item.name] ?? ""}
                     aria-describedby={
                       [
                         item.hint && `${item.name}-hint`,
@@ -103,6 +104,9 @@ export default function AddressForm({ address_type, address_field }) {
                         .join("") || undefined
                     }
                     onChange={(event) => {
+                      if (item.value !== "") {
+                        item.name = item.value;
+                      }
                       setValue({ ...value, [item.name]: event.target.value });
                       setErrors({ ...error, [item.name]: undefined });
                     }}
