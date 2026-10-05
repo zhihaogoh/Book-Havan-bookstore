@@ -251,5 +251,4 @@ export const address = [
     phone_number: "012-3456789",
     status: false
   }
-
 ]
