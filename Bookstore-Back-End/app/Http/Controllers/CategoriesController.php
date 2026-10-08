@@ -12,7 +12,7 @@ class CategoriesController extends Controller
         return Category::all();
     }
 
-    public function show($id){
+    public function show(Category $id){
         $category = Category::find($id);
         if(!$category){
             return response() ->json([
@@ -36,5 +36,32 @@ class CategoriesController extends Controller
             'message' => 'Category created successfully',
             'category' => $book
         ], 201);
+    }
+
+    public function update(Request $request, $id){
+        $category = Category::find($id);
+        if(!$category){
+            return response() -> json([
+                'message' => 'Category not found'
+            ], 404);
+        }
+        $category->update($request->all());
+        return response() -> json([
+            'message' => 'Category updated successfully',
+            'category' => $category
+        ], 200);
+    }
+
+    public function destroy($id){
+        $category = Category::find($id);
+        if(!$category){
+            return response() -> json([
+                'message' => 'Category not found'
+            ], 404);
+        }
+        $category->delete();
+        return response() -> json([
+            'message' => 'Category deleted successfully'
+        ], 200);
     }
 }
