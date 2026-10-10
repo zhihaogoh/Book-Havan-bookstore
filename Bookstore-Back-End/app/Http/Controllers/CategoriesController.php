@@ -12,22 +12,30 @@ class CategoriesController extends Controller
         return Category::all();
     }
 
-    public function show(Category $id){
+    public function show($id)
+    {
         $category = Category::find($id);
-        if(!$category){
-            return response() ->json([
+        if (!$category) {
+            return response()->json([
                 'message' => 'Category not found'
             ], 404);
         }
-        return response() ->json([
+        return response()->json([
             'message' => 'Category found',
             'category' => $category
         ], 200);
     }
 
-    public function store(Request $request){
-        $book = Category::create($request->all());
-        if(!$book){
+    public function store(Request $request)
+    {
+
+        $validated = $request->validate([
+            'categories_name' => 'required|string|max:255|unique:categories,categories_name',
+            'slug' => 'required|string|max:255|unique:categories,slug',
+        ]);
+
+        $book = Category::create($validated);
+        if (!$book) {
             return response()->json([
                 'message' => 'Category creation failed'
             ], 500);
@@ -38,29 +46,38 @@ class CategoriesController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $category = Category::find($id);
-        if(!$category){
-            return response() -> json([
+
+        if (!$category) {
+            return response()->json([
                 'message' => 'Category not found'
             ], 404);
         }
-        $category->update($request->all());
-        return response() -> json([
+
+        $validated = $request->validate([
+            'categories_name' => 'sometimes|required|string|max:255|unique:categories,categories_name,' . $category->id,
+            'slug' => 'sometimes|required|string|max:255|unique:categories,slug,' . $category->id,
+        ]);
+
+        $category->update($validated);
+        return response()->json([
             'message' => 'Category updated successfully',
             'category' => $category
         ], 200);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $category = Category::find($id);
-        if(!$category){
-            return response() -> json([
+        if (!$category) {
+            return response()->json([
                 'message' => 'Category not found'
             ], 404);
         }
         $category->delete();
-        return response() -> json([
+        return response()->json([
             'message' => 'Category deleted successfully'
         ], 200);
     }
