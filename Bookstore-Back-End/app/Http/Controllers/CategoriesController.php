@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -26,15 +28,13 @@ class CategoriesController extends Controller
         ], 200);
     }
 
-    public function store(Request $request)
+    public function store( StoreCategoryRequest $request)
     {
 
-        $validated = $request->validate([
-            'categories_name' => 'required|string|max:255|unique:categories,categories_name',
-            'slug' => 'required|string|max:255|unique:categories,slug',
-        ]);
+        $validated = $request->validated();
 
         $book = Category::create($validated);
+
         if (!$book) {
             return response()->json([
                 'message' => 'Category creation failed'
@@ -46,7 +46,7 @@ class CategoriesController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
         $category = Category::find($id);
 
@@ -56,10 +56,7 @@ class CategoriesController extends Controller
             ], 404);
         }
 
-        $validated = $request->validate([
-            'categories_name' => 'sometimes|required|string|max:255|unique:categories,categories_name,' . $category->id,
-            'slug' => 'sometimes|required|string|max:255|unique:categories,slug,' . $category->id,
-        ]);
+        $validated = $request->validated();
 
         $category->update($validated);
         return response()->json([

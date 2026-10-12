@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Books;
 use Illuminate\Http\Request;
 
@@ -26,22 +28,10 @@ class BookController extends Controller
         ], 200);
     }
 
-    public function store(Request $request)
+    public function store(StoreBookRequest $request)
     {
 
-        $validated = $request->validate([
-            'book_name' => 'required|string|max:255|unique:books,book_name',
-            'book_author' => 'required|string|max:255',
-            'book_description' => 'required|string',
-            'book_price' => 'required|numeric|min:0',
-            'book_image' => 'required|string|max:255',
-            'book_quantity' => 'required|integer|min:0',
-            'book_publisher' => 'required|string|max:255',
-            'book_language' => 'required|string|max:255',
-            'book_pages' => 'required|string|min:1',
-            'book_isbn' => 'required|string|max:255|unique:books,book_isbn',
-            'categories_id' => 'required|integer|exists:categories,id',
-        ]);
+        $validated = $request->validated();
 
 
 
@@ -57,7 +47,7 @@ class BookController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateBookRequest $request, $id)
     {
 
 
@@ -68,20 +58,8 @@ class BookController extends Controller
             ], 404);
         }
 
-        $validated = $request->validate([
-            'book_name' => 'sometimes|required|string|max:255|unique:books,book_name,' . $book->id,
-            'book_author' => 'sometimes|required|string|max:255',
-            'book_description' => 'sometimes|required|string',
-            'book_price' => 'sometimes|required|numeric|min:0',
-            'book_image' => 'sometimes|required|string|max:255',
-            'book_quantity' => 'sometimes|required|integer|min:0',
-            'book_publisher' => 'sometimes|required|string|max:255',
-            'book_language' => 'sometimes|required|string|max:255',
-            'book_pages' => 'sometimes|required|string|min:1',
-            'book_isbn' => 'sometimes|required|string|max:255|unique:books,book_isbn,' . $book->id,
-            'categories_id' => 'sometimes|required|integer|exists:categories,id',
-        ]);
-
+        $validated = $request->validated();
+         
         $book->update($validated);
         return response()->json([
             'message' => 'Book updated successfully',
