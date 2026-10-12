@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Http\Resources\BookResource;
 use App\Models\Books;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,8 @@ class BookController extends Controller
 {
     public function index()
     {
-        return Books::all();
+        $books = Books::all();
+        return BookResource::collection($books);
     }
 
     public function show($id)
@@ -24,9 +26,11 @@ class BookController extends Controller
         }
         return response()->json([
             'message' => 'Book found',
-            'book' => $book
+            'book' => new BookResource($book)
         ], 200);
-    }
+
+
+        }
 
     public function store(StoreBookRequest $request)
     {
@@ -43,7 +47,7 @@ class BookController extends Controller
         }
         return response()->json([
             'message' => 'Book created successfully',
-            'book' => $book
+            'book' => new BookResource($book)
         ], 201);
     }
 
@@ -59,11 +63,11 @@ class BookController extends Controller
         }
 
         $validated = $request->validated();
-         
+
         $book->update($validated);
         return response()->json([
             'message' => 'Book updated successfully',
-            'book' => $book
+            'book' => new BookResource($book)
         ], 200);
     }
 
