@@ -22,7 +22,7 @@ class StoreBookRequest extends FormRequest
             'book_author' => 'required|string|max:255',
             'book_description' => 'required|string',
             'book_price' => 'required|numeric|min:0',
-            'book_image' => 'required|string|max:255',
+            'book_image' => 'nullable|string|max:255',
             'book_quantity' => 'required|integer|min:0',
             'book_publisher' => 'required|string|max:255',
             'book_language' => 'required|string|max:255',

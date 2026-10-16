@@ -17,13 +17,15 @@ return new class extends Migration
             $table->string("book_author");
             $table->string("book_description");
             $table->decimal("book_price", 10, 2);
-            $table->string("book_image");
+            $table->string("book_image")->nullable();
             $table->integer("book_quantity")->default(0);
             $table->string("book_publisher");
             $table->string("book_language");
             $table->string("book_pages");
             $table->string("book_isbn")->unique();
-            $table->foreignId("categories_id")->constrained("categories")->onDelete("cascade");
+            $table->foreignId("categories_id")
+                ->constrained("categories")
+                ->onDelete("cascade");
             $table->timestamps();
         });
     }
