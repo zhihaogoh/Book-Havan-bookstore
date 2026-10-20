@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Author;
 use App\Models\Books;
 use App\Models\Category;
+use App\Models\OrderItem;
+use App\Models\Orders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,14 +22,16 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::firstOrCreate(['email' => 'test@example.com'], [
-            'first_name' => 'Test',
-            'last_name' => 'User',
-            'password' => 'password',
-            'email' => 'test@example.com',
-        ],
+        User::firstOrCreate(
+            ['email' => 'test@example.com'],
+            [
+                'first_name' => 'Test',
+                'last_name' => 'User',
+                'password' => 'password',
+                'email' => 'test@example.com',
+            ],
         );
-         $users = [
+        $users = [
             [
                 'first_name' => 'ABC',
                 'last_name' => 'abc',
@@ -41,6 +46,10 @@ class DatabaseSeeder extends Seeder
             ]
         ];
 
+
+        foreach ($users as $user) {
+            User::firstOrCreate(['email' => $user['email']], $user);
+        }
 
         $categories = [
             [
@@ -63,13 +72,39 @@ class DatabaseSeeder extends Seeder
 
         foreach ($categories as $category) {
             Category::firstOrCreate(['slug' => $category['slug']], $category);
-        }
-;
+        };
+
+        $authors = [
+            [
+                'author_name' => 'James Clear',
+                'author_bio' => 'James Clear'
+            ],
+            [
+                'author_name' => 'Morgan Housel',
+                'author_bio' => 'Morgan Housel'
+            ],
+            [
+                'author_name' => 'Mark Mansonl',
+                'author_bio' => 'Mark Manson'
+            ],
+            [
+                'author_name' => 'Stephen R. Covey',
+                'author_bio' => 'Stephen R. Covey'
+            ],
+            [
+                'author_name' => 'Daniel Kahneman',
+                'author_bio' => 'Daniel Kahneman'
+            ]
+        ];
+
+        foreach ($authors as $author) {
+            Author::firstOrCreate(['author_name' => $author['author_name']], $author);
+        };
 
         $books = [
             [
                 'book_name' => 'Atomic Habits',
-                'book_author' => 'James Clear',
+                'author_id' => 1,
                 'book_publisher' => 'Avery',
                 'book_description' => 'A book about building good habits.',
                 'book_price' => 59.90,
@@ -81,7 +116,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'book_name' => 'The Psychology of Money',
-                'book_author' => 'Morgan Housel',
+                'author_id' => 2,
                 'book_publisher' => 'Harriman House',
                 'book_description' => 'A book about money and human behaviour.',
                 'book_price' => 49.90,
@@ -93,7 +128,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'book_name' => 'The Subtle Art of Not Giving a F*ck',
-                'book_author' => 'Mark Manson',
+                'author_id' => 3,
                 'book_publisher' => 'Harper',
                 'book_description' => 'A book about living a better life by caring less.',
                 'book_price' => 39.90,
@@ -105,7 +140,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'book_name' => 'The 7 Habits of Highly Effective People',
-                'book_author' => 'Stephen R. Covey',
+                'author_id' => 4,
                 'book_publisher' => 'Free Press',
                 'book_description' => 'A book about personal and professional effectiveness.',
                 'book_price' => 69.90,
@@ -117,7 +152,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'book_name' => 'Thinking, Fast and Slow',
-                'book_author' => 'Daniel Kahneman',
+                'author_id' => 5,
                 'book_publisher' => 'Farrar, Straus and Giroux',
                 'book_description' => 'A book about the two systems of thinking.',
                 'book_price' => 79.90,
@@ -130,13 +165,9 @@ class DatabaseSeeder extends Seeder
         ];
 
 
-        foreach ($users as $user) {
-            User::firstOrCreate(['email' => $user['email']], $user);
-        }
 
         foreach ($books as $book) {
             Books::updateOrCreate(['book_isbn' => $book['book_isbn']], $book);
         }
     }
 }
-

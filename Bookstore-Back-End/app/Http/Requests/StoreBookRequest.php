@@ -19,7 +19,7 @@ class StoreBookRequest extends FormRequest
     {
         return [
             'book_name' => 'required|string|max:255|unique:books,book_name',
-            'book_author' => 'required|string|max:255',
+            'author_id' => 'required|integer|exists:authors,id',
             'book_description' => 'required|string',
             'book_price' => 'required|numeric|min:0',
             'book_image' => 'nullable|string|max:255',
@@ -40,9 +40,8 @@ class StoreBookRequest extends FormRequest
             'book_name.max' => 'The book name may not be greater than 255 characters.',
             'book_name.unique' => 'The book name has already been taken.',
 
-            'book_author.required' => 'The book author is required.',
-            'book_author.string' => 'The book author must be a string.',
-            'book_author.max' => 'The book author may not be greater than 255 characters.',
+            'author_id.required' => 'The book author is required.',
+
 
             'book_description.required' => 'The book description is required.',
             'book_description.string' => 'The book description must be a string.',

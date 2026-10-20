@@ -16,7 +16,7 @@ class BookController extends Controller
         return BookResource::collection($books);
     }
 
-    public function show($id)
+    public function show(string $id)
     {
         $book = Books::find($id);
         if (!$book) {
@@ -51,10 +51,8 @@ class BookController extends Controller
         ], 201);
     }
 
-    public function update(UpdateBookRequest $request, $id)
+    public function update(UpdateBookRequest $request, string $id)
     {
-
-
         $book = Books::find($id);
         if (!$book) {
             return response()->json([
@@ -71,7 +69,7 @@ class BookController extends Controller
         ], 200);
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $book = Books::find($id);
         if (!$book) {

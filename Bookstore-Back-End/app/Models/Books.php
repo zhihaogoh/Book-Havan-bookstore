@@ -8,7 +8,7 @@ class Books extends Model
 {
     protected $fillable = [
         'book_name',
-        'book_author',
+        'author_id',
         'book_description',
         'book_price',
         'book_image',
@@ -19,6 +19,11 @@ class Books extends Model
         'book_isbn',
         'categories_id',
     ];
+
+    public function author()
+    {
+        return $this->belongsTo(Author::class, 'author_id');
+    }
 
     public function category()
     {

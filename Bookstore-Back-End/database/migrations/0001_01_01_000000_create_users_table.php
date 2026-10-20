@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('status')->default(0);
             $table->rememberToken();
-            $table->string('user_role')->default('user');
+            $table->set('user_role',['user','seller','admin'])->default('user')->nullable();
             $table->string('phone_number')->nullable();
             $table->set('gender', ['male', 'female', 'other'])->nullable();
             $table->date('date_of_birth')->nullable();
