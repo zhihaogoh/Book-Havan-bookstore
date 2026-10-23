@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Author;
 use App\Models\Books;
+
+use App\Models\Books_image;
 use App\Models\Category;
 use App\Models\OrderItem;
 use App\Models\Orders;
@@ -163,11 +165,40 @@ class DatabaseSeeder extends Seeder
                 'categories_id' => 2
             ]
         ];
-
-
-
         foreach ($books as $book) {
             Books::updateOrCreate(['book_isbn' => $book['book_isbn']], $book);
+        }
+
+        $booksImages = [
+            [
+                'book_id' => 1,
+                'path' => 'images/atomic_habits.jpg',
+                'sort_order' => 1
+            ],
+            [
+                'book_id' => 2,
+                    'path' => 'images/psychology_of_money.jpg',
+                    'sort_order' => 1
+            ],
+            [
+                'book_id' => 3,
+                'path' => 'images/subtle_art_of_not_giving_a_fuck.jpg',
+                'sort_order' => 1
+            ],
+            [
+                'book_id' => 4,
+                'path' => 'images/7_habits_of_highly_effective_people.jpg',
+                'sort_order' => 1
+            ],
+            [
+                'book_id' => 5,
+                'path' => 'images/thinking_fast_and_slow.jpg',
+                'sort_order' => 1
+            ]
+        ];
+
+        foreach ($booksImages as $bookImage){
+            Books_image::updateOrCreate(['path' => $bookImage['path']], $bookImage);
         }
     }
 }

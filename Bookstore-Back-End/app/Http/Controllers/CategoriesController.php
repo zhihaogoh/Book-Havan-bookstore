@@ -14,7 +14,7 @@ class CategoriesController extends Controller
         return Category::all();
     }
 
-    public function show($id)
+    public function show(string $id)
     {
         $category = Category::find($id);
         if (!$category) {
@@ -46,7 +46,7 @@ class CategoriesController extends Controller
         ], 201);
     }
 
-    public function update(UpdateCategoryRequest $request, $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
         $category = Category::find($id);
 
@@ -65,7 +65,7 @@ class CategoriesController extends Controller
         ], 200);
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $category = Category::find($id);
         if (!$category) {

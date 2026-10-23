@@ -14,6 +14,14 @@ class ImageBookResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'book_id' => $this->book_id,
+            'path' => $this->path,
+            'alt_text' => $this->alt_text,
+            'sort_order' => $this->sort_order,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
 }

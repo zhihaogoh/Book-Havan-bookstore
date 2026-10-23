@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ImageBookController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\userController;
 use Illuminate\Http\Request;
@@ -42,5 +43,10 @@ Route::get('books/{id}', [BookController::class, 'show']);
 Route::post('books', [BookController::class, 'store']);
 Route::put('books/{id}', [BookController::class, 'update']);
 Route::delete('books/{id}', [BookController::class, 'destroy']);
+
+Route::get('books/{book}/image', [ImageBookController::class, 'index']);
+Route::post('books/{book}/image', [ImageBookController::class, 'store']);
+Route::delete('books/{book}/image/{id}', [ImageBookController::class, 'destroy']);
+
 
 Route::get('orders', [OrderController::class, 'index']);

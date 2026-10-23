@@ -20,7 +20,12 @@ return new class extends Migration
                 ->constrained('books')
                 ->cascadeOnDelete();
             $table->integer('quantity');
-            $table->decimal('price', 10, 2);
+            $table->string('title_book');
+            $table->string('SKU');
+            $table->decimal('price_per_unit', 10, 2);
+            $table->decimal('discount_amount', 10, 2);
+            $table->decimal('tax_amount', 10, 2);
+            $table->decimal('subtotal', 10, 2);
             $table->timestamps();
         });
     }

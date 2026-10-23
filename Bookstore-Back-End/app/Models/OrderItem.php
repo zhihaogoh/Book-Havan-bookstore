@@ -10,7 +10,12 @@ class OrderItem extends Model
         'order_id',
         'book_id',
         'quantity',
-        'price',
+        'title_book',
+        'SKU',
+        'price_per_unit',
+        'discount_amount',
+        'tax_amount',
+        'subtotal',
     ];
 
     public function order()
