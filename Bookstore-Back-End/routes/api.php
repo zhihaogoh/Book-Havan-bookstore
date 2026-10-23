@@ -6,6 +6,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ImageBookController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\userController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/address',[AddressController::class, 'store']);
     Route::delete('/address/{id}', [AddressController::class, 'destroy']);
     Route::put('/address/{id}', [AddressController::class, 'update']);
-});
+
+    Route::get('order-item', [OrderItemController::class, 'index']);
+    Route::post('order-item', [OrderItemController::class, 'store']);
+    Route::get('orders', [OrderController::class, 'index']);
+    Route::post('orders', [OrderController::class, 'store']);
+    });
 
 Route::post('author',[AuthorController::class, 'store']);
 Route::put('author/{id}',[AuthorController::class, 'update']);

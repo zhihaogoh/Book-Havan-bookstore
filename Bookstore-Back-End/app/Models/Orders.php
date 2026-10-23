@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Orders extends Model
 {
+    protected $casts = [
+        'shipping_address_snapshot' => 'array',
+    ];
+
     protected $fillable = [
 
         'order_number',

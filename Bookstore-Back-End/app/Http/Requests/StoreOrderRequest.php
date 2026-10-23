@@ -12,7 +12,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +25,7 @@ class StoreOrderRequest extends FormRequest
         return [
          'order_number' => ['required', 'string', 'max:255'],
             'user_id' => ['required', 'integer', 'exists:users,id'],
-            'address_id' => ['required', 'integer', 'exists:addresses,id'],
+            'address_id' => ['required', 'integer', 'exists:user_address,id'],
             'status' => ['required', 'string', 'max:255'],
             'currency' => ['required', 'string', 'max:3'],
             'subtotal' => ['required', 'numeric', 'min:0'],
@@ -33,7 +33,6 @@ class StoreOrderRequest extends FormRequest
             'shipping_total' => ['nullable', 'numeric', 'min:0'],
             'tax_total' => ['nullable', 'numeric', 'min:0'],
             'grand_total' => ['required', 'numeric', 'min:0'],
-            'shipping_address_snapshot' => ['nullable', 'string'],
             'placed_at' => ['nullable', 'date'],
         ];
     }
