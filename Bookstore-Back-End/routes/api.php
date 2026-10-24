@@ -18,8 +18,8 @@ Route::get('/user', function (Request $request) {
 Route::post('/register', [userController::class, 'Register']);
 Route::post('/login', [userController::class, 'Login']);
 
-
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user', [userController::class, 'getUser']);
     Route::post('/logout', [userController::class, 'Logout']);
 
     Route::get('/address',[AddressController::class,'index']);

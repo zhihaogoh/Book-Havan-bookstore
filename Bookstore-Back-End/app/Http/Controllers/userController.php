@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\TransientToken;
 
 class userController extends Controller
 {
@@ -16,17 +17,8 @@ class userController extends Controller
     {
          $validated=$request->validated();
 
-        $user_role = $validated['user_role'] ?? 'user';
-        $user =User::create([
-            'first_name' => $validated['first_name'],
-            'last_name' => $validated['last_name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'phone_number' => $validated['phone_number'] ?? null,
-            'gender' => $validated['gender'] ?? null,
-            'date_of_birth' => $validated['date_of_birth'] ?? null,
-            'user_role' => $user_role,
-        ]);
+        $validated['user_role'] = $validated['user_role'] ?? 'user';
+        $user =User::create($validated);
 
         return response()->json([
             'message' => 'User registered successfully',
@@ -64,10 +56,33 @@ class userController extends Controller
         ]);
     }
 
+    public function getUser(Request $request)
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'user' => new UserResource($user),
+            'token' => $request->bearerToken(),
+        ]);
+    }
+
     public function Logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        $request->user()->update([
+        $user = $request->user();
+        $token = $user->currentAccessToken();
+
+        if ($token instanceof TransientToken) {
+            Auth::guard('web')->logout();
+
+            if ($request->hasSession()) {
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+            }
+        } else {
+            $token?->delete();
+        }
+
+        $user->update([
             'token' => null,
         ]);
 
