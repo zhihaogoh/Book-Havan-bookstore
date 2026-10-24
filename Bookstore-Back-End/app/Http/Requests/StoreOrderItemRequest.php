@@ -31,7 +31,7 @@ class StoreOrderItemRequest extends FormRequest
             'price_per_unit' => ['required', 'numeric', 'min:0'],
             'discount_amount' => ['nullable', 'numeric', 'min:0'],
             'tax_amount' => ['nullable', 'numeric', 'min:0'],
-            'subtotal' => ['required', 'numeric', 'min:0'],
+            'subtotal' => ['sometimes', 'numeric', 'min:0'],
         ];
     }
 }

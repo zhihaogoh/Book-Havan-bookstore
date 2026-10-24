@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
 use App\Models\Author;
 use App\Models\Books;
 
@@ -24,7 +25,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::firstOrCreate(
+        $testUser = User::firstOrCreate(
             ['email' => 'test@example.com'],
             [
                 'first_name' => 'Test',
@@ -48,9 +49,40 @@ class DatabaseSeeder extends Seeder
             ]
         ];
 
-
+        $seededUsers = [];
         foreach ($users as $user) {
-            User::firstOrCreate(['email' => $user['email']], $user);
+            $seededUsers[$user['email']] = User::firstOrCreate(['email' => $user['email']], $user);
+        }
+
+        $addresses = [
+            [
+                'user_id' => $testUser->id,
+                'recipient_name' => 'John Doe',
+                'recipent_phone' => '1234567890',
+                'address_1' => '123 Main St',
+                'address_2' => 'Apt 4B',
+                'city' => 'New York',
+                'state' => 'NY',
+                'postal_code' => '10001',
+                'country' => 'USA',
+                'status' => 1
+            ],
+            [
+                'user_id' => $seededUsers['Abc@gmail.com']->id,
+                'recipient_name' => 'Jane Smith',
+                'recipent_phone' => '0987654321',
+                'address_1' => '456 Elm St',
+                'address_2' => '',
+                'city' => 'Los Angeles',
+                'state' => 'CA',
+                'postal_code' => '90001',
+                'country' => 'USA',
+                'status' => 0
+            ]
+        ];
+
+        foreach ($addresses as $address){
+            Address::firstOrCreate($address);
         }
 
         $categories = [

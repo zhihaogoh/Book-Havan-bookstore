@@ -23,11 +23,11 @@ return new class extends Migration
                 ->nullOnDelete();
             $table->string('status', 30);
             $table->char('currency', 3);
-            $table->decimal('subtotal', 12, 2);
+            $table->decimal('subtotal', 12, 2)->default(0);
             $table->decimal('discount_total', 12, 2)->default(0);
             $table->decimal('shipping_total', 12, 2)->default(0);
             $table->decimal('tax_total', 12, 2)->default(0);
-            $table->decimal('grand_total', 12, 2);
+            $table->decimal('grand_total', 12, 2)->default(0);
             $table->json('shipping_address_snapshot');
             $table->timestamp('placed_at')->nullable();
             $table->timestamps();

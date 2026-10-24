@@ -12,7 +12,11 @@ class AddressController extends Controller
 {
     public function index(Request $request){
         $address = Address::where ('user_id',$request->user()->id)->paginate(3);
-        return AddressResource::collection($address);
+        return response()->json([
+            'message' => 'Addresses retrieved successfully',
+            'addresses' => AddressResource::collection($address)
+        ]);
+
     }
     public function store(StoreAddressRequest $request){
         $data = $request->validated();

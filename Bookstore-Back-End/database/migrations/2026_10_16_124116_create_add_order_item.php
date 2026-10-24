@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('title_book');
             $table->string('SKU');
             $table->decimal('price_per_unit', 10, 2);
-            $table->decimal('discount_amount', 10, 2);
-            $table->decimal('tax_amount', 10, 2);
+            $table->decimal('discount_amount', 10, 2)->default(0);
+            $table->decimal('tax_amount', 10, 2)->default(0);
             $table->decimal('subtotal', 10, 2);
             $table->timestamps();
         });
