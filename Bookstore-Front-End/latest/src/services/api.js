@@ -35,8 +35,8 @@ const getXSRFToken = () => {
 
   return cookie
     ? decodeURIComponent(
-        cookie.substring("XSRF-TOKEN=".length)
-      )
+      cookie.substring("XSRF-TOKEN=".length)
+    )
     : null;
 };
 
@@ -83,9 +83,11 @@ export const apiPost = async (endpoint, data = {}) => {
   const result = await response.json();
 
   if (!response.ok) {
-    throw new Error(
-      result.message || `API Error: ${response.status}`
-    );
+    const error = new Error(result.message || "Login failed");
+
+    error.status = response.status;
+    error.errors = result.errors ?? {};
+    throw error;
   }
 
   return result;

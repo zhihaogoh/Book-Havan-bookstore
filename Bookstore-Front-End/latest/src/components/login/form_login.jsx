@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Button, Form, FormCheck, Tab, Tabs} from "react-bootstrap";
+import { Button, Form, FormCheck, Tab, Tabs } from "react-bootstrap";
 import { Link, useNavigate } from "react-router";
 import { handleLogin } from "../../auth/auth";
 
 export default function FormLogin() {
   const navigate = useNavigate();
-  const [ setError] = useState("");
-  const [ setErrors] = useState({});
+  const [errors, setErrors] = useState({});
+  // const [error, setError] = useState("");
   const toForgotPassword = () => {
     navigate("/forgot_password");
   };
@@ -19,29 +19,29 @@ export default function FormLogin() {
     confirmPassword: "",
   });
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     setErrors({});
-    setError("");
-    console.log("Form submitted:", data);
+    // setError("");
+
     try {
       await handleLogin(data.email, data.password);
-      // After successful login, navigate to the profile page
-      
+
+      // Login success
       toProfile();
     } catch (error) {
-    
-      console.error(error);
-      if(error.response?.status === 422) {
-        const responseData = await error.response.json();
-        setErrors(responseData.errors ?? {});
-        return;
-      } 
+      console.log("Validation Errors:", error.errors);
 
-      setError(error.message || "An error occurred during login.");
+      if (error.status === 422) {
+        setErrors(error.errors ?? {});
+        return;
+      }
+
+      // setError(error.message || "An error occurred during login.");
     }
   };
+  console.log(errors);
   return (
     <>
       <Tabs className="login mb-3" defaultActiveKey="login" fill>
@@ -54,9 +54,14 @@ export default function FormLogin() {
                 name="email"
                 placeholder="name@example.com"
                 value={data.email}
-                onChange={(e) => setData({ ...data, email: e.target.value })}
+                onChange={(e) => setData({ ...data, password: e.target.value })}
+                isInvalid={!!errors.email?.length}
               />
+                <Form.Control.Feedback type="invalid">
+              {errors.email?.[0]}
+            </Form.Control.Feedback>
             </Form.Group>
+          
             <Form.Group className="mb-3">
               <Form.Label>Password</Form.Label>
               <Form.Control
@@ -65,8 +70,13 @@ export default function FormLogin() {
                 placeholder="Enter your Password"
                 value={data.password}
                 onChange={(e) => setData({ ...data, password: e.target.value })}
+                isInvalid={!!errors.password?.length}
               />
+            <Form.Control.Feedback type="invalid">
+              {errors.password?.[0]}
+            </Form.Control.Feedback>
             </Form.Group>
+
             <div className="check_forgot">
               <FormCheck label="Remember for 30 days" />
               <Link className="forgot_password" onClick={toForgotPassword}>
