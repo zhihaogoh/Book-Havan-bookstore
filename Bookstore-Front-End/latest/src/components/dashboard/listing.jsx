@@ -7,8 +7,19 @@ import {
   MdSecurity,
   MdShoppingBasket,
 } from "react-icons/md";
-import { NavLink as RouterNavLink } from "react-router";
+import { NavLink as RouterNavLink, useNavigate } from "react-router";
+import { handleLogout } from "../../auth/auth";
 export default function Listing() {
+  const navigate = useNavigate();
+  const toLogin =async () =>{
+    try{
+      await handleLogout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+
+    navigate("/login");
+  }
   return (
     <>
       <div className="account">
@@ -72,7 +83,7 @@ export default function Listing() {
               className={({ isActive }) =>
                 `nav-link mt-3 ${isActive ? "fw-bold" : ""}`
               }
-              to="#"
+              onClick={toLogin}
             >
               <FaSignOutAlt /> Logout
             </RouterNavLink>
