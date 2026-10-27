@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -27,7 +28,7 @@ class userController extends Controller
 
     }
 
-    public function Login(Request $request)
+    public function Login(LoginRequest $request)
     {
         $login=$request->validate([
             'email' => 'required|email',
@@ -38,7 +39,7 @@ class userController extends Controller
         if(!Auth::attempt($login)){
 
             return response()->json([
-                'message' => 'Invalid credentials',
+                'message' => 'Invalid email or password',
             ], 401);
         }
         $user = User::where('email', $request->email)->firstOrFail();
