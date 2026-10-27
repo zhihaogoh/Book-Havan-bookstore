@@ -100,6 +100,7 @@ export default function FormLogin() {
             <Form.Group className="mb-3 position-relative">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                className="password"
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Enter your Password"
@@ -186,6 +187,7 @@ export default function FormLogin() {
             <Form.Group className="mb-3 position-relative">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                className="password"
                 type={showRegisterPassword ? "text" : "password"}
                 placeholder="Enter your Password"
                 value={data.password}
@@ -211,6 +213,7 @@ export default function FormLogin() {
             <Form.Group className="mb-3 position-relative">
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control
+                className="password"
                 type={showRegisterCPassword ? "text" : "password"}
                 placeholder="Enter your Confirm Password"
                 value={data.password_confirmation}
