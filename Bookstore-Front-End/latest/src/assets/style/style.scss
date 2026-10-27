@@ -37,6 +37,7 @@
   }
 }
 .login_form {
+  
   .form-label {
     color: black;
     font-size: 1rem;
@@ -44,6 +45,7 @@
     font-weight: 400;
   }
   .form-control {
+   
     padding: 1rem;
     color: black;
     font-size: 1rem;
@@ -79,6 +81,14 @@
   .btn-light {
     padding: 1rem;
     width: 100%;
+  }
+  .eye{
+    position: absolute;
+    right: 5%;
+    top:40%;
+    border: none;
+    color: #000;
+    font-size: 1rem;
   }
 }
 //ogin end

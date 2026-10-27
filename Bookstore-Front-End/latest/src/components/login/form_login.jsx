@@ -2,34 +2,47 @@ import { useState } from "react";
 import { Button, Form, FormCheck, Row, Tab, Tabs } from "react-bootstrap";
 import { Link, useNavigate } from "react-router";
 import { handleLogin, handleRegister } from "../../auth/auth";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function FormLogin() {
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({});
+  const [loginError, setLoginError] = useState({});
+  const [registerError, setRegisterError] = useState({});
   // const [error, setError] = useState("");
-  
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
+  const [showRegisterCPassword, setShowRegisterCPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+  const toggleRegisterPasswordVisibility = () => {
+    setShowRegisterPassword((prevState) => !prevState);
+  };
+  const toggleConfrimPasswordVisibility = () => {
+    setShowRegisterCPassword((prevState) => !prevState);
+  };
   const toForgotPassword = () => {
     navigate("/forgot_password");
   };
   const toProfile = () => {
     navigate("/profile");
   };
-   const [loginData, setLoginData] = useState({
-    email:"",
-    password:""
-  })
-  const [data, setData] = useState({
-    first_name:"",
-    last_name:"",
+  const [loginData, setLoginData] = useState({
     email: "",
     password: "",
-   password_confirmation: "",
+  });
+  const [data, setData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
   });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    setErrors({});
+    setLoginError({});
     // setError("");
     try {
       console.log("start");
@@ -37,7 +50,7 @@ export default function FormLogin() {
       toProfile();
     } catch (error) {
       if (error.status === 422) {
-        setErrors(error.errors ?? {});
+        setLoginError(error.errors ?? {});
         return;
       }
       // setError(error.message || "An error occurred during login.");
@@ -45,13 +58,19 @@ export default function FormLogin() {
   };
   const handleRegisterSubmit = async (event) => {
     event.preventDefault();
-    setErrors({});
+    setRegisterError({});
     try {
-      await handleRegister(data.first_name,data.last_name,data.email, data.password, data.password_confirmation);
-    
+      await handleRegister(
+        data.first_name,
+        data.last_name,
+        data.email,
+        data.password,
+        data.password_confirmation,
+      );
+      navigate("/login");
     } catch (error) {
       if (error.status === 422) {
-        setErrors(error.errors ?? {});
+        setRegisterError(error.errors ?? {});
         return;
       }
     }
@@ -68,26 +87,41 @@ export default function FormLogin() {
                 name="email"
                 placeholder="name@example.com"
                 value={loginData.email}
-                onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-                isInvalid={!!errors.email?.length}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, email: e.target.value })
+                }
+                isInvalid={!!loginError.email?.length}
               />
               <Form.Control.Feedback type="invalid">
-                {errors.email?.[0]}
+                {loginError.email?.[0]}
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3 position-relative">
               <Form.Label>Password</Form.Label>
               <Form.Control
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Enter your Password"
                 value={loginData.password}
-                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                isInvalid={!!errors.password?.length}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, password: e.target.value })
+                }
+                isInvalid={!!loginError.password?.length}
               />
+              <Button
+                className="eye"
+                variant="outline-secondary"
+                type="button"
+                onClick={togglePasswordVisibility}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+              >
+                {showPassword ? <FiEye /> : <FiEyeOff />}
+              </Button>
+
               <Form.Control.Feedback type="invalid">
-                {errors.password?.[0]}
+                {loginError.password?.[0]}
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -102,11 +136,9 @@ export default function FormLogin() {
             </Button>
           </Form>
         </Tab>
-        <Tab
-          eventKey="register"
-          title="Register">
-          <Form className="login_form"  onSubmit={handleRegisterSubmit}>
-             <Row>
+        <Tab eventKey="register" title="Register">
+          <Form className="login_form" onSubmit={handleRegisterSubmit}>
+            <Row>
               <Form.Group className="mb-3 col-6">
                 <Form.Label>First name</Form.Label>
                 <Form.Control
@@ -116,10 +148,10 @@ export default function FormLogin() {
                   onChange={(e) =>
                     setData({ ...data, first_name: e.target.value })
                   }
-                  isInvalid={!!errors.first_name?.length}
+                  isInvalid={!!registerError.first_name?.length}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.first_name?.[0]}
+                  {registerError.first_name?.[0]}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mb-3 col-6">
@@ -131,10 +163,10 @@ export default function FormLogin() {
                   onChange={(e) =>
                     setData({ ...data, last_name: e.target.value })
                   }
-                  isInvalid={!!errors.last_name?.length}
+                  isInvalid={!!registerError.last_name?.length}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.last_name?.[0]}
+                  {registerError.last_name?.[0]}
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
@@ -145,41 +177,63 @@ export default function FormLogin() {
                 placeholder="name@example.com"
                 value={data.email}
                 onChange={(e) => setData({ ...data, email: e.target.value })}
-                 isInvalid={!!errors.email?.length}
+                isInvalid={!!registerError.email?.length}
               />
               <Form.Control.Feedback type="invalid">
-                {errors.email?.[0]}
+                {registerError.email?.[0]}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3 position-relative">
               <Form.Label>Password</Form.Label>
               <Form.Control
-                type="password"
+                type={showRegisterPassword ? "text" : "password"}
                 placeholder="Enter your Password"
                 value={data.password}
                 onChange={(e) => setData({ ...data, password: e.target.value })}
-                 isInvalid={!!errors.password?.length}
+                isInvalid={!!registerError.password?.length}
               />
+              <Button
+                className="eye"
+                variant="outline-secondary"
+                type="button"
+                onClick={toggleRegisterPasswordVisibility}
+                aria-label={
+                  showRegisterPassword ? "Hide password" : "Show password"
+                }
+                aria-pressed={showRegisterPassword}
+              >
+                {showRegisterPassword ? <FiEye /> : <FiEyeOff />}
+              </Button>
               <Form.Control.Feedback type="invalid">
-                {errors.password?.[0]}
+                {registerError.password?.[0]}
               </Form.Control.Feedback>
-            
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3 position-relative">
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control
-                type="password"
+                type={showRegisterCPassword ? "text" : "password"}
                 placeholder="Enter your Confirm Password"
                 value={data.password_confirmation}
                 onChange={(e) =>
                   setData({ ...data, password_confirmation: e.target.value })
                 }
-                 isInvalid={!!errors.password?.length}
+                isInvalid={!!registerError.password?.length}
               />
+              <Button
+                className="eye"
+                variant="outline-secondary"
+                type="button"
+                onClick={toggleConfrimPasswordVisibility}
+                aria-label={
+                  showRegisterCPassword ? "Hide password" : "Show password"
+                }
+                aria-pressed={setShowRegisterCPassword}
+              >
+                {showRegisterCPassword ? <FiEye /> : <FiEyeOff />}
+              </Button>
               <Form.Control.Feedback type="invalid">
-                {errors.password?.[0]}
+                {registerError.password?.[0]}
               </Form.Control.Feedback>
-            
             </Form.Group>
             <Button className="btn-success my-3" type="submit">
               Sign In
