@@ -3,15 +3,30 @@ import { NavLink as RouterNavLink, useNavigate } from "react-router";
 import { IoSearchOutline } from "react-icons/io5";
 import {
   MdFavoriteBorder,
+  MdLogout,
   MdOutlineShoppingBag,
   MdPerson,
 } from "react-icons/md";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import headerLogo from "../../assets/Image/Header_Logo.png";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Header({ menu }) {
+  const {loading, isAuthenticated, logoutUser } = useAuth();
   const navigate = useNavigate();
+  const [loggingOut, setLoggingOut] = useState(false);
+  const handleLogoutClick = async () => {
+    setLoggingOut(true);
+    try {
+      await logoutUser();
+      navigate("/login", { replace: true });
+    } catch (error) {
+      console.log("Logout failed", error);
+    } finally {
+      setLoggingOut(false);
+    }
+  };
   const [keyWord, setKeyWord] = useState("");
 
   const handleSearch = (event) => {
@@ -31,11 +46,7 @@ export default function Header({ menu }) {
         <div className="container">
           {/* logo business */}
           <Navbar.Brand href="/">
-            <img
-              src={headerLogo}
-              className="Header_logo"
-              alt="Logo"
-            />
+            <img src={headerLogo} className="Header_logo" alt="Logo" />
           </Navbar.Brand>
           {/* main menu  */}
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -56,10 +67,26 @@ export default function Header({ menu }) {
               </button>
             </Form>
             {/* sub menu  */}
-            <Nav.Link className="menu" href="/login">
-              <MdPerson className="icon-menu" />
-            </Nav.Link>
-
+            {!loading &&
+              (isAuthenticated ? (
+                <>
+                  <Nav.Link as={RouterNavLink} className="menu" to="/profile">
+                    <MdPerson className="icon-menu" />
+                  </Nav.Link>
+                  <Nav.Link
+                    className="menu"
+                    variant="outline-danger"
+                    onClick={handleLogoutClick}
+                    disabled={loggingOut}
+                  >
+                    <MdLogout className="icon-menu" />
+                  </Nav.Link>
+                </>
+              ) : (
+                <Nav.Link as={RouterNavLink} className="menu" to="/profile">
+                  <MdPerson className="icon-menu" />
+                </Nav.Link>
+              ))}
             <Nav.Link className="menu" href="/favourite">
               <MdFavoriteBorder className="icon-menu" />
             </Nav.Link>
@@ -74,7 +101,6 @@ export default function Header({ menu }) {
       {/* header end */}
       <Nav className="main_menu" variant="underline">
         {menu.map((item, index) => (
-          
           <Nav.Item key={index}>
             <RouterNavLink
               className={({ isActive }) =>
@@ -85,7 +111,6 @@ export default function Header({ menu }) {
               {item.menu_title}
             </RouterNavLink>
           </Nav.Item>
-          
         ))}
       </Nav>
     </>

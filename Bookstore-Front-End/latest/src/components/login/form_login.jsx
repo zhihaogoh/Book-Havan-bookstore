@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Button, Form, FormCheck, Row, Tab, Tabs } from "react-bootstrap";
-import { Link, useNavigate } from "react-router";
-import { handleLogin, handleRegister } from "../../auth/auth";
+import { Link, useLocation, useNavigate } from "react-router";
+import { handleRegister } from "../../auth/auth";
+import { useAuth } from "../../context/AuthContext";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function FormLogin() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { loginUser } = useAuth();
+  const [errorMessage, setErrorMessage] = useState("");
   const [loginError, setLoginError] = useState({});
   const [registerError, setRegisterError] = useState({});
   // const [error, setError] = useState("");
@@ -25,7 +29,8 @@ export default function FormLogin() {
     navigate("/forgot_password");
   };
   const toProfile = () => {
-    navigate("/profile");
+    const from = location.state?.from;
+    navigate(from ? `${from.pathname}${from.search || ""}${from.hash || ""}` : "/profile", { replace: true });
   };
   const [loginData, setLoginData] = useState({
     email: "",
@@ -43,17 +48,17 @@ export default function FormLogin() {
     event.preventDefault();
 
     setLoginError({});
+    setErrorMessage("");
     // setError("");
     try {
-      console.log("start");
-      await handleLogin(loginData.email, loginData.password);
+      await loginUser(loginData);
       toProfile();
     } catch (error) {
       if (error.status === 422) {
         setLoginError(error.errors ?? {});
         return;
       }
-      // setError(error.message || "An error occurred during login.");
+      setErrorMessage(error.message || "Unable to sign in. Please try again.");
     }
   };
   const handleRegisterSubmit = async (event) => {
@@ -80,6 +85,7 @@ export default function FormLogin() {
       <Tabs className="login mb-3" defaultActiveKey="login" fill>
         <Tab eventKey="login" title="Login">
           <Form className="login_form" onSubmit={handleSubmit}>
+            {errorMessage && <p role="alert" className="text-danger">{errorMessage}</p>}
             <Form.Group className="mb-3">
               <Form.Label>Email Address</Form.Label>
               <Form.Control

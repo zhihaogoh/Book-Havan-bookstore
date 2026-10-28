@@ -8,14 +8,16 @@ import {
   MdShoppingBasket,
 } from "react-icons/md";
 import { NavLink as RouterNavLink, useNavigate } from "react-router";
-import { handleLogout } from "../../auth/auth";
+import { useAuth } from "../../context/AuthContext";
 export default function Listing() {
   const navigate = useNavigate();
+  const { logoutUser } = useAuth();
   const toLogin =async () =>{
     try{
-      await handleLogout();
+      await logoutUser();
     } catch (error) {
       console.error('Logout error:', error);
+      return;
     }
 
     navigate("/login");

@@ -12,9 +12,8 @@ export function AuthProvider({ children }) {
     const restoreSession = async () => {
       try {
         const response = await getUser();
-        console.log(response);
         if (active) {
-          setUser(response.data);
+          setUser(response.data ?? response);
         }
       } catch (error) {
         console.error("Restore session failed:", error);
@@ -40,19 +39,20 @@ export function AuthProvider({ children }) {
 
     // 2. Get authenticated user
     const user = await getUser();
-    console.log(user);
     // 3. Update React state
-    setUser(user);
+    setUser(user.data ?? user);
 
     // 4. Return user
-    return user;
+    return user.data ?? user;
   };
 
   const logoutUser = async () => {
     try {
       await handleLogout();
+      setUser(null);
     } catch (error) {
       console.error("Logout error:", error);
+      throw error;
     }
   };
 
