@@ -21,6 +21,7 @@ import EditProfile from "./pages/profile/edit_profile";
 import OrderDetail from "./pages/profile/order_detail";
 import Layout from "./layout/Layout";
 import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/protected_route/ProtectedRoute";
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -28,9 +29,18 @@ function App() {
     {
       element: <Layout />,
       children: [
+        //Public section
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/forgot_password",
+          element: <ForgotPassword />,
         },
         {
           path: "/about",
@@ -44,70 +54,70 @@ function App() {
           path: "/product_detail/:productId",
           element: <ProductDetail />,
         },
+
+        //protect section
         {
-          path: "/shopping_cart",
-          element: <ShoppingCart />,
-        },
-        {
-          path: "/check_out",
-          element: <CheckOut />,
-        },
-        {
-          path: "/favourite",
-          element: <Favoutite />,
-        },
-        {
-          path: "/login",
-          element: <Login />,
-        },
-        {
-          path: "/forgot_password",
-          element: <ForgotPassword />,
-        },
-        {
-          path: "/profile",
-          element: <Profile />,
-        },
-        {
-          path: "/address",
-          element: <Address />,
-        },
-        {
-          path: "/address/new",
-          element: <AddressDetail />,
-        },
-        {
-          path: "/address/new/:AddressId",
-          element: <AddressDetail />,
-        },
-        {
-          path: "profile_favourite",
-          element: <ProfileFavourite />,
-        },
-        {
-          path: "/list_order",
-          element: <ListOrder />,
-        },
-        {
-          path: "/change_password",
-          element: <ChangePassword />,
-        },
-        {
-          path: "/edit_profile",
-          element: <EditProfile />,
-        },
-        {
-          path: "/order_detail/:orderId",
-          element: <OrderDetail />,
+          element: <ProtectedRoute />,
+          children: [
+            {
+              path: "/shopping_cart",
+              element: <ShoppingCart />,
+            },
+            {
+              path: "/check_out",
+              element: <CheckOut />,
+            },
+            {
+              path: "/favourite",
+              element: <Favoutite />,
+            },
+
+            {
+              path: "/profile",
+              element: <Profile />,
+            },
+            {
+              path: "/address",
+              element: <Address />,
+            },
+            {
+              path: "/address/new",
+              element: <AddressDetail />,
+            },
+            {
+              path: "/address/new/:AddressId",
+              element: <AddressDetail />,
+            },
+            {
+              path: "profile_favourite",
+              element: <ProfileFavourite />,
+            },
+            {
+              path: "/list_order",
+              element: <ListOrder />,
+            },
+            {
+              path: "/change_password",
+              element: <ChangePassword />,
+            },
+            {
+              path: "/edit_profile",
+              element: <EditProfile />,
+            },
+            {
+              path: "/order_detail/:orderId",
+              element: <OrderDetail />,
+            },
+          ],
         },
       ],
     },
   ]);
   return (
     <>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </>
   );
 }
