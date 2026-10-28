@@ -19,86 +19,95 @@ import ListOrder from "./pages/profile/list_order";
 import ChangePassword from "./pages/profile/change_password";
 import EditProfile from "./pages/profile/edit_profile";
 import OrderDetail from "./pages/profile/order_detail";
+import Layout from "./layout/Layout";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   //const [count, setCount] = useState(0)
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/about",
-      element: <About />,
-    },
-    {
-      path: "/fliter_product",
-      element: <FliterProduct />,
-    },
-    {
-      path: "/product_detail/:productId",
-      element: <ProductDetail />,
-    },
-    {
-      path: "/shopping_cart",
-      element: <ShoppingCart />,
-    },
-    {
-      path: "/check_out",
-      element: <CheckOut />,
-    },
-    {
-      path: "/favourite",
-      element: <Favoutite />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/forgot_password",
-      element: <ForgotPassword />,
-    },
-    {
-      path: "/profile",
-      element: <Profile />,
-    },
-    {
-      path: "/address",
-      element: <Address />,
-    },
-    {
-      path: "/address/new",
-      element: <AddressDetail />,
-    },
-    {
-      path: "/address/new/:AddressId",
-      element: <AddressDetail />,
-    },
-    {
-      path: "profile_favourite",
-      element: <ProfileFavourite />,
-    },
-    {
-      path: "/list_order",
-      element: <ListOrder />,
-    },
-    {
-      path: "/change_password",
-      element: <ChangePassword />,
-    },
-    {
-      path: "/edit_profile",
-      element: <EditProfile />,
-    },
-    {
-      path: "/order_detail/:orderId",
-      element: <OrderDetail />,
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/fliter_product",
+          element: <FliterProduct />,
+        },
+        {
+          path: "/product_detail/:productId",
+          element: <ProductDetail />,
+        },
+        {
+          path: "/shopping_cart",
+          element: <ShoppingCart />,
+        },
+        {
+          path: "/check_out",
+          element: <CheckOut />,
+        },
+        {
+          path: "/favourite",
+          element: <Favoutite />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/forgot_password",
+          element: <ForgotPassword />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
+        },
+        {
+          path: "/address",
+          element: <Address />,
+        },
+        {
+          path: "/address/new",
+          element: <AddressDetail />,
+        },
+        {
+          path: "/address/new/:AddressId",
+          element: <AddressDetail />,
+        },
+        {
+          path: "profile_favourite",
+          element: <ProfileFavourite />,
+        },
+        {
+          path: "/list_order",
+          element: <ListOrder />,
+        },
+        {
+          path: "/change_password",
+          element: <ChangePassword />,
+        },
+        {
+          path: "/edit_profile",
+          element: <EditProfile />,
+        },
+        {
+          path: "/order_detail/:orderId",
+          element: <OrderDetail />,
+        },
+      ],
     },
   ]);
   return (
     <>
+    <AuthProvider>
       <RouterProvider router={router} />
+    </AuthProvider>
     </>
   );
 }

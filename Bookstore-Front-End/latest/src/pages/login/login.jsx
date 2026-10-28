@@ -1,12 +1,11 @@
 import { Col, Row } from "react-bootstrap";
-import Layout from "../../layout/Layout";
 import FormLogin from "../../components/login/form_login";
 
 export default function Login() {
   return (
     <>
-      <Layout>
-        <div className="container p-3">
+      <>
+        <div className="container p-5">
           <Row>
             <Col md={12} lg={12}>
               <div className="title py-2 text-center">
@@ -17,7 +16,7 @@ export default function Login() {
             </Col>
           </Row>
         </div>
-      </Layout>
+      </>
     </>
   );
 }

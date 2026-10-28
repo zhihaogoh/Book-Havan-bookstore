@@ -1,12 +1,11 @@
 import { Col, Row } from "react-bootstrap";
-import Layout from "../../layout/Layout";
 import Listing from "../../components/dashboard/listing";
 import EditProfileForm from "../../components/edit_profile/edit_profile_form";
 
 export default function EditProfile() {
   return (
     <>
-      <Layout>
+      <>
         <div className="container">
           <Row>
             <Col md={4} lg={3}>
@@ -78,7 +77,7 @@ export default function EditProfile() {
             </Col>
           </Row>
         </div>
-      </Layout>
+      </>
     </>
   );
 }

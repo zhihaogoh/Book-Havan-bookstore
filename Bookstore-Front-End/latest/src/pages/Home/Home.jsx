@@ -2,12 +2,11 @@ import Banner from "../../components/banner/Banner";
 import ListProduct from "../../components/list_product/list_product";
 import Categories from "../../components/categories/Categories";
 import ServiceList from "../../components/service/service_list";
-import Layout from "../../layout/Layout";
 
 export default function Home() {
   return (
     <>
-      <Layout>
+      <>
         <Banner
           banner={[
             {
@@ -219,7 +218,7 @@ export default function Home() {
         />
 
         {/* Discount Ends*/}
-      </Layout>
+      </>
     </>
   );
 }

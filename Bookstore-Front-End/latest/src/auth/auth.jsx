@@ -3,15 +3,13 @@ import { apiGet, apiPost } from "../services/api";
 export const handleLogin = async (email, password) => {
   const response = await apiPost("/login", { email, password });
   console.log("Login successful:", response);
-
-  const user = await apiGet("/user");
-
-  console.log("User data:", response.access_token, user);
-
   return response;
 };
 
-
+export const getUser = async () => {
+  const user = await apiGet("/user");
+  return user;
+}
 
 export const handleRegister = async (
   first_name,

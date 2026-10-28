@@ -1,8 +1,11 @@
+import { Outlet } from "react-router";
 import Footer from "./footer/Footer";
 import Header from "./header/Header";
-import PropTypes from "prop-types";
 
-export default function Layout({ children }) {
+
+
+export default function Layout() {
+
   return (
     <>
       <Header
@@ -29,7 +32,11 @@ export default function Layout({ children }) {
           },
         ]}
       />
-      <main>{children}</main>
+
+      <main>
+        <Outlet />
+      </main>
+      
       <Footer
         company="Novel-Bookstroe Online"
         company_important={[
@@ -60,10 +67,9 @@ export default function Layout({ children }) {
         }
       ]}
       />
+  
     </>
   );
 }
 
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+

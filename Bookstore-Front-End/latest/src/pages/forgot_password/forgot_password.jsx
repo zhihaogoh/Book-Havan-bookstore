@@ -1,11 +1,10 @@
 import { Col, Row } from "react-bootstrap";
-import Layout from "../../layout/Layout";
 import ForgotPasswordForm from "../../components/forgot_password_form/forgot_password_form";
 
 export default function ForgotPassword() {
   return (
     <>
-      <Layout>
+      <>
         <div className="container p-3">
           <Row>
             <Col md={6} lg={6}>
@@ -23,7 +22,7 @@ export default function ForgotPassword() {
             </Col>
           </Row>
         </div>
-      </Layout>
+      </>
     </>
   );
 }

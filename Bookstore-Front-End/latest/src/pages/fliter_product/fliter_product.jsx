@@ -1,6 +1,5 @@
 import { Col, Row } from "react-bootstrap";
 import Fliter from "../../components/fliter/fliter";
-import Layout from "../../layout/Layout";
 import ProductResult from "../../components/product/product_result";
 import { useState } from "react";
 import { products } from "../../data/products";
@@ -56,7 +55,7 @@ export default function FliterProduct() {
 
   return (
     <>
-      <Layout>
+      <>
         <div className="fliter_product container">
           <Row>
             <Col xs={0} md={4} lg={4}>
@@ -99,7 +98,7 @@ export default function FliterProduct() {
             </Col>
           </Row>
         </div>
-      </Layout>
+      </>
     </>
   );
 }

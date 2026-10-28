@@ -1,5 +1,4 @@
 import { Col, Row } from "react-bootstrap";
-import Layout from "../../layout/Layout";
 import Listing from "../../components/dashboard/listing";
 import AddressForm from "../../components/dashboard/address_form";
 import { useParams } from "react-router";
@@ -10,7 +9,7 @@ export default function AddressDetail() {
   const {AddressId} = useParams();
     const addressDetial = address.find((item) => String(item.id)=== AddressId);
   return (
-    <Layout>
+    <>
       <div className="container">
         <Row>
           <Col md={4} lg={3} className="d-none d-md-block">
@@ -101,6 +100,6 @@ export default function AddressDetail() {
           </Col>
         </Row>
       </div>
-    </Layout>
+    </>
   );
 }

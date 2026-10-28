@@ -4,7 +4,6 @@ import AddressForm from "../../components/check_out_form/address_form";
 import ReviewForm from "../../components/check_out_form/review_form";
 import PaymentForm from "../../components/check_out_form/payment_form";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
-import Layout from "../../layout/Layout";
 import { cart } from "../../data/products";
 
 export default function CheckOut() {
@@ -28,7 +27,7 @@ export default function CheckOut() {
 
   return (
     <>
-      <Layout>
+      <>
         <div className="container mb-3">
           <div className="title">
             <h3>Check Out</h3>
@@ -110,7 +109,7 @@ export default function CheckOut() {
             </Col>
           </Row>
         </div>
-      </Layout>
+      </>
     </>
   );
 }

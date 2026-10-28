@@ -1,13 +1,12 @@
 import { Col, Row } from "react-bootstrap";
 import { products } from "../../data/products";
-import Layout from "../../layout/Layout";
 import CardProduct from "../../components/card_product/card_product";
 
 export default function Favoutite() {
   const product = products;
   return (
     <>
-     <Layout>
+     <>
         <div className="container">
             <div className="title">
                 <h3>Your Wishlist</h3>
@@ -23,7 +22,7 @@ export default function Favoutite() {
         ))}
       </Row>
     </div>
-     </Layout>
+     </>
       
     </>
    
