@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -75,10 +76,21 @@ class userController extends Controller
         $profile ->update($validated);
         return response() -> json([
             'message' => 'Profile updated successfully',
-            'user' => $profile
-        ]);
+            'user' => new UserResource($profile)
+        ],200);
     }
 
+    public function updatePassword(UpdatePasswordRequest $request){
+        $user = $request->user();
+
+        $validated = $request->validated();
+        $user-> password = Hash::make($validated['new_password']);
+        $user->save();
+
+        return response() -> json([
+            'message' => 'Edit password successfully'
+        ],200);
+    }
 
 
     public function Logout(Request $request)

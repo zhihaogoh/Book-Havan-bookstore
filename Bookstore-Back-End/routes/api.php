@@ -23,7 +23,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [userController::class, 'Logout']);
 
     Route::put('/user/profile', [userController :: class, 'update']);
-    Route::put('/user/password', [userController:: class ,'update']);
+    Route::put('/user/password', [userController:: class ,'updatePassword']);
 
     Route::get('/address',[AddressController::class,'index']);
     Route::post('/address',[AddressController::class, 'store']);
