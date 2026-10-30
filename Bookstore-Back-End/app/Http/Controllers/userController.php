@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -66,6 +67,19 @@ class userController extends Controller
             'token' => $request->bearerToken(),
         ]);
     }
+
+    public function update(UpdateProfileRequest $request)
+    {
+        $profile = $request->user();
+        $validated = $request->validated();
+        $profile ->update($validated);
+        return response() -> json([
+            'message' => 'Profile updated successfully',
+            'user' => $profile
+        ]);
+    }
+
+
 
     public function Logout(Request $request)
     {
