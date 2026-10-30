@@ -16,7 +16,6 @@ class AddressController extends Controller
             'message' => 'Addresses retrieved successfully',
             'addresses' => AddressResource::collection($address)
         ]);
-
     }
     public function store(StoreAddressRequest $request){
         $data = $request->validated();

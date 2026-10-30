@@ -21,15 +21,15 @@ Route::post('/login', [userController::class, 'Login']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [userController::class, 'getUser']);
     Route::post('/logout', [userController::class, 'Logout']);
-
     Route::put('/user/profile', [userController :: class, 'update']);
     Route::put('/user/password', [userController:: class ,'updatePassword']);
-
     Route::get('/address',[AddressController::class,'index']);
     Route::post('/address',[AddressController::class, 'store']);
     Route::delete('/address/{id}', [AddressController::class, 'destroy']);
     Route::put('/address/{id}', [AddressController::class, 'update']);
 
+
+    
     Route::get('order-item', [OrderItemController::class, 'index']);
     Route::post('order-item', [OrderItemController::class, 'store']);
     Route::delete('order-item/{id}', [OrderItemController::class, 'destroy']);
