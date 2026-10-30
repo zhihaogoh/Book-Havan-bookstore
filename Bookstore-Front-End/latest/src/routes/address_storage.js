@@ -2,7 +2,7 @@
 const STORAGE_KEY = "book-haven-addresses";
 export function readAddresses() {
   const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-  if (!Array.isArray(stored) || stored.some((item) => !item || typeof item !== "object" || !["id", "Name", "Address", "city", "state", "postcode", "country", "phone_number", "type"].every((key) => typeof item[key] === "string"))) throw new Error("Invalid address data");
+  if (!Array.isArray(stored) || stored.some((item) => !item || typeof item !== "object" || !["id", "recipent_name", "address_1","address_2", "city", "state", "post_code", "country", "recipent_phone", "type"].every((key) => typeof item[key] === "string"))) throw new Error("Invalid address data");
   return stored;
 }
 export function saveAddress(existing, address) {

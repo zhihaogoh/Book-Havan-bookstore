@@ -87,3 +87,16 @@ export const updateProfile = async ({
     throw error;
   }
 };
+
+export const getAddress = async () =>{
+   try {
+    const response = await apiGet("/address");
+    console.log(response);
+    return response;
+  } catch (error) {
+    if (error.status === 401) {
+      setAccessToken(null);
+    }
+    throw error;
+  }
+}
