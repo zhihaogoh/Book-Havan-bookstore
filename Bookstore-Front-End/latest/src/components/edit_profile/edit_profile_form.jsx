@@ -4,22 +4,25 @@ import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { FiSave } from "react-icons/fi";
 import { MdContactMail, MdInfo } from "react-icons/md";
 import { useNavigate } from "react-router";
+import { updateProfile } from "../../auth/auth";
 
 export default function EditProfileForm({ fields_basic, fields_contact }) {
   const navigate = useNavigate();
-  const [data, setData] = useState({
-    first_name: "",
-    last_name: "",
-    date_of_birth: "",
-    contact_number: "",
-    email: "",
-    gender: "",
-    IC_Passport: "",
-  });
+  const [data, setData] = useState(() =>
+    Object.fromEntries(
+      [...fields_basic, ...fields_contact].map((field) => [
+        field.name,
+        field.value ?? "",
+      ]),
+    ),
+  );
   const [message, setMessage] = useState("");
   const [error, setError] = useState({});
-  function handleEditProfile(event) {
+  const [saving, setSaving] = useState(false);
+  const handleEditProfile = async (event) => {
     event.preventDefault();
+    if (saving) return;
+    setMessage("");
     const nextErrors = {};
     if (!data.first_name) {
       nextErrors.first_name = "Please enter your first name";
@@ -27,16 +30,11 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
     if (!data.last_name) {
       nextErrors.last_name = "Please enter your last name";
     }
-    if (!data.IC_Passport.trim()) {
-      nextErrors.IC_Passport = "Please enter your IC or Passport";
-    } else if (!/^[A-Za-z0-9]+$/.test(data.IC_Passport.trim())) {
-      nextErrors.IC_Passport = "Only letters and numbers are allowed";
-    }
     if (!data.gender) {
       nextErrors.gender = "Please select your gender";
     }
     if (!data.date_of_birth) {
-      nextErrors.date_of_brith = "Please select your date or birth";
+      nextErrors.date_of_birth = "Please select your date of birth";
     }
     if (!data.contact_number.trim()) {
       nextErrors.contact_number = "Please sleect your contact number";
@@ -56,11 +54,22 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
       return;
     }
     try {
-      setMessage(
-        "Form validated. The server is not connected. Your password has not been changed.",
-      );
-    } catch {
-      setMessage("Unable to change your password. Please try again.");
+      setSaving(true);
+      await updateProfile({
+        ...data,
+        phone_number: data.contact_number.trim(),
+      });
+      navigate("/profile");
+    } catch (error) {
+      setError(Object.fromEntries(
+        Object.entries(error.errors ?? {}).map(([field, messages]) => [
+          field === "phone_number" ? "contact_number" : field,
+          Array.isArray(messages) ? messages.join(" ") : messages,
+        ]),
+      ));
+      setMessage(error.message || "Unable to update your profile. Please try again.");
+    } finally {
+      setSaving(false);
     }
   }
   return (
@@ -81,7 +90,7 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
         <Form className="information_profile" onSubmit={handleEditProfile}>
           <Card className="information my-3">
             <Row className="header_information px-0 pb-3">
-              <Col md={10} lg={10}>
+              <Col md={9} lg={10}>
                 <div className="title_information">
                   <MdInfo className="icon" />
                   <div className="title">
@@ -92,7 +101,7 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
                   </div>
                 </div>
               </Col>
-              <Col className="d-none d-md-block" md={2} lg={2}>
+              <Col className="d-none d-md-block" md={3} lg={2}>
                 <div className="section">
                   <span>Section 1</span>
                 </div>
@@ -172,7 +181,7 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
           </Card>
           <Card className="information my-3">
             <Row className="header_information px-0 pb-3">
-              <Col md={10} lg={10}>
+              <Col md={9} lg={10}>
                 <div className="title_information">
                   <MdContactMail className="icon" />
                   <div className="title">
@@ -183,7 +192,7 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
                   </div>
                 </div>
               </Col>
-              <Col className="d-none d-md-block" md={2} lg={2}>
+              <Col className="d-none d-md-block" md={3} lg={2}>
                 <div className="section">
                   <span>Section 2</span>
                 </div>
@@ -243,9 +252,9 @@ export default function EditProfileForm({ fields_basic, fields_contact }) {
             >
               Discard Changes
             </Button>
-            <Button type="submit" className="submit">
+            <Button type="submit" className="submit" disabled={saving}>
               <FiSave aria-hidden="true" />
-              Save Changes
+              {saving ? "Saving..." : "Save Changes"}
             </Button>
           </Card>
         </Form>
@@ -267,6 +276,7 @@ EditProfileForm.propTypes = {
           gender: PropTypes.string.isRequired,
         }),
       ),
+      value: PropTypes.string.isRequired
     }),
   ),
   fields_contact: PropTypes.arrayOf(
@@ -275,6 +285,8 @@ EditProfileForm.propTypes = {
       type: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       placeholder: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired
+
     }),
   ),
 };

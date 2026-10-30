@@ -16,8 +16,11 @@ export function AuthProvider({ children }) {
           setUser(response.data ?? response);
         }
       } catch (error) {
-        console.error("Restore session failed:", error);
         if (active) {
+          // A missing or expired session is an expected signed-out state.
+          if (error.status !== 401) {
+            console.error("Restore session failed:", error);
+          }
           setUser(null);
         }
       } finally {
@@ -26,7 +29,7 @@ export function AuthProvider({ children }) {
         }
       }
     };
-
+    
     restoreSession();
     return () => {
       active = false;

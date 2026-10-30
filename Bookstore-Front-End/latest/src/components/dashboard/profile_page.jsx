@@ -1,7 +1,14 @@
+import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router";
 
-export default function ProfilePage() {
+export default function ProfilePage({
+  first_name,
+  last_name,
+  gender,
+  phone_number,
+  email
+}) {
   const navigate= useNavigate();
   const toEditProfile = () =>{
     navigate("/edit_profile")
@@ -15,38 +22,38 @@ export default function ProfilePage() {
         </div>
         <div className="profile">
           <Row className="py-3">
-            <Col md={6} lg={6}>
+            <Col md={6} lg={6} xs={6}>
               <div className="information">
                 <span className="mb-3">First Name</span>
-                <span>g</span>
+                <span>{first_name ?? "Not Found"}</span>
               </div>
             </Col>
-            <Col md={6} lg={6}>
+            <Col md={6} lg={6} xs={6}>
               <div className="information">
                 <span className="mb-3">Last Name</span>
-                <span>z</span>
+                <span>{last_name ?? "Not Found"}</span>
               </div>
             </Col>
           </Row>
           <Row className="py-3">
-            <Col md={6} lg={6}>
+            <Col md={6} lg={6}  xs={6}>
               <div className="information">
                 <span className="mb-3">Phone Number</span>
-                <span>012-34567890</span>
+                <span>{phone_number ?? "Not Found"}</span>
               </div>
             </Col>
-            <Col md={6} lg={6}>
+            <Col md={6} lg={6}  xs={6}>
               <div className="information">
                 <span className="mb-3">Gender</span>
-                <span>Male</span>
+                <span>{gender ?? "Not Found"}</span>
               </div>
             </Col>
           </Row>
           <Row className="py-3">
-            <Col md={12} lg={12}>
+            <Col md={12} lg={12}  xs={12}>
               <div className="information">
                 <span className="mb-3">Email</span>
-                <span>name@example.com</span>
+                <span>{email}</span>
               </div>
             </Col>
           </Row>
@@ -54,4 +61,12 @@ export default function ProfilePage() {
       </div>
     </>
   );
+}
+
+ProfilePage.propTypes ={
+   first_name : PropTypes.string.isRequired,
+   last_name : PropTypes.string.isRequired,
+   gender : PropTypes.string.isRequired,
+   phone_number : PropTypes.string.isRequired,
+   email : PropTypes.string.isRequired
 }

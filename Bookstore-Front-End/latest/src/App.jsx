@@ -24,7 +24,6 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/protected_route/ProtectedRoute";
 
 function App() {
-  //const [count, setCount] = useState(0)
   const router = createBrowserRouter([
     {
       element: <Layout />,
