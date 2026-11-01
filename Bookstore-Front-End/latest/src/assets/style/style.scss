@@ -2180,8 +2180,7 @@
     cursor: pointer;
     .icon {
       flex-shrink: 0;
-      width: 34px;
-      height: 34px;
+      font-size: 3rem;
       padding: 1rem;
       border-radius: 10px;
       background: #e7e3e0;
@@ -2198,11 +2197,11 @@
     // 保留原生 checkbox 的键盘操作能力，外观显示为开关。
     .form-check-input {
       appearance: none;
-      flex-shrink: 0;
+      flex-shrink: 0 !important;
       width: 46px;
       height: 25px;
       border-radius: 20px;
-      background: #006400;
+      background: #ddd;
       margin-left: auto;
       cursor: pointer;
       position: relative;
@@ -2220,6 +2219,7 @@
       &:checked {
         background: #006400;
         &::after {
+          
           transform: translateX(21px);
         }
       }

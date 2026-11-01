@@ -2,12 +2,25 @@ import { Col, Row } from "react-bootstrap";
 import Listing from "../../components/dashboard/listing";
 import AddressForm from "../../components/dashboard/address_form";
 import { useParams } from "react-router";
-import { address } from "../../data/products";
+import { useEffect, useState } from "react";
+import { getAddress } from "../../auth/auth";
 
 export default function AddressDetail() {
   // 沿用账户页布局，保持导航一致。
   const {AddressId} = useParams();
-    const addressDetial = address.find((item) => String(item.id)=== AddressId);
+  const [loaded, setLoaded] = useState(null);
+  useEffect(() => {
+    if (!AddressId) return;
+    let active = true;
+    getAddress().then((response) => {
+      const address = response.addresses.find((item) => String(item.id) === AddressId);
+      if (active) setLoaded({ id: AddressId, address, error: address ? "" : "Address not found." });
+    }).catch(() => {
+      if (active) setLoaded({ id: AddressId, error: "Unable to load this address. Please reload to try again." });
+    });
+    return () => { active = false; };
+  }, [AddressId]);
+  const addressDetial = AddressId && loaded?.id === AddressId ? loaded.address : null;
   return (
     <>
       <div className="container">
@@ -16,7 +29,14 @@ export default function AddressDetail() {
             <Listing />
           </Col>
           <Col md={8} lg={9}>
-            <AddressForm
+            {AddressId && loaded?.id !== AddressId ? (
+              <p role="status">Loading address...</p>
+            ) : AddressId && loaded?.error ? (
+              <p role="alert">{loaded.error}</p>
+            ) : <AddressForm
+              key={AddressId ?? "new"}
+              addressId={AddressId}
+              initialDefault={Boolean(addressDetial?.status)}
               address_type={[
                 {
                   id: 1,
@@ -35,7 +55,7 @@ export default function AddressDetail() {
                   hint: "The name your delivery driver should ask for.",
                   placeholder: "e.g. Eleanor Vance",
                   width: "half",
-                  value: addressDetial?.Name ?? ""
+                  value: addressDetial?.recipient_name ?? ""
                 },
                 {
                   name: "phone_number",
@@ -45,7 +65,7 @@ export default function AddressDetail() {
                   hint: "Include your country code for delivery updates.",
                   placeholder: "e.g. +60 12-345 6789",
                   width: "half",
-                   value: addressDetial?.phone_number ?? ""
+                   value: addressDetial?.recipent_phone ?? ""
                 },
                 {
                   name: "address",
@@ -54,16 +74,16 @@ export default function AddressDetail() {
                   hint: "Include your house or building number and street name.",
                   placeholder: "e.g. 128 Hill House Lane",
                   width: "street",
-                   value: addressDetial?.Address ?? ""
+                   value: addressDetial?.address_1 ?? ""
                 },
                 {
                   name: "unit",
                   label: "Apartment, suite, unit",
                   autoComplete: "address-line2",
-                  hint: "Optional — floor or unit number.",
+                  hint: "Enter your area, building, floor or unit number.",
                   placeholder: "e.g. Apt 4B",
-                  optional: true,
-                   value: addressDetial?.unit ?? ""
+                  optional: false,
+                   value: addressDetial?.address_2 ?? ""
 
                 },
                 {
@@ -86,7 +106,7 @@ export default function AddressDetail() {
                   autoComplete: "postal-code",
                   placeholder: "e.g. 50450",
                   hint: "No postal code in your country? Enter N/A.",
-                   value: addressDetial?.postcode ?? ""
+                   value: addressDetial?.postal_code ?? ""
                 },
                 {
                   name: "country",
@@ -96,7 +116,7 @@ export default function AddressDetail() {
                    value: addressDetial?.country ?? ""
                 },
               ]}
-            />
+            />}
           </Col>
         </Row>
       </div>

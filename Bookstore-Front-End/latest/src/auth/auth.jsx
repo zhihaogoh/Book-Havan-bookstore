@@ -88,8 +88,8 @@ export const updateProfile = async ({
   }
 };
 
-export const getAddress = async () =>{
-   try {
+export const getAddress = async () => {
+  try {
     const response = await apiGet("/address");
     console.log(response);
     return response;
@@ -99,4 +99,38 @@ export const getAddress = async () =>{
     }
     throw error;
   }
-}
+};
+
+export const updateAddress = (id, data) =>
+  apiPut(`/address/${encodeURIComponent(id)}`, data);
+
+export const addAddress = async ({
+  recipient_name,
+  recipent_phone,
+  address_1,
+  address_2,
+  city,
+  state,
+  postal_code,
+  country,
+  status,
+}) => {
+  try {
+    const response = await apiPost("/address", {
+      recipient_name,
+      recipent_phone,
+      address_1,
+      address_2,
+      city,
+      state,
+      postal_code,
+      country,
+      status,
+    });
+    console.log("Address added successfully:", response);
+    return response;
+  } catch (error) {
+    console.error("Error adding address:", error);
+    throw error;
+  }
+};

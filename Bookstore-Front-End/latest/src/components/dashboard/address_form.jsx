@@ -2,13 +2,14 @@ import PropTypes, { shape } from "prop-types";
 import { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { FiSave } from "react-icons/fi";
-import { MdBookmarkBorder } from "react-icons/md";
+import {  MdBookmarks } from "react-icons/md";
 import { useNavigate } from "react-router";
+import { addAddress, updateAddress } from "../../auth/auth";
 
-export default function AddressForm({ address_type, address_field }) {
+export default function AddressForm({ address_type, address_field, addressId, initialDefault = false }) {
   const navigate = useNavigate();
 
-  const [purpose, setPurpose] = useState((address_type.id = 1));
+  const [purpose, setPurpose] = useState(address_type[0]?.id ?? 1);
   //没有数据
   const [value, setValue] = useState(() =>
     Object.fromEntries(
@@ -16,12 +17,12 @@ export default function AddressForm({ address_type, address_field }) {
     ),
   );
   const [error, setErrors] = useState({});
-  const [isDefault, setIsDefault] = useState(false);
-  // const [saveError, setSaveError] = useState("");
+  const [isDefault, setIsDefault] = useState(initialDefault);
+  const [isSaving, setIsSaving] = useState(false);
 
-  function handleSubmit(event) {
-    console.log(value);
+  const handleSubmit = async(event) => {
     event.preventDefault();
+    if (isSaving) return;
 
     const cleaned = Object.fromEntries(
       Object.entries(value).map(([key, value]) => [key, value.trim()]),
@@ -38,12 +39,54 @@ export default function AddressForm({ address_type, address_field }) {
     )
       nextError.phone_number = "Enter a valid phone number with 7–15 digits.";
     setErrors(nextError);
-    console.log(error);
     if (Object.keys(nextError).length) {
       event.currentTarget.elements.namedItem(Object.keys(nextError)[0]).focus();
       return;
     }
+
+    const apiFields = {
+      recipient_name: "name",
+      recipent_phone: "phone_number",
+      address_1: "address",
+      address_2: "unit",
+      city: "city",
+      state: "state",
+      postal_code: "postcode",
+      country: "country",
+    };
+    setIsSaving(true);
+    try{
+      const payload = {
+        ...Object.fromEntries(
+          Object.entries(apiFields).map(([apiField, formField]) => [
+            apiField, cleaned[formField],
+          ]),
+        ),
+        status: purpose === 1 && isDefault,
+      };
+      if (addressId) {
+        await updateAddress(addressId, payload);
+      } else {
+        await addAddress(payload);
+      }
+      navigate("/profile");
+    } catch (error) {
+      const fieldErrors = Object.fromEntries(
+        Object.entries(error.errors ?? {}).map(([field, messages]) => [
+          apiFields[field] ?? field,
+          Array.isArray(messages) ? messages.join(" ") : messages,
+        ]),
+      );
+      setErrors({
+        ...fieldErrors,
+        form: error.message || "Failed to save address. Please try again.",
+      });
+    } finally {
+      setIsSaving(false);
+    }
   }
+
+
 
   return (
     <>
@@ -101,12 +144,9 @@ export default function AddressForm({ address_type, address_field }) {
                         error[item.name] && `${item.name}-error`,
                       ]
                         .filter(Boolean)
-                        .join("") || undefined
+                        .join(" ") || undefined
                     }
                     onChange={(event) => {
-                      if (item.value !== "") {
-                        item.name = item.value;
-                      }
                       setValue({ ...value, [item.name]: event.target.value });
                       setErrors({ ...error, [item.name]: undefined });
                     }}
@@ -126,9 +166,9 @@ export default function AddressForm({ address_type, address_field }) {
                 </div>
               ))}
             </div>
-            {address_type.id === 1 && (
+            {purpose === 1 && (
               <label className="customer_address_default">
-                <MdBookmarkBorder className="icon" aria-hidden="true" />
+                <MdBookmarks className="icon" aria-hidden="true" />
                 <span>
                   <strong>Set as default shipping address</strong>
                   <small>
@@ -144,6 +184,7 @@ export default function AddressForm({ address_type, address_field }) {
                 />
               </label>
             )}
+            {error.form && <p role="alert">{error.form}</p>}
             <Card className="product_action my-3">
               <span>
                 All required reader details have been verified and are ready to
@@ -156,9 +197,9 @@ export default function AddressForm({ address_type, address_field }) {
               >
                 Discard Changes
               </Button>
-              <Button type="submit" className="submit">
+              <Button type="submit" className="submit" disabled={isSaving}>
                 <FiSave aria-hidden="true" />
-                Save Changes
+                {isSaving ? "Saving..." : "Save Changes"}
               </Button>
             </Card>
           </Form>
@@ -169,6 +210,8 @@ export default function AddressForm({ address_type, address_field }) {
 }
 
 AddressForm.propTypes = {
+  addressId: PropTypes.string,
+  initialDefault: PropTypes.bool,
   address_type: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -180,10 +223,10 @@ AddressForm.propTypes = {
       name: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       autoComplete: PropTypes.string.isRequired,
-      hint: PropTypes.string.isRequired,
+      hint: PropTypes.string,
       placeholder: PropTypes.string.isRequired,
-      width: PropTypes.string.isRequired,
-      optional: PropTypes.bool.isRequired,
+      width: PropTypes.string,
+      optional: PropTypes.bool,
     }),
   ),
 };

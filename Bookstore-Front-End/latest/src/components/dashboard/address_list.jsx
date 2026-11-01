@@ -62,17 +62,17 @@ export default function AddressList({ addresses = [] }) {
                   </div>
                   <div className="name">
                     <span>
-                      {item.recipient_name ?? item.recipent_name ?? item.Name}
+                      {item.recipient_name ?? item.recipent_name ?? item.Name},
                     </span>
                   </div>
                   <div className="address">
-                    <span>{item.address_1 ?? item.Address}</span>
+                    <span>{item.address_1 ?? item.Address},</span>
                     {(item.address_2 ?? item.unit) && (
-                      <span>{item.address_2 ?? item.unit}</span>
+                      <span>{item.address_2 ?? item.unit},</span>
                     )}
                     <span>
                       {item.postal_code ?? item.post_code ?? item.postcode},{" "}
-                      {item.city}, {item.state}
+                      {item.city}, {item.state},
                     </span>
                     <span>{item.country}</span>
                   </div>
