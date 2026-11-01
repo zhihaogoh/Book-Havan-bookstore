@@ -19,13 +19,13 @@ class StoreAddressRequest extends FormRequest
         return [
             'recipient_name' => 'required|string|max:255',
             'recipent_phone' => 'required|string|max:255',
-            'address_1' => 'required|string|max:255',
-            'address_2' => 'required|string|max:255',
+            'address_1' => 'required|string|max:255|unique:user_address,address_1',
+            'address_2' => 'required|string|max:255|unique:user_address,address_2',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'postal_code' => 'required|string|max:255',
             'country' => 'required|string|max:255',
-            'status' => 'required|boolean',
+            'status' => 'sometimes|boolean',
         ];
     }
 }
