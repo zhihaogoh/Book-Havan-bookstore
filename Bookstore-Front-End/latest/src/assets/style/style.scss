@@ -2283,6 +2283,18 @@
       }
     }
   }
+  @media (max-width: 575px) {
+    .product_action {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+    @media (max-width: 770px) {
+    .product_action {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
 }
 //edit customer end
 //order_detail start

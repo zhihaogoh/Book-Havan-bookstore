@@ -33,35 +33,21 @@ export default function AddressForm({ address_type, address_field, addressId, in
         nextError[item.name] = `Please enter ${item.label.toLowerCase()}`;
     });
     if (
-      cleaned.phone_number &&
-      (!/^[+\d\s().-]+$/.test(cleaned.phone_number) ||
-        !/^\d{7,15}$/.test(cleaned.phone_number.replace(/\D/g, "")))
+      cleaned.recipent_phone &&
+      (!/^[+\d\s().-]+$/.test(cleaned.recipent_phone) ||
+        !/^\d{7,15}$/.test(cleaned.recipent_phone.replace(/\D/g, "")))
     )
-      nextError.phone_number = "Enter a valid phone number with 7–15 digits.";
+      nextError.recipent_phone = "Enter a valid phone number with 7–15 digits.";
     setErrors(nextError);
     if (Object.keys(nextError).length) {
       event.currentTarget.elements.namedItem(Object.keys(nextError)[0]).focus();
       return;
     }
 
-    const apiFields = {
-      recipient_name: "name",
-      recipent_phone: "phone_number",
-      address_1: "address",
-      address_2: "unit",
-      city: "city",
-      state: "state",
-      postal_code: "postcode",
-      country: "country",
-    };
     setIsSaving(true);
     try{
       const payload = {
-        ...Object.fromEntries(
-          Object.entries(apiFields).map(([apiField, formField]) => [
-            apiField, cleaned[formField],
-          ]),
-        ),
+        ...cleaned,
         status: purpose === 1 && isDefault,
       };
       if (addressId) {
@@ -73,7 +59,7 @@ export default function AddressForm({ address_type, address_field, addressId, in
     } catch (error) {
       const fieldErrors = Object.fromEntries(
         Object.entries(error.errors ?? {}).map(([field, messages]) => [
-          apiFields[field] ?? field,
+          field,
           Array.isArray(messages) ? messages.join(" ") : messages,
         ]),
       );
@@ -135,7 +121,7 @@ export default function AddressForm({ address_type, address_field, addressId, in
                     name={item.name}
                     type={item.type}
                     autoComplete={item.autoComplete}
-                    maxLength={item.name === "address" ? 200 : 100}
+                    maxLength={item.name === "address_1" ? 200 : 100}
                     placeholder={item.placeholder}
                     value={value[item.name] ?? ""}
                     aria-describedby={
@@ -184,7 +170,6 @@ export default function AddressForm({ address_type, address_field, addressId, in
                 />
               </label>
             )}
-            {error.form && <p role="alert">{error.form}</p>}
             <Card className="product_action my-3">
               <span>
                 All required reader details have been verified and are ready to

@@ -20,7 +20,7 @@ export default function AddressDetail() {
     });
     return () => { active = false; };
   }, [AddressId]);
-  const addressDetial = AddressId && loaded?.id === AddressId ? loaded.address : null;
+  const addressDetail = AddressId && loaded?.id === AddressId ? loaded.address : null;
   return (
     <>
       <div className="container">
@@ -36,7 +36,7 @@ export default function AddressDetail() {
             ) : <AddressForm
               key={AddressId ?? "new"}
               addressId={AddressId}
-              initialDefault={Boolean(addressDetial?.status)}
+              initialDefault={Boolean(addressDetail?.status)}
               address_type={[
                 {
                   id: 1,
@@ -49,41 +49,41 @@ export default function AddressDetail() {
               ]}
               address_field={[
                 {
-                  name: "name",
+                  name: "recipient_name",
                   label: "Full recipient name",
                   autoComplete: "name",
                   hint: "The name your delivery driver should ask for.",
                   placeholder: "e.g. Eleanor Vance",
                   width: "half",
-                  value: addressDetial?.recipient_name ?? ""
+                  value: addressDetail?.recipient_name ?? ""
                 },
                 {
-                  name: "phone_number",
+                  name: "recipent_phone",
                   label: "Contact telephone",
                   autoComplete: "tel",
                   type: "tel",
                   hint: "Include your country code for delivery updates.",
                   placeholder: "e.g. +60 12-345 6789",
                   width: "half",
-                   value: addressDetial?.recipent_phone ?? ""
+                   value: addressDetail?.recipent_phone ?? ""
                 },
                 {
-                  name: "address",
+                  name: "address_1",
                   label: "Street address",
                   autoComplete: "address-line1",
                   hint: "Include your house or building number and street name.",
                   placeholder: "e.g. 128 Hill House Lane",
                   width: "street",
-                   value: addressDetial?.address_1 ?? ""
+                   value: addressDetail?.address_1 ?? ""
                 },
                 {
-                  name: "unit",
+                  name: "address_2",
                   label: "Apartment, suite, unit",
                   autoComplete: "address-line2",
                   hint: "Enter your area, building, floor or unit number.",
                   placeholder: "e.g. Apt 4B",
                   optional: false,
-                   value: addressDetial?.address_2 ?? ""
+                   value: addressDetail?.address_2 ?? ""
 
                 },
                 {
@@ -91,29 +91,29 @@ export default function AddressDetail() {
                   label: "City / Municipality",
                   autoComplete: "address-level2",
                   placeholder: "e.g. Kuala Lumpur",
-                   value: addressDetial?.city ?? ""
+                   value: addressDetail?.city ?? ""
                 },
                 {
                   name: "state",
                   label: "State / Province",
                   autoComplete: "address-level1",
                   placeholder: "e.g. Kuala Lumpur",
-                   value: addressDetial?.state ?? ""
+                   value: addressDetail?.state ?? ""
                 },
                 {
-                  name: "postcode",
+                  name: "postal_code",
                   label: "Postal / ZIP code",
                   autoComplete: "postal-code",
                   placeholder: "e.g. 50450",
                   hint: "No postal code in your country? Enter N/A.",
-                   value: addressDetial?.postal_code ?? ""
+                   value: addressDetail?.postal_code ?? ""
                 },
                 {
                   name: "country",
                   label: "Country / Territory",
                   autoComplete: "country-name",
                   placeholder: "e.g. Malaysia",
-                   value: addressDetial?.country ?? ""
+                   value: addressDetail?.country ?? ""
                 },
               ]}
             />}
