@@ -55,7 +55,7 @@ export default function AddressForm({ address_type, address_field, addressId, in
       } else {
         await addAddress(payload);
       }
-      navigate("/profile");
+      navigate("/address");
     } catch (error) {
       const fieldErrors = Object.fromEntries(
         Object.entries(error.errors ?? {}).map(([field, messages]) => [
@@ -178,7 +178,7 @@ export default function AddressForm({ address_type, address_field, addressId, in
               <Button
                 type="button"
                 className="edit_cancel"
-                onClick={() => navigate("/profile")}
+                onClick={() => navigate("/address")}
               >
                 Discard Changes
               </Button>

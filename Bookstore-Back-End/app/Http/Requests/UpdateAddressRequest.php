@@ -22,7 +22,13 @@ class UpdateAddressRequest extends FormRequest
             'state' => 'sometimes|required|string|max:255',
             'postal_code' => 'sometimes|required|string|max:255',
             'country' => 'sometimes|required|string|max:255',
-            'status' => 'sometimes|required|boolean',
+            'status' => 'sometimes|required|boolean|unique:user_address,status,' . $this->route('id') . ',id,user_id,' . $this->user()->id.',status,1',
         ];
     }
+    public function messages(): array
+{
+    return [
+        'status.unique' => 'there can only be one active address per user. Please deactivate the current active address before setting a new one.',
+    ];
+}
 }

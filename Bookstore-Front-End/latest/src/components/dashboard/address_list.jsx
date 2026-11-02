@@ -62,8 +62,10 @@ export default function AddressList({ addresses = [] }) {
                   </div>
                   <div className="name">
                     <span>
-                      {item.recipient_name ?? item.recipent_name ?? item.Name},
+                      {item.recipient_name ?? item.recipent_name ?? item.Name} 
                     </span>
+                    <strong className="text-success px-3">{item.status ? "Active" : ""}</strong>
+                    <strong>{item.type}</strong>
                   </div>
                   <div className="address">
                     <span>{item.address_1 ?? item.Address},</span>
@@ -127,6 +129,7 @@ AddressList.propTypes = {
       state: PropTypes.string.isRequired,
       postal_code: PropTypes.string.isRequired,
       country: PropTypes.string.isRequired,
+      status: PropTypes.bool,
     }),
   ),
 };
