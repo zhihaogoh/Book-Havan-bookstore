@@ -1,4 +1,4 @@
-import { apiGet, apiPost, apiPut, setAccessToken } from "../services/api";
+import { apiDelete, apiGet, apiPost, apiPut, setAccessToken } from "../services/api";
 
 export const handleLogin = async (email, password) => {
   const response = await apiPost("/login", { email, password });
@@ -131,6 +131,29 @@ export const addAddress = async ({
     return response;
   } catch (error) {
     console.error("Error adding address:", error);
+    throw error;
+  }
+};
+
+export const deleteAddress = async (id) => {
+  try {
+    const response = await apiDelete(`/address/${encodeURIComponent(id)}`);  
+    return response;
+
+  } catch (error) {
+    console.error("Error deleting address:", error);
+    throw error;
+  }
+}
+
+
+export const changePassword = async (current_password, new_password, new_password_confirmation) => {
+  try {
+    const response = await apiPut("/user/password", { current_password, new_password, new_password_confirmation });
+    console.log("Password changed successfully:", response);
+    return response;
+  } catch (error) {
+    console.error("Error changing password:", error);
     throw error;
   }
 };

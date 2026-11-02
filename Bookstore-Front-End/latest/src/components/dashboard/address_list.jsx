@@ -3,6 +3,7 @@ import { MdAddCircle, MdPhone } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router";
 import { readAddresses } from "../../routes/address_storage";
 import PropTypes from "prop-types";
+import { deleteAddress } from "../../auth/auth";
 
 export default function AddressList({ addresses = [] }) {
   const location = useLocation();
@@ -19,6 +20,21 @@ export default function AddressList({ addresses = [] }) {
   const toEditAddress = (AddressId) => {
     navigate(`/address/new/${AddressId}`);
   };
+
+  const toDeleteAddress = (AddressId) => {
+    // Implement delete functionality here
+    try{
+      const response = deleteAddress(AddressId);
+      if (response) {
+        // Optionally, you can update the state or refetch the addresses after deletion
+        console.log(`Address with ID ${AddressId} deleted successfully.`);
+        navigate("/address"); // Navigate back to the address list after deletion
+      }
+    } catch (error) {
+      console.error("Error deleting address:", error);
+    }
+  };
+    
   return (
     <>
       <div className="address_list">
@@ -90,7 +106,9 @@ export default function AddressList({ addresses = [] }) {
                     >
                       Edit
                     </Button>
-                    <Button className="delete">Delete</Button>
+                    <Button className="delete" onClick={() => toDeleteAddress(item.id)}>
+                      Delete
+                    </Button>
                   </div>
                 </Card>
               </Col>

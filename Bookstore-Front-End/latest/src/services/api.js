@@ -147,3 +147,36 @@ export const apiPut = async (endpoint, data = {}) => {
   return result;
 };
 
+export const apiDelete = async (endpoint) => {
+  await getCsrfCookie();
+
+  const xsrfToken = getXSRFToken();
+
+  if (!xsrfToken) {
+    throw new Error(
+      "XSRF-TOKEN Cookie not found. Check browser cookies."
+    );
+  }
+
+  const response = await fetch(`${API_URL}${endpoint}`, {
+    method: "DELETE",
+    credentials: "include",
+    headers: {
+      "Accept": "application/json",
+      "X-XSRF-TOKEN": xsrfToken,
+      ...getAuthHeaders(),
+    },
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    const error = new Error(result.message || "Delete failed");
+
+    error.status = response.status;
+    error.errors = result.errors ?? {};
+    throw error;
+  }
+
+  return result;
+};

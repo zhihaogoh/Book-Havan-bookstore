@@ -9,6 +9,7 @@ import {
   FiSave,
 } from "react-icons/fi";
 import { useNavigate } from "react-router";
+import { changePassword } from "../../auth/auth";
 
 export default function ChangePasswordForm() {
   const navigate = useNavigate();
@@ -23,11 +24,12 @@ export default function ChangePasswordForm() {
   const [visible, setVisible] = useState({});
   // 保存页面提示信息；空字符串表示暂时没有提示
   const [message, setMessage] = useState("");
+  const [saving, setSaving] = useState(false);
 
   // 估算新密码强度：检查长度和字符组合，不是验证字体
   const score = [
     passwords.next.length >= 8,
-    passwords.next.length >= 12,
+    passwords.next.length >= 13,
     // 同时包含小写字母和大写字母，得 1 分
     /[a-z]/.test(passwords.next) && /[A-Z]/.test(passwords.next), // 包含数字，得 1 分
     /\d/.test(passwords.next),
@@ -66,8 +68,9 @@ export default function ChangePasswordForm() {
       Icon: FiCheckCircle,
     },
   ];
-  function handleChangePassword(event) {
+  const handleChangePassword = async (event) => {
     event.preventDefault();
+        if (saving) return;
     const nextErrors = {};
     if (!passwords.current) {
       nextErrors.current = "Please enter your current password";
@@ -75,8 +78,8 @@ export default function ChangePasswordForm() {
 
     if (!passwords.next) {
       nextErrors.next = "Please enter your new password ";
-    }  else if (passwords.next >8 && passwords >12 ){
-      nextErrors.next = "Please neter length 8 character and more than 12 character new password"
+    }  else if (passwords.next.length < 8 && passwords.next.length < 12 ){
+      nextErrors.next = "Please enter a password with 8 to 12 characters";
     } else if (passwords.next === passwords.current) {
       nextErrors.next =
         "Please choose a password different from your current password. ";
@@ -95,12 +98,13 @@ export default function ChangePasswordForm() {
       return;
     }
     try {
-       setMessage(
-      "Form validated. The server is not connected. Your password has not been changed."
-    );
-    } catch {
-      setMessage("Unable to change your password. Please try again.");
+       setSaving(true);
+      await changePassword(passwords.current, passwords.next, passwords.confirm);
+      navigate("/profile");
+    } catch (error) {
+      setMessage("Unable to change your password. Please try again.",error);
     }
+
   }
   return (
     <>
@@ -229,9 +233,9 @@ export default function ChangePasswordForm() {
               >
                 Cancel
               </Button>
-              <Button type="submit" className="password-save">
+              <Button type="submit" className="password-save" disabled={saving}>
                 <FiSave aria-hidden="true" />
-                Save Changes
+                {saving ? "Saving..." : "Save Changes"}
               </Button>
             </div>
           </Form>
