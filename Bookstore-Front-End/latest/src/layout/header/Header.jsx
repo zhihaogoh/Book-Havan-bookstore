@@ -13,7 +13,7 @@ import headerLogo from "../../assets/Image/Header_Logo.png";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Header({ menu }) {
-  const {loading, isAuthenticated, logoutUser } = useAuth();
+  const { loading, isAuthenticated, logoutUser } = useAuth();
   const navigate = useNavigate();
   const [loggingOut, setLoggingOut] = useState(false);
   const handleLogoutClick = async () => {
@@ -67,33 +67,46 @@ export default function Header({ menu }) {
               </button>
             </Form>
             {/* sub menu  */}
+            <Nav.Link className="menu py-2" href="/favourite">
+              <MdFavoriteBorder className="icon-menu" />
+              <h5 className="d-md-block d-lg-none m-0">Favourites</h5>
+            </Nav.Link>
+
+            <Nav.Link className="menu py-2" href="/shopping_cart">
+              <MdOutlineShoppingBag className="icon-menu" />
+              <h5 className="d-md-block d-lg-none m-0">Cart</h5>
+            </Nav.Link>
             {!loading &&
               (isAuthenticated ? (
                 <>
-                  <Nav.Link as={RouterNavLink} className="menu" to="/profile">
+                  <Nav.Link
+                    as={RouterNavLink}
+                    className="menu py-2"
+                    to="/profile"
+                  >
                     <MdPerson className="icon-menu" />
+                    <h5 className="d-md-block d-lg-none m-0">Profile</h5>
                   </Nav.Link>
                   <Nav.Link
-                    className="menu"
+                    className="menu py-2"
                     variant="outline-danger"
                     onClick={handleLogoutClick}
                     disabled={loggingOut}
                   >
                     <MdLogout className="icon-menu" />
+                    <h5 className="d-md-block d-lg-none m-0">Logout</h5>
                   </Nav.Link>
                 </>
               ) : (
-                <Nav.Link as={RouterNavLink} className="menu" to="/profile">
+                <Nav.Link
+                  as={RouterNavLink}
+                  className="menu py-2"
+                  to="/profile"
+                >
                   <MdPerson className="icon-menu" />
+                  <h5 className="d-md-block d-lg-none m-0">Login</h5>
                 </Nav.Link>
               ))}
-            <Nav.Link className="menu" href="/favourite">
-              <MdFavoriteBorder className="icon-menu" />
-            </Nav.Link>
-
-            <Nav.Link className="menu" href="/shopping_cart">
-              <MdOutlineShoppingBag className="icon-menu" />
-            </Nav.Link>
             {/*have already login redirect to profile page if haven't login redirect to login page */}
           </Navbar.Collapse>
         </div>
