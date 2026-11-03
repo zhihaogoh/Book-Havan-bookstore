@@ -46,6 +46,19 @@ class DatabaseSeeder extends Seeder
                 'last_name' => 'def',
                 'email' => 'Def@gmail.com',
                 'password' => 'Def@12345',
+            ],
+            [
+                'first_name' => 'GHI',
+                'last_name' => 'ghi',
+                'email' => 'Ghi@gmail.com',
+                'password' => 'Ghi@12345',
+            ],
+            [
+                'first_name' => 'JKL',
+                'last_name' => 'jkl',
+                'email' => 'Jkl@gmail.com',
+                'password' => 'Jkl@12345',
+                'user_role' => 'admin'
             ]
         ];
 
@@ -128,6 +141,34 @@ class DatabaseSeeder extends Seeder
             [
                 'author_name' => 'Daniel Kahneman',
                 'author_bio' => 'Daniel Kahneman'
+            ],
+            [
+                'author_name' => 'Jane Austen',
+                'author_bio' => 'Jane Austen',
+            ],
+            [
+                'author_name' => 'Charlotte Brontë',
+                'author_bio' => 'Charlotte Brontë',
+            ],
+            [
+                'author_name' => 'Emily Brontë',
+                'author_bio' => 'Emily Brontë',
+            ],
+            [
+                'author_name' => 'George Orwell',
+                'author_bio' => 'George Orwell',
+            ],
+            [
+                'author_name' => 'Aldous Huxley',
+                'author_bio' => 'Aldous Huxley',
+            ],
+            [
+                'author_name' => 'Ray Bradbury',
+                'author_bio' => 'Ray Bradbury',
+            ],
+            [
+                'author_name' => 'Margaret Atwood',
+                'author_bio' => 'Margaret Atwood',
             ]
         ];
 
@@ -195,7 +236,141 @@ class DatabaseSeeder extends Seeder
                 'book_quantity' => 100,
                 'book_isbn' => '9780743269153',
                 'categories_id' => 2
+            ],
+            [
+                'book_name' => 'Pride and Prejudice',
+                'author_id' => 6,
+                'book_publisher' => 'Havan Sample Publishing',
+                'book_description' => 'Pride and Prejudice',
+                'book_price' => 24.90,
+                'book_pages' => '160 pages',
+                'book_language' => 'English',
+                'book_quantity' => 100,
+                'book_isbn' => '9780009000010',
+                'categories_id' => 1
+            ],
+            [
+                'book_name' => 'Sense and Sensibility',
+                'author_id' => 6,
+                'book_publisher' => 'Havan Sample Publishing',
+                'book_description' => 'Sense and Sensibility by Jane Austen. A classic fiction title for the Havan Bookstore collection.',
+                'book_price' => 37.90,
+                'book_pages' => '184 pages',
+                'book_language' => 'English',
+                'book_quantity' => 12,
+                'book_isbn' => '9780009000027',
+                'categories_id' => 1
+            ],
+            [
+                'book_name' => 'Emma',
+                'author_id' => 6,
+                'book_publisher' => 'Havan Sample Publishing',
+                'book_description' => 'Emma by Jane Austen. A classic fiction title for the Havan Bookstore collection.',
+                'book_price' => 50.90,
+                'book_pages' => '208 pages',
+                'book_language' => 'English',
+                'book_quantity' => 19,
+                'book_isbn' => '9780009000034',
+                'categories_id' => 1
+            ],
+            [
+                'book_name' => 'Persuasion',
+                'author_id' => 6,
+                'book_publisher' => 'Havan Sample Publishing',
+                'book_description' => 'Persuasion by Jane Austen. A classic fiction title for the Havan Bookstore collection.',
+                'book_price' => 63.90,
+                'book_pages' => '232 pages',
+                'book_language' => 'English',
+                'book_quantity' => 26,
+                'book_isbn' => '9780009000041',
+                'categories_id' => 1
+            ],
+            [
+                'book_name' => 'Jane Eyre',
+                'author_id' => 7,
+                'book_publisher' => 'Havan Sample Publishing',
+                'book_description' => 'Jane Eyre by Charlotte Brontë. A classic fiction,
+    title for the Havan Bookstore collection.',
+                'book_price' => 76.90,
+                'book_pages' => '256 pages',
+                'book_language' => 'English',
+                'book_quantity' => 33,
+                'book_isbn' => '9780009000058',
+                'categories_id' => 1
+            ],
+            [
+                'book_name' => 'Wuthering Heights',
+                'author_id' => 8,
+                'book_publisher' => 'Havan Sample Publishing',
+                'book_description' => 'Wuthering Heights by Emily Brontë. A classic fiction title for the Havan Bookstore collection.',
+                'book_price' => 89.90,
+                'book_pages' => '280 pages',
+                'book_language' => 'English',
+                'book_quantity' => 40,
+                'book_isbn' => '9780009000065',
+                'categories_id' => 1
+            ],
+            [
+                'book_name' => '1984',
+                'author_id' => 9,
+                'book_publisher' => 'Havan Sample Publishing',
+                'book_description' => '1984 by George Orwell. A dystopian fiction title for the Havan Bookstore collection.',
+                'book_price' => 79.90,
+                'book_pages' => '400 pages',
+                'book_language' => 'English',
+                'book_quantity' => 19,
+                'book_isbn' => '9780009000019',
+                'categories_id' => 2
+            ],
+            [
+                'book_name' => 'Animal Farm',
+                'author_id' => 9,
+                'book_publisher' => 'Havan Sample Publishing',
+                'book_description' => 'Animal Farm by George Orwell. A dystopian fiction title for the Havan Bookstore collection.',
+                'book_price' => 92.90,
+                'book_pages' => '424 pages',
+                'book_language' => 'English',
+                'book_quantity' => 26,
+                'book_isbn' => '9780009000026',
+                'categories_id' => 2
+            ],
+            [
+                'book_name' => 'Brave New World',
+                'author_id' => 10,
+                'book_publisher' => 'Havan Sample Publishing',
+                'book_description' => 'Brave New World by Aldous Huxley. A dystopian fiction title for the Havan Bookstore collection.',
+                'book_price' => 30.90,
+                'book_pages' => '424 pages',
+                'book_language' => 'English',
+                'book_quantity' => 33,
+                'book_isbn' => '9780009000033',
+                'categories_id' => 2
+            ],
+            [
+                'book_name' => "Fahrenheit 451",
+                "author_id" => 11,
+                "book_publisher" => "Havan Sample Publishing",
+                "book_description" => "Fahrenheit 451 by Ray Bradbury. A dystopian fiction title for the Havan Bookstore collection.",
+                "book_price" => 43.90,
+                "book_pages" => "472 pages",
+                "book_language" => "English",
+                "book_quantity" => 40,
+                "book_isbn" => "9780009000040",
+                "categories_id" => 2
+            ],
+            [
+                "book_name" => "The Handmaid's Tale",
+                "author_id" => 12,
+                "book_publisher" => "Havan Sample Publishing",
+                "book_description" => "The Handmaid's Tale by Margaret Atwood. A dystopian fiction title for the Havan Bookstore collection.",
+                "book_price" => 56.90,
+                "book_pages" => "448 pages",
+                "book_language" => "English",
+                "book_quantity" => 47,
+                "book_isbn" => "9780009000057",
+                "categories_id" => 2
             ]
+
         ];
         foreach ($books as $book) {
             Books::updateOrCreate(['book_isbn' => $book['book_isbn']], $book);

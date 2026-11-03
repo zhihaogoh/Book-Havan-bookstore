@@ -11,6 +11,7 @@ class Books extends Model
         'author_id',
         'book_description',
         'book_price',
+        'discount_percentage',
         'book_image',
         'book_quantity',
         'book_publisher',
@@ -18,6 +19,9 @@ class Books extends Model
         'book_pages',
         'book_isbn',
         'categories_id',
+        'stock_on_hand',
+        'stock_reserved',
+        'status',
     ];
 
     public function author()

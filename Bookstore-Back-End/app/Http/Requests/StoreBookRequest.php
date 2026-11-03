@@ -29,6 +29,10 @@ class StoreBookRequest extends FormRequest
             'book_pages' => 'required|string|min:1',
             'book_isbn' => 'required|string|max:255|unique:books,book_isbn',
             'categories_id' => 'required|integer|exists:categories,id',
+            'discount_percentage' => 'nullable|numeric|min:0|max:100',
+            'stock_on_hand' => 'nullable|integer|min:0',
+            'stock_reserved' => 'nullable|integer|min:0',
+            'status' => 'nullable|boolean'
         ];
     }
 

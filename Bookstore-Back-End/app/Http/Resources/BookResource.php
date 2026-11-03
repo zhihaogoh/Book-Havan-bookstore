@@ -27,6 +27,10 @@ class BookResource extends JsonResource
             'book_language' => $this->book_language,
             'book_pages' => $this->book_pages,
             'book_isbn' => $this->book_isbn,
+            'discount_percentage' => (float) $this->discount_percentage,
+            'stock_on_hand' => $this->stock_on_hand,
+            'stock_reserved' => $this->stock_reserved,
+            'status' => $this->status,
         ];
     }
 }

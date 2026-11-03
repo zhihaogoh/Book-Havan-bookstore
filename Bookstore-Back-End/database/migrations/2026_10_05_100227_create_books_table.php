@@ -19,6 +19,7 @@ return new class extends Migration
             ->onDelete("cascade");
             $table->string("book_description");
             $table->decimal("book_price", 10, 2);
+            $table->decimal("discount_percentage", 5, 2)->default(0);
             $table->string("book_image")->nullable();
             $table->integer("book_quantity")->default(0);
             $table->string("book_publisher");
@@ -28,6 +29,9 @@ return new class extends Migration
             $table->foreignId("categories_id")
                 ->constrained("categories")
                 ->onDelete("cascade");
+            $table->integer("stock_on_hand")->default(0);
+            $table->integer("stock_reserved")->default(0);
+            $table->boolean("status")->default(0);
             $table->timestamps();
         });
     }
