@@ -1,4 +1,10 @@
-import { apiDelete, apiGet, apiPost, apiPut, setAccessToken } from "../services/api";
+import {
+  apiDelete,
+  apiGet,
+  apiPost,
+  apiPut,
+  setAccessToken,
+} from "../services/api";
 
 export const handleLogin = async (email, password) => {
   const response = await apiPost("/login", { email, password });
@@ -137,23 +143,42 @@ export const addAddress = async ({
 
 export const deleteAddress = async (id) => {
   try {
-    const response = await apiDelete(`/address/${encodeURIComponent(id)}`);  
+    const response = await apiDelete(`/address/${encodeURIComponent(id)}`);
     return response;
-
   } catch (error) {
     console.error("Error deleting address:", error);
     throw error;
   }
-}
+};
 
-
-export const changePassword = async (current_password, new_password, new_password_confirmation) => {
+export const changePassword = async (
+  current_password,
+  new_password,
+  new_password_confirmation,
+) => {
   try {
-    const response = await apiPut("/user/password", { current_password, new_password, new_password_confirmation });
+    const response = await apiPut("/user/password", {
+      current_password,
+      new_password,
+      new_password_confirmation,
+    });
     console.log("Password changed successfully:", response);
     return response;
   } catch (error) {
     console.error("Error changing password:", error);
+    throw error;
+  }
+};
+
+export const getBook = async () => {
+  try {
+    const response = await apiGet("/books");
+    console.log(response);
+    return response;
+  } catch (error) {
+    if (error.status === 401) {
+      setAccessToken(null);
+    }
     throw error;
   }
 };

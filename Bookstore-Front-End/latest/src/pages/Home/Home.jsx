@@ -2,8 +2,24 @@ import Banner from "../../components/banner/Banner";
 import ListProduct from "../../components/list_product/list_product";
 import Categories from "../../components/categories/Categories";
 import ServiceList from "../../components/service/service_list";
+import { useEffect, useState } from "react";
+import { getBook } from "../../auth/auth";
 
 export default function Home() {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try{
+        const response = await getBook();
+        console.log("Books fetched successfully:", response);
+        setProducts(response);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
+  console.log("Products in Home component:", products);
   return (
     <>
       <>
