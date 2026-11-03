@@ -18,7 +18,17 @@ class BookResource extends JsonResource
             'id' => $this->id,
             'book_name' => $this->book_name,
             'author_id' => $this->author_id,
+            'author' => $this->whenLoaded('author', function () {
+                return [
+                    'author_name' => $this->author->author_name,
+                ];
+            }),
             'categories_id' => $this->categories_id,
+            'category' => $this->whenLoaded('category', function () {
+                return [
+                    'categories_name' => $this->category->categories_name,
+                ];
+            }),
             'book_price' => (float) $this->book_price,
             'book_quantity' => $this->book_quantity,
             'book_description' => $this->book_description,

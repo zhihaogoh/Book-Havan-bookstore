@@ -12,13 +12,13 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Books::paginate(10);
+        $books = Books::with(['author','category'])->paginate(10);
         return BookResource::collection($books);
     }
 
     public function show(string $id)
     {
-        $book = Books::find($id);
+        $book = Books::with(['author','category'])->find($id);
         if (!$book) {
             return response()->json([
                 'message' => 'Book not found'

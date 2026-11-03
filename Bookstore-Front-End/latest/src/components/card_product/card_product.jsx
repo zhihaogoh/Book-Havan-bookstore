@@ -2,7 +2,7 @@ import { Card } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { Link } from "react-router";
 import { MdFavorite } from "react-icons/md";
-import StarRating from "../star_rating/star_rating";
+// import StarRating from "../star_rating/star_rating";
 
 export default function CardProduct({ product,favourite }) {
   const discount =product.Price * (1-product.discount/100);
@@ -21,7 +21,7 @@ export default function CardProduct({ product,favourite }) {
           </div>
           <h3 className="book-name">{product.BookName}</h3>
           <p className="author">{product.Author}</p>
-          <StarRating rating={product.star} reviewCount={product.viewNumber} />
+          {/* <StarRating rating={product.star} reviewCount={product.viewNumber} /> */}
           <div className="price-cart">
             {product.discount ?(
               <>

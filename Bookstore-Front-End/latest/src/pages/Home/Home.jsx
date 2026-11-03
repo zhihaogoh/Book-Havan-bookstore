@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { getBook } from "../../auth/auth";
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
+  const [product, setProducts] = useState([]);
   useEffect(() => {
     const fetchProducts = async () => {
       try{
@@ -19,7 +19,7 @@ export default function Home() {
     };
     fetchProducts();
   }, []);
-  console.log("Products in Home component:", products);
+  console.log("Products in Home component:", product);
   return (
     <>
       <>
@@ -77,6 +77,7 @@ export default function Home() {
         <ListProduct
           title="New Arrivals"
           viewAllLink="All Link"
+          product={product}
           products={[
             {
               id: 1,
