@@ -187,7 +187,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 100,
                 'book_isbn' => '9780735211292',
-                'categories_id' => 1
+                'categories_id' => 1,
+                'discount_percentage' => 0,
+                'stock_on_hand' => 100,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => 'The Psychology of Money',
@@ -199,7 +203,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 10,
                 'book_isbn' => '9780857197689',
-                'categories_id' => 2
+                'categories_id' => 2,
+                'discount_percentage' => 0,
+                'stock_on_hand' => 10,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => 'The Subtle Art of Not Giving a F*ck',
@@ -211,7 +219,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 10,
                 'book_isbn' => '9780062457714',
-                'categories_id' => 3
+                'categories_id' => 3,
+                                'discount_percentage' => 10,
+                'stock_on_hand' => 10,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => 'The 7 Habits of Highly Effective People',
@@ -223,7 +235,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 100,
                 'book_isbn' => '9780743269513',
-                'categories_id' => 4
+                'categories_id' => 4,
+                'discount_percentage' => 50,
+                'stock_on_hand' => 100,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => 'Thinking, Fast and Slow',
@@ -235,7 +251,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 100,
                 'book_isbn' => '9780743269153',
-                'categories_id' => 2
+                'categories_id' => 2,
+                'discount_percentage' => 50,
+                'stock_on_hand' => 100,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => 'Pride and Prejudice',
@@ -247,7 +267,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 100,
                 'book_isbn' => '9780009000010',
-                'categories_id' => 1
+                'categories_id' => 1,
+                'discount_percentage' => 10,
+                'stock_on_hand' => 100,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => 'Sense and Sensibility',
@@ -259,7 +283,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 12,
                 'book_isbn' => '9780009000027',
-                'categories_id' => 1
+                'categories_id' => 1,
+                'discount_percentage' => 10,
+                'stock_on_hand' => 100,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => 'Emma',
@@ -271,7 +299,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 19,
                 'book_isbn' => '9780009000034',
-                'categories_id' => 1
+                'categories_id' => 1,
+                'discount_percentage' => 10,
+                'stock_on_hand' => 100,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => 'Persuasion',
@@ -283,7 +315,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 26,
                 'book_isbn' => '9780009000041',
-                'categories_id' => 1
+                'categories_id' => 1,
+                'discount_percentage' => 50,
+                'stock_on_hand' => 100,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => 'Jane Eyre',
@@ -296,7 +332,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 33,
                 'book_isbn' => '9780009000058',
-                'categories_id' => 1
+                'categories_id' => 1,
+                'discount_percentage' => 10,
+                'stock_on_hand' => 100,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => 'Wuthering Heights',
@@ -308,7 +348,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 40,
                 'book_isbn' => '9780009000065',
-                'categories_id' => 1
+                'categories_id' => 1,
+                'discount_percentage' => 10,
+                'stock_on_hand' => 100,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => '1984',
@@ -320,7 +364,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 19,
                 'book_isbn' => '9780009000019',
-                'categories_id' => 2
+                'categories_id' => 2,
+                'discount_percentage' => 10,
+                'stock_on_hand' => 100,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => 'Animal Farm',
@@ -332,7 +380,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 26,
                 'book_isbn' => '9780009000026',
-                'categories_id' => 2
+                'categories_id' => 2,
+                'discount_percentage' => 10,
+                'stock_on_hand' => 100,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => 'Brave New World',
@@ -344,7 +396,11 @@ class DatabaseSeeder extends Seeder
                 'book_language' => 'English',
                 'book_quantity' => 33,
                 'book_isbn' => '9780009000033',
-                'categories_id' => 2
+                'categories_id' => 2,
+                'discount_percentage' => 10,
+                'stock_on_hand' => 100,
+                'stock_reserved' => 0,
+                'status' => 1
             ],
             [
                 'book_name' => "Fahrenheit 451",
@@ -356,7 +412,11 @@ class DatabaseSeeder extends Seeder
                 "book_language" => "English",
                 "book_quantity" => 40,
                 "book_isbn" => "9780009000040",
-                "categories_id" => 2
+                "categories_id" => 2,
+                "discount_percentage" => 10,
+                "stock_on_hand" => 100,
+                "stock_reserved" => 0,
+                "status" => 1
             ],
             [
                 "book_name" => "The Handmaid's Tale",
@@ -368,7 +428,11 @@ class DatabaseSeeder extends Seeder
                 "book_language" => "English",
                 "book_quantity" => 47,
                 "book_isbn" => "9780009000057",
-                "categories_id" => 2
+                "categories_id" => 2,
+                "discount_percentage" => 10,
+                "stock_on_hand" => 100,
+                "stock_reserved" => 0,
+                "status" => 1
             ]
 
         ];
