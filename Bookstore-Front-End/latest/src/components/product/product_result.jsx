@@ -7,6 +7,9 @@ export default function ProductResult({
   products,
   selectedCategories,
   keyword,
+  currentPage,
+  lastPage,
+  onPageChange,
 }) {
   const resultLabel = selectedCategories.length
     ? selectedCategories.join(", ")
@@ -72,15 +75,23 @@ export default function ProductResult({
           </Row>
         </div>
         <Pagination className="justify-content-center">
-          <Pagination.Prev />
-          <Pagination.Item active>{1}</Pagination.Item>
-          <Pagination.Item>{2}</Pagination.Item>
-          <Pagination.Item>{3}</Pagination.Item>
-          <Pagination.Item>{4}</Pagination.Item>
-          <Pagination.Item>{5}</Pagination.Item>
-          <Pagination.Ellipsis />
-          <Pagination.Item>{22}</Pagination.Item>
-          <Pagination.Next />
+          <Pagination.Prev 
+            onClick={() => onPageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {Array.from({ length: lastPage }, (_, index) => (
+            <Pagination.Item
+              key={index + 1}
+              active={index + 1 === currentPage}
+              onClick={() => onPageChange(index + 1)}
+            >
+              {index + 1}
+            </Pagination.Item>
+          ))}         
+          <Pagination.Next 
+            onClick={() => onPageChange(currentPage + 1)}
+            disabled={currentPage === lastPage}
+          />
         </Pagination>
       </div>
     </>
@@ -104,4 +115,7 @@ ProductResult.propTypes = {
   ).isRequired,
   keyword: PropTypes.string.isRequired,
   selectedCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currentPage: PropTypes.number.isRequired,
+  lastPage: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
 };

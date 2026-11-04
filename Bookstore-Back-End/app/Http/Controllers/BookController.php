@@ -12,11 +12,13 @@ class BookController extends Controller
 {
     public function index()
     {
+        // $books = Books::with(['author','category'])->get();
         $books = Books::with(['author','category'])->paginate(10);
+
         return BookResource::collection($books);
     }
 
-    
+
 
     public function search(Request $request)
     {

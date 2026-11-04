@@ -181,9 +181,9 @@ export const getCategory = async () => {
   }
 };
 
-export const getBook = async () => {
+export const getBook = async (page) => {
   try {
-    const response = await apiGet("/books");
+    const response = await apiGet(`/books?page=${page ?? 1}`);
     // console.log(response);
     return response;
   } catch (error) {
@@ -193,3 +193,15 @@ export const getBook = async () => {
     throw error;
   }
 };
+
+// export const getSearchBook = async (query) => {
+//   try {
+//     const response = await apiGet(`books/search`,{query});
+//     return response;
+//   } catch (error) {
+//     if (error.status === 401) {
+//       setAccessToken(null);
+//     }
+//     throw error;
+//   }
+// };

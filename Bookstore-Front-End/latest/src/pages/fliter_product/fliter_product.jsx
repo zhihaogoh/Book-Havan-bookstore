@@ -8,6 +8,8 @@ import { getBook, getCategory } from "../../auth/auth";
 
 export default function FliterProduct() {
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [inStockOnly, setInStockOnly] = useState(false);
@@ -26,12 +28,13 @@ export default function FliterProduct() {
   useEffect(() => {
     const fetchProducts = async () => {
       try{
-        const response = await getBook();
+        const response = await getBook(currentPage);
         // console.log("Books fetched successfully:", response);
         if (!Array.isArray(response.data)) {
           throw new Error("Books API response.data must be an array");
         }
         setProducts(response.data);
+        setLastPage(response.meta.last_page);
       } catch (error) {
         console.error("Error fetching books:", error);
       }
@@ -50,7 +53,8 @@ export default function FliterProduct() {
     };
     fetchProducts();
     fetchCategories();
-  }, []);
+  }, [currentPage]);
+
   //交互categories end
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
@@ -60,7 +64,7 @@ export default function FliterProduct() {
       minPrice === "" || product.book_price >= Number(minPrice); //设置至少的价钱
     const matchesMaxPrice =
       maxPrice === "" || product.book_price <= Number(maxPrice); //设置至多的价钱
-    const matchesStock = !inStockOnly || product.stock; // 设置佣有货
+    const matchesStock = !inStockOnly || product.status === 1; // 设置佣有货
     const matchSearch =
       keyword === "" ||
       product.book_name.toLowerCase().includes(keyword) ||
@@ -108,6 +112,9 @@ export default function FliterProduct() {
                 products={filteredProducts}
                 selectedCategories={selectedCategories}
                 keyword={keyword}
+                currentPage={currentPage}
+                lastPage={lastPage}
+                onPageChange={setCurrentPage}
               />
             </Col>
           </Row>
