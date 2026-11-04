@@ -17,7 +17,7 @@ export default function ProductResult({
   const [sortBy, setSortBy] = useState("default");
   const sortedProduct = [...products];
   const getFinalPrice = (product) => {
-    return product.Price * (1 - (product.discount ?? 0) / 100);
+    return product.book_price * (1 - (product.discount_percentage ?? 0) / 100);
   };
   if (sortBy === "more") {
     sortedProduct.sort((a, b) => getFinalPrice(b) - getFinalPrice(a));
@@ -26,9 +26,9 @@ export default function ProductResult({
     sortedProduct.sort((a, b) => getFinalPrice(a) - getFinalPrice(b));
     console.log(sortedProduct);
   } else if (sortBy === "az") {
-    sortedProduct.sort((a, b) => a.BookName.localeCompare(b.BookName));
+    sortedProduct.sort((a, b) => a.book_name.localeCompare(b.book_name));
   } else if (sortBy === "za") {
-    sortedProduct.sort((a, b) => b.BookName.localeCompare(a.BookName));
+    sortedProduct.sort((a, b) => b.book_name.localeCompare(a.book_name));
   }
   return (
     <>

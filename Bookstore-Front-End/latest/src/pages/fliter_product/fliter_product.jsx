@@ -93,7 +93,7 @@ export default function FliterProduct() {
       <>
         <div className="fliter_product container">
           <Row>
-            <Col xs={0} md={4} lg={4}>
+            <Col xs={0} md={4} lg={3}>
               <Fliter
                 selectedCategories={selectedCategories}
                 minPrice={minPrice}
@@ -107,7 +107,7 @@ export default function FliterProduct() {
                 categories={checkCategories}
               />
             </Col>
-            <Col xs={0} md={8} lg={8}>
+            <Col xs={0} md={8} lg={9}>
               <ProductResult
                 products={filteredProducts}
                 selectedCategories={selectedCategories}

@@ -194,14 +194,15 @@ export const getBook = async (page) => {
   }
 };
 
-// export const getSearchBook = async (query) => {
-//   try {
-//     const response = await apiGet(`books/search`,{query});
-//     return response;
-//   } catch (error) {
-//     if (error.status === 401) {
-//       setAccessToken(null);
-//     }
-//     throw error;
-//   }
-// };
+export const getBookById = async (id) => {
+  try {
+    const response = await apiGet(`/books/${encodeURIComponent(id)}`);
+    // console.log("Book fetched successfully:", response);
+    return response;
+  } catch (error) {
+    if (error.status === 401) {
+      setAccessToken(null);
+    }
+    throw error;
+  }
+};

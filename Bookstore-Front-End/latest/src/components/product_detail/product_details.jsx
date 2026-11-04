@@ -9,9 +9,12 @@ import "swiper/css/pagination";
 import { Grid, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SuccessStatus from "../Modal/success_status";
-export default function ProductDetails({ product }) {
+
+export default function ProductDetails({ product, img }) {
   const [num, setNumber] = useState(1);
   const [modal, setModal] = useState(false);
+  const price = Number(product.book_price);
+  const discount = price * (1 - (product.discount_percentage ?? 0) / 100);
   return (
     <>
       <div className="product_detail">
@@ -19,7 +22,7 @@ export default function ProductDetails({ product }) {
           <Col sm={12} md={6} lg={6}>
             <div className="image_group">
               <div className="main_img">
-                <img src={product.img} alt={product.img} />
+                <img src={img} alt={img} />
               </div>
               <Swiper
                 slidesPerView={4}
@@ -31,19 +34,19 @@ export default function ProductDetails({ product }) {
                 className="swiper_img"
               >
                 <SwiperSlide>
-                  <img src={product.img} alt={product.img} />
+                  <img src={img} alt={img} />
                 </SwiperSlide>
                 <SwiperSlide>
-                  <img src={product.img} alt={product.img} />
+                  <img src={img} alt={img} />
                 </SwiperSlide>
                 <SwiperSlide>
-                  <img src={product.img} alt={product.img} />
+                  <img src={img} alt={img} />
                 </SwiperSlide>
                 <SwiperSlide>
-                  <img src={product.img} alt={product.img} />
+                  <img src={img} alt={img} />
                 </SwiperSlide>
                 <SwiperSlide>
-                  <img src={product.img} alt={product.img} />
+                  <img src={img} alt={img} />
                 </SwiperSlide>
               </Swiper>
             </div>
@@ -52,17 +55,29 @@ export default function ProductDetails({ product }) {
           <Col sm={12} md={6} lg={6}>
             <div className="pt-3 product_detail_content">
               <div className="title_books">
-                <h3>{product.BookName}</h3>
+                <h3>{product.book_name}</h3>
               </div>
               <div className="author">
                 <span>
-                  by <span>{product.Author}</span>
+                  by <span>{product.author?.author_name}</span>
                 </span>
               </div>
               <div className="price_cart mt-5 p-3">
-                <span>RM{product.Price.toFixed(2)}</span>
+                {product.discount_percentage > 0 ? (
+                  <span>
+                    <p className="price text-danger fw-bold">
+                      RM{discount.toFixed(2)}
+                    </p>
+                    <p className="price_del">
+                      <del>RM{price.toFixed(2)}</del>
+                    </p>
+                  </span>
+                ) : (
+                  <span>RM{price.toFixed(2)}</span>
+                )}
+
                 <div className="stock">
-                  {product.stock === true ? (
+                  {product.status === 1 ? (
                     <span className="true">
                       <MdCheckCircle /> In Stock • Ships within 24hrs
                     </span>
@@ -81,17 +96,29 @@ export default function ProductDetails({ product }) {
                         >
                           -
                         </Button>
-                        <input type="number" className="number" value={num} readOnly />
+                        <input
+                          type="number"
+                          className="number"
+                          value={num}
+                          readOnly
+                        />
                         <Button
                           className="btn-light"
                           onClick={() => setNumber(num + 1)}
+                          disabled={product.status === 0}
                         >
                           +
                         </Button>
                       </div>
                     </Col>
                     <Col className="p-1" sm={2} md={6} lg={6}>
-                      <Button className="cart" onClick={() => {setModal(true)}}> 
+                      <Button
+                        className="cart"
+                        disabled={product.status === 0}
+                        onClick={() => {
+                          setModal(true);
+                        }}
+                      >
                         <FaShoppingCart /> Add to Cart
                       </Button>
                     </Col>
@@ -105,46 +132,33 @@ export default function ProductDetails({ product }) {
               </div>
               <div className="product_description">
                 <h3>Synopsis</h3>
-                <p>
-                  Alicia Berenson’s life is seemingly perfect. A famous painter
-                  married to an in-demand fashion photographer, she lives in a
-                  grand house with big windows overlooking a park in one of
-                  London’s most desirable areas. One evening her husband Gabriel
-                  returns home late from a fashion shoot, and Alicia shoots him
-                  five times in the face, and then never speaks another word.
-                  Alicia’s refusal to talk, or give any kind of explanation,
-                  turns a domestic tragedy into something far grander, a mystery
-                  that captures the public imagination and casts Alicia into
-                  notoriety. The price of her art skyrockets, and she, the
-                  silent patient, is hidden away from the tabloids and spotlight
-                  at the Grove, a secure forensic unit in North London.
-                </p>
+                <p>{product.book_description}</p>
                 <span>Read More</span>
               </div>
               <div className="spec">
                 <Row>
                   <Col sm={4} md={6} lg={3}>
                     <div className="spec_detail">
-                      <h3>Format</h3>
-                      <span>Hardcover</span>
+                      <h3>Category</h3>
+                      <span>{product.category.categories_name}</span>
                     </div>
                   </Col>
                   <Col sm={4} md={6} lg={3}>
                     <div className="spec_detail">
                       <h3>Pages</h3>
-                      <span>336</span>
+                      <span>{product.book_pages}</span>
                     </div>
                   </Col>
                   <Col sm={4} md={6} lg={3}>
                     <div className="spec_detail">
                       <h3>Publisher</h3>
-                      <span>Celadon Books</span>
+                      <span>{product.book_publisher}</span>
                     </div>
                   </Col>
                   <Col sm={4} md={6} lg={3}>
                     <div className="spec_detail">
                       <h3>ISBN</h3>
-                      <span>9781250301697</span>
+                      <span>{product.book_isbn}</span>
                     </div>
                   </Col>
                 </Row>
@@ -152,14 +166,15 @@ export default function ProductDetails({ product }) {
             </div>
           </Col>
         </Row>
-        <SuccessStatus 
+        <SuccessStatus
           show={modal}
           product={product}
-          number = {num}
-          onHide={() => {setModal(false)}}
+          number={num}
+          onHide={() => {
+            setModal(false);
+          }}
         />
       </div>
-      
     </>
   );
 }
@@ -167,14 +182,28 @@ export default function ProductDetails({ product }) {
 ProductDetails.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    img: PropTypes.string.isRequired,
-    BookName: PropTypes.string.isRequired,
-    Author: PropTypes.string.isRequired,
-    star: PropTypes.number.isRequired,
-    viewNumber: PropTypes.number.isRequired,
-    Price: PropTypes.number.isRequired,
-    discount: PropTypes.number,
-    categoty: PropTypes.string,
-    stock: PropTypes.bool,
+
+    book_name: PropTypes.string.isRequired,
+    author: PropTypes.shape({
+      author_name: PropTypes.string.isRequired,
+    }).isRequired,
+    book_description: PropTypes.string.isRequired,
+    book_publisher: PropTypes.string.isRequired,
+    book_language: PropTypes.string.isRequired,
+    book_pages: PropTypes.string.isRequired,
+    book_isbn: PropTypes.string.isRequired,
+    // star: PropTypes.number.isRequired,
+    // viewNumber: PropTypes.number.isRequired,
+    book_price: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+      .isRequired,
+    discount_percentage: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]).isRequired,
+    category: PropTypes.shape({
+      categories_name: PropTypes.string.isRequired,
+    }).isRequired,
+    status: PropTypes.number,
   }).isRequired,
+  img: PropTypes.string.isRequired,
 };

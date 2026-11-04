@@ -1,10 +1,27 @@
 import { useParams } from "react-router";
-import { products } from "../../data/products";
 import ProductDetails from "../../components/product_detail/product_details";
+import { useEffect, useState } from "react";
+import { getBookById } from "../../auth/auth";
 
 export default function ProductDetail() {
   const { productId } = useParams();
-  const product = products.find((item) => String(item.id) === productId);
+  
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await getBookById(productId);
+        setProduct(response.book);
+        // console.log("Fetched product  :", response.book);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } 
+    }
+    fetchProducts();
+  }, [productId]);
+  
+  const [product, setProduct] = useState(null);
+  // const product = products.find((item) => String(item.id) === productId);
+
   if (!product) {
     return (
       <>
@@ -16,7 +33,9 @@ export default function ProductDetail() {
     <>
       <>
         <div className="container">
-          <ProductDetails product={product} />
+          <ProductDetails product={product}
+              img = {"../src/assets/Image/Product/Product1.jpg"}
+          />
         </div>
       </>
     </>
