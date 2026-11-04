@@ -173,7 +173,7 @@ export const changePassword = async (
 export const getCategory = async () => {
   try {
     const response = await apiGet("/categories");
-    console.log("Categories fetched successfully:", response);
+    // console.log("Categories fetched successfully:", response);
     return response;
   } catch (error) {
     console.error("Error fetching categories:", error);
@@ -184,7 +184,7 @@ export const getCategory = async () => {
 export const getBook = async () => {
   try {
     const response = await apiGet("/books");
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (error) {
     if (error.status === 401) {

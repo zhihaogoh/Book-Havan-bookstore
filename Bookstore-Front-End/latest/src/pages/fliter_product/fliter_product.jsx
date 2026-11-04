@@ -27,7 +27,7 @@ export default function FliterProduct() {
     const fetchProducts = async () => {
       try{
         const response = await getBook();
-        console.log("Books fetched successfully:", response);
+        // console.log("Books fetched successfully:", response);
         if (!Array.isArray(response.data)) {
           throw new Error("Books API response.data must be an array");
         }
@@ -39,7 +39,7 @@ export default function FliterProduct() {
     const fetchCategories = async () => {
       try {
         const response = await getCategory();
-        console.log("Categories fetched successfully:", response);
+        // console.log("Categories fetched successfully:", response);
 
         setCheckCategories(response);
 
