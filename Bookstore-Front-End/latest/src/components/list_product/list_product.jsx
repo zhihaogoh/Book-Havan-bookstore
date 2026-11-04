@@ -41,12 +41,14 @@ ListProduct.propTypes = {
   products: PropTypes.arrayOf(
     PropTypes.shape({
       img: PropTypes.string.isRequired,
-      BookName: PropTypes.string.isRequired,
-      Author: PropTypes.string.isRequired,
-      star: PropTypes.number.isRequired,
-      viewNumber: PropTypes.number.isRequired,
-      Price: PropTypes.number.isRequired,
-      discount: PropTypes.number,
+      book_name: PropTypes.string.isRequired,
+      author: PropTypes.shape({
+        author_name: PropTypes.string.isRequired,
+      }).isRequired,
+      // star: PropTypes.number.isRequired,
+      // viewNumber: PropTypes.number.isRequired,
+      book_price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+      book_discount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
   ).isRequired,
 };

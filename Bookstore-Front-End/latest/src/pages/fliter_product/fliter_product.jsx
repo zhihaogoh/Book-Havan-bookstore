@@ -1,9 +1,10 @@
 import { Col, Row } from "react-bootstrap";
 import Fliter from "../../components/fliter/fliter";
 import ProductResult from "../../components/product/product_result";
-import { useState } from "react";
-import { products } from "../../data/products";
+import { useEffect, useState } from "react";
+
 import { useSearchParams } from "react-router";
+import { getBook, getCategory } from "../../auth/auth";
 
 export default function FliterProduct() {
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -12,6 +13,8 @@ export default function FliterProduct() {
   const [inStockOnly, setInStockOnly] = useState(false);
   const [searchParams] = useSearchParams();
   const keyword = (searchParams.get("q") ?? "").trim().toLowerCase();
+  const [products, setProducts] = useState([]);
+  const [checkCategories, setCheckCategories] = useState([]);
   //交互categories start
   const handleCategoryChange = (category) => {
     setSelectedCategories((currentCategories) =>
@@ -20,21 +23,48 @@ export default function FliterProduct() {
         : [...currentCategories, category],
     );
   };
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try{
+        const response = await getBook();
+        console.log("Books fetched successfully:", response);
+        if (!Array.isArray(response.data)) {
+          throw new Error("Books API response.data must be an array");
+        }
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+    const fetchCategories = async () => {
+      try {
+        const response = await getCategory();
+        console.log("Categories fetched successfully:", response);
 
+        setCheckCategories(response);
+
+      }
+      catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchProducts();
+    fetchCategories();
+  }, []);
   //交互categories end
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
       selectedCategories.length === 0 ||
-      selectedCategories.includes(product.category); //选择一个以上的书类
+      selectedCategories.includes(product.category.categories_name); //选择一个以上的书类
     const matchesMinPrice =
-      minPrice === "" || product.Price >= Number(minPrice); //设置至少的价钱
+      minPrice === "" || product.book_price >= Number(minPrice); //设置至少的价钱
     const matchesMaxPrice =
-      maxPrice === "" || product.Price <= Number(maxPrice); //设置至多的价钱
+      maxPrice === "" || product.book_price <= Number(maxPrice); //设置至多的价钱
     const matchesStock = !inStockOnly || product.stock; // 设置佣有货
     const matchSearch =
       keyword === "" ||
-      product.BookName.toLowerCase().includes(keyword) ||
-      product.Author.toLowerCase().includes(keyword);
+      product.book_name.toLowerCase().includes(keyword) ||
+      product.author.author_name.toLowerCase().includes(keyword);
 
     return (
       matchSearch &&
@@ -53,6 +83,7 @@ export default function FliterProduct() {
     setInStockOnly(false);
   };
 
+  
   return (
     <>
       <>
@@ -69,24 +100,7 @@ export default function FliterProduct() {
                 onMaxPriceChange={setMaxPrice}
                 onStockChange={setInStockOnly}
                 onClearAll={handleClearAll}
-                check_categories={[
-                  {
-                    category: "Fiction",
-                  },
-                  {
-                    category: "Non Fiction",
-                  },
-                  {
-                    category: "Business",
-                  },
-                  {
-                    category: "Scinece & Tech",
-                  },
-                  {
-                    category: "Romance",
-                  },
-                ]}
-               
+                categories={checkCategories}
               />
             </Col>
             <Col xs={0} md={8} lg={8}>

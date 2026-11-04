@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Col, Form, FormCheck, FormControl, Row } from "react-bootstrap";
 
 export default function Fliter({
-  check_categories,
+  categories,
   selectedCategories,
   minPrice,
   maxPrice,
@@ -36,14 +36,14 @@ export default function Fliter({
         <div className="list_fliter">
           <div className="categories">
             <Form>
-              {check_categories.map((item, index) => (
-                <div className="mb-3" key={index}>
+              {categories.map((item, ) => (
+                <div className="mb-3" key={ item.id}>
                   <Form.Check
                     className="check"
-                    label={item.category}
-                    id={item.category}
-                    checked={selectedCategories.includes(item.category)}
-                    onChange={() => onCategoryChange(item.category)}
+                    label={item.categories_name}
+                    id={item.categories_name}
+                    checked={selectedCategories.includes(item.categories_name)}
+                    onChange={() => onCategoryChange(item.categories_name)}
                   />
                 </div>
               ))}
@@ -104,9 +104,10 @@ export default function Fliter({
 }
 
 Fliter.propTypes = {
-  check_categories: PropTypes.arrayOf(
+  categories: PropTypes.arrayOf(
     PropTypes.shape({
-      category: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      categories_name: PropTypes.string.isRequired,
     }),
   ),
   selectedCategories: PropTypes.arrayOf(PropTypes.string).isRequired,

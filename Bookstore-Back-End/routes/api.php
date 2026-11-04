@@ -29,7 +29,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/address/{id}', [AddressController::class, 'update']);
 
 
-    
+
     Route::get('order-item', [OrderItemController::class, 'index']);
     Route::post('order-item', [OrderItemController::class, 'store']);
     Route::delete('order-item/{id}', [OrderItemController::class, 'destroy']);
@@ -48,6 +48,7 @@ Route::post('categories', [CategoriesController::class, 'store']);
 Route::put('categories/{id}', [CategoriesController::class, 'update']);
 Route::delete('categories/{id}', [CategoriesController::class, 'destroy']);
 
+Route::get('books/search', [BookController::class, 'search']);
 Route::get('books', [BookController::class, 'index']);
 Route::get('books/{id}', [BookController::class, 'show']);
 Route::post('books', [BookController::class, 'store']);

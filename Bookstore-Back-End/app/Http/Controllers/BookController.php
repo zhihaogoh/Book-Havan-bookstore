@@ -16,6 +16,24 @@ class BookController extends Controller
         return BookResource::collection($books);
     }
 
+    
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $books = Books::with(['author','category'])
+            ->where('book_name', 'like', "%$query%")
+            ->orWhereHas('author', function ($q) use ($query) {
+                $q->where('author_name', 'like', "%$query%");
+            })
+            ->orWhereHas('category', function ($q) use ($query) {
+                $q->where('categories_name', 'like', "%$query%");
+            })
+            ->paginate(10);
+
+        return BookResource::collection($books);
+    }
+
     public function show(string $id)
     {
         $book = Books::with(['author','category'])->find($id);

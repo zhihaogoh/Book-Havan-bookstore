@@ -12,7 +12,10 @@ export default function Home() {
       try{
         const response = await getBook();
         console.log("Books fetched successfully:", response);
-        setProducts(response);
+        if (!Array.isArray(response.data)) {
+          throw new Error("Books API response.data must be an array");
+        }
+        setProducts(response.data);
       } catch (error) {
         console.error("Error fetching books:", error);
       }
@@ -77,163 +80,16 @@ export default function Home() {
         <ListProduct
           title="New Arrivals"
           viewAllLink="All Link"
-          product={product}
-          products={[
-            {
-              id: 1,
-              BookName: "The Silent Patient",
-              Author: "Alex Michaelides",
-              Price: 15.99,
-              img: "../src/assets/Image/Product/Product6.jpg",
-              viewNumber: 1000,
-              star: 4.5,
-              category: "Fiction",
-              stock: true,
-            },
-            {
-              id: 2,
-              BookName: "The Midnight Library",
-              Author: "Matt Haig",
-              Price: 14.99,
-              img: "../src/assets/Image/Product/Product5.jpg",
-              viewNumber: 800,
-              star: 4.3,
-              category: "Non Fiction",
-              stock: true,
-            },
-            {
-              id: 3,
-              BookName: "The Vanishing Half",
-              Author: "Brit Bennett",
-              Price: 16.99,
-              img: "../src/assets/Image/Product/Product4.jpg",
-              viewNumber: 1200,
-              star: 4.7,
-              category: "Non Fiction",
-              stock: true,
-            },
-            {
-              id: 4,
-              BookName: "The Four Winds",
-              Author: "Kristin Hannah",
-              Price: 17.99,
-              img: "../src/assets/Image/Product/Product3.jpg",
-              viewNumber: 900,
-              star: 4.6,
-              category: "Business",
-              stock: true,
-            },
-            {
-              id: 5,
-              BookName: "The Night Circus",
-              Author: "Erin Morgenstern",
-              Price: 13.99,
-              img: "../src/assets/Image/Product/Product2.jpg",
-              viewNumber: 1100,
-              star: 4.4,
-              category: "Business",
-              stock: true,
-            },
-            {
-              id: 6,
-              BookName: "The Seven Husbands of Evelyn Hugo",
-              Author: "Taylor Jenkins Reid",
-              Price: 14.99,
-              img: "../src/assets/Image/Product/Product1.jpg",
-              viewNumber: 1000,
-              star: 4.5,
-              category: "Scinece & Tech",
-              stock: true,
-            },
-          ]}
+          products={product}
         />
         {/* New Arrivals  Ends*/}
         {/* Discount Starts*/}
         <ListProduct
           title="Discounted Items"
           viewAllLink="All Link"
-          products={[
-            {
-              id: 7,
-              BookName: "The Silent Patient",
-              Author: "Alex Michaelides",
-              Price: 18.0,
-              img: "../src/assets/Image/Product/Product6.jpg",
-              viewNumber: 1000,
-              star: 4.5,
-              discount: 10,
-              category: "Scinece & Tech",
-              stock: true,
-              favorite: false,
-            },
-            {
-              id: 8,
-              BookName: "The Midnight Library",
-              Author: "Matt Haig",
-              Price: 17.5,
-              img: "../src/assets/Image/Product/Product5.jpg",
-              viewNumber: 800,
-              star: 4.3,
-              discount: 15,
-              category: "Scinece & Tech",
-              stock: true,
-              favorite: false,
-            },
-            {
-              id: 9,
-              BookName: "The Vanishing Half",
-              Author: "Brit Bennett",
-              Price: 18.5,
-              img: "../src/assets/Image/Product/Product4.jpg",
-              viewNumber: 1200,
-              star: 4.7,
-              discount: 15,
-              category: "Romance",
-              stock: true,
-              favorite: false,
-            },
-            {
-              id: 10,
-              BookName: "The Four Winds",
-              Author: "Kristin Hannah",
-              Price: 18.5,
-              img: "../src/assets/Image/Product/Product3.jpg",
-              viewNumber: 900,
-              star: 4.6,
-              discount: 15,
-              category: "Romance",
-              stock: true,
-              favorite: false,
-            },
-            {
-              id: 11,
-              BookName: "The Night Circus",
-              Author: "Erin Morgenstern",
-              Price: 17.0,
-              img: "../src/assets/Image/Product/Product2.jpg",
-              viewNumber: 1100,
-              star: 4.4,
-              discount: 15,
-              category: "Romance",
-              stock: true,
-              favorite: false,
-            },
-            {
-              id: 12,
-              BookName: "The Seven Husbands of Evelyn Hugo",
-              Author: "Taylor Jenkins Reid",
-              Price: 17.5,
-              img: "../src/assets/Image/Product/Product1.jpg",
-              viewNumber: 1000,
-              star: 4.5,
-              discount: 15,
-              category: "Non Fiction",
-              stock: false,
-              favorite: false,
-            },
-          ]}
+          products={product.filter((item) => item.discount_percentage > 0)}
         />
-
+       
         {/* Discount Ends*/}
       </>
     </>
