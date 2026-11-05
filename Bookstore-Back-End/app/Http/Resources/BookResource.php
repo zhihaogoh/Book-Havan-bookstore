@@ -32,7 +32,6 @@ class BookResource extends JsonResource
             'book_price' => (float) $this->book_price,
             'book_quantity' => $this->book_quantity,
             'book_description' => $this->book_description,
-            'book_image' => $this->book_image,
             'book_publisher' => $this->book_publisher,
             'book_language' => $this->book_language,
             'book_pages' => $this->book_pages,

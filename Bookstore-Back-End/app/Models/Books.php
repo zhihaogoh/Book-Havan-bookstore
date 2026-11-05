@@ -12,7 +12,6 @@ class Books extends Model
         'book_description',
         'book_price',
         'discount_percentage',
-        'book_image',
         'book_quantity',
         'book_publisher',
         'book_language',

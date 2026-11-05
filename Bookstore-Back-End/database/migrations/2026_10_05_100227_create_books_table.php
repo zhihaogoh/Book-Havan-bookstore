@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string("book_description");
             $table->decimal("book_price", 10, 2);
             $table->decimal("discount_percentage", 5, 2)->default(0);
-            $table->string("book_image")->nullable();
             $table->integer("book_quantity")->default(0);
             $table->string("book_publisher");
             $table->string("book_language");

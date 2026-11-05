@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ImageBookController;
 use App\Http\Controllers\OrderController;
@@ -21,25 +22,27 @@ Route::post('/login', [userController::class, 'Login']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [userController::class, 'getUser']);
     Route::post('/logout', [userController::class, 'Logout']);
-    Route::put('/user/profile', [userController :: class, 'update']);
-    Route::put('/user/password', [userController:: class ,'updatePassword']);
-    Route::get('/address',[AddressController::class,'index']);
-    Route::post('/address',[AddressController::class, 'store']);
+    Route::put('/user/profile', [userController::class, 'update']);
+    Route::put('/user/password', [userController::class, 'updatePassword']);
+    Route::get('/address', [AddressController::class, 'index']);
+    Route::post('/address', [AddressController::class, 'store']);
     Route::delete('/address/{id}', [AddressController::class, 'destroy']);
     Route::put('/address/{id}', [AddressController::class, 'update']);
 
 
+    Route::get('/cart', [CartController::class, 'index']);
+    Route::post('/cart', [CartController::class, 'store']);
+    Route::delete('/cart/{id}' ,[CartController::class , 'destroy']);
+    Route::get('/order-item', [OrderItemController::class, 'index']);
+    Route::post('/order-item', [OrderItemController::class, 'store']);
+    Route::delete('/order-item/{id}', [OrderItemController::class, 'destroy']);
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::post('/orders', [OrderController::class, 'store']);
+});
 
-    Route::get('order-item', [OrderItemController::class, 'index']);
-    Route::post('order-item', [OrderItemController::class, 'store']);
-    Route::delete('order-item/{id}', [OrderItemController::class, 'destroy']);
-    Route::get('orders', [OrderController::class, 'index']);
-    Route::post('orders', [OrderController::class, 'store']);
-    });
-
-Route::post('author',[AuthorController::class, 'store']);
-Route::put('author/{id}',[AuthorController::class, 'update']);
-Route::delete('author/{id}',[AuthorController::class, 'destroy']);
+Route::post('author', [AuthorController::class, 'store']);
+Route::put('author/{id}', [AuthorController::class, 'update']);
+Route::delete('author/{id}', [AuthorController::class, 'destroy']);
 
 
 Route::get('categories', [CategoriesController::class, 'index']);

@@ -22,7 +22,6 @@ class UpdateBookRequest extends FormRequest
             'author_id' => 'required|integer|exists:authors,id',
             'book_description' => 'required|string',
             'book_price' => 'required|numeric|min:0',
-            'book_image' => 'nullable|string|max:255',
             'book_quantity' => 'required|integer|min:0',
             'book_publisher' => 'required|string|max:255',
             'book_language' => 'required|string|max:255',
@@ -53,10 +52,7 @@ class UpdateBookRequest extends FormRequest
             'book_price.numeric' => 'The book price must be a number.',
             'book_price.min' => 'The book price must be at least 0.',
 
-            'book_image.required' => 'The book image is required.',
-            'book_image.string' => 'The book image must be a string.',
-            'book_image.max' => 'The book image may not be greater than 255 characters.',
-
+        
             'book_quantity.required' => 'The book quantity is required.',
             'book_quantity.integer' => 'The book quantity must be an integer.',
             'book_quantity.min' => 'The book quantity must be at least 0.',
