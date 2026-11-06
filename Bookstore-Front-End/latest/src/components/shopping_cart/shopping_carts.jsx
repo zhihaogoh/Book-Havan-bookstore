@@ -8,8 +8,8 @@ export default function ShoppingCarts({ carts }) {
   const [quantities, setQuantities] = useState({});
   const shippingFee = 5;
   const getQuantity = (id) => quantities[id] ?? 1;
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
+  console.log(carts);
   const updateQuantity = (id, change) => {
     setQuantities((currentQuantities) => ({
       ...currentQuantities,
@@ -23,14 +23,14 @@ export default function ShoppingCarts({ carts }) {
   );
 
   const subtotal = carts.reduce(
-    (total, item) => total + item.Price * getQuantity(item.id),
+    (total, item) => total + Number(item.book?.book_price) * getQuantity(item.id),
     0,
   );
 
   const total = subtotal + shippingFee;
   const handleProceedToCheckout = () => {
     navigate("/check_out");
-  }
+  };
 
   return (
     <>
@@ -52,15 +52,15 @@ export default function ShoppingCarts({ carts }) {
                     <Card className="cart" key={item.id}>
                       <Row>
                         <Col md={4} lg={3}>
-                          <img src={item.img} alt={item.img} />
+                          <img src={"item.img"} alt={"item.img"} />
                         </Col>
                         <Col md={8} lg={9}>
                           <div className="name_price">
-                            <h3>{item.BookName}</h3>
-                            <h4>RM{item.Price.toFixed(2)}</h4>
+                            <h3>{item.book?.book_name}</h3>
+                            <h4>RM{Number(item.book?.book_price).toFixed(2)}</h4>
                           </div>
                           <div className="author">
-                            <span>{item.Author}</span>
+                            <span>{item.book?.book_author}</span>
                           </div>
                           <div className="set_product">
                             <Row>
@@ -142,7 +142,10 @@ export default function ShoppingCarts({ carts }) {
                       </Form>
                     </div>
                     <div className="check_out py-3">
-                      <Button className="btn-light" onClick={handleProceedToCheckout}>
+                      <Button
+                        className="btn-light"
+                        onClick={handleProceedToCheckout}
+                      >
                         Proceed to Check Out <MdKeyboardArrowRight />
                       </Button>
                     </div>
@@ -161,11 +164,16 @@ ShoppingCarts.propTypes = {
   carts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      BookName: PropTypes.string.isRequired,
-      Author: PropTypes.string.isRequired,
-      Price: PropTypes.number.isRequired,
-      img: PropTypes.string.isRequired,
-      status: PropTypes.bool.isRequired,
-    }),
-  ),
+      quantity: PropTypes.number.isRequired,
+      book: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        book_name: PropTypes.string.isRequired,
+        book_price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        book_author: PropTypes.string.isRequired,
+      }),
+      cart: PropTypes.shape({
+        user: PropTypes.object,
+      }),
+    })
+  ).isRequired,
 };

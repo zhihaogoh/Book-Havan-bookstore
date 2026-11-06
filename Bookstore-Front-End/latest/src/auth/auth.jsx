@@ -207,3 +207,15 @@ export const getBookById = async (id) => {
   }
 };
 
+export const getCart = async () =>{
+  try{
+    const response = await apiGet('/cart');
+    return response;
+  } catch (error){
+    if(error.status === 401){
+      console.log("Error fetching carts :" , error);
+    }
+    throw error;
+  }
+}
+
