@@ -33,6 +33,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/cart', [CartController::class, 'index']);
     Route::post('/cart', [CartController::class, 'store']);
     Route::delete('/cart/{id}' ,[CartController::class , 'destroy']);
+    Route::delete('/cart' ,[CartController::class , 'clear']);
+    Route::post('/cart/{id}' , [CartController::class, 'update']);
+
+
     Route::get('/order-item', [OrderItemController::class, 'index']);
     Route::post('/order-item', [OrderItemController::class, 'store']);
     Route::delete('/order-item/{id}', [OrderItemController::class, 'destroy']);

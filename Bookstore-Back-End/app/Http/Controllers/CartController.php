@@ -70,22 +70,79 @@ class CartController extends Controller
             'data' => new CartResource($item),
         ], 201);
     }
+    public function update(Request $request, String $id)
+    {
+        $data = $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
 
-    public function destroy(Request $request, $id)
+        $cartItem = DB::transaction(function () use ($request, $id, $data) {
+
+            $item = CartsItem::whereKey($id)
+                ->whereHas('cart', function ($query) use ($request) {
+                    $query->where('user_id', $request->user()->id);
+                })
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            $book = Books::whereKey($item->book_id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            $available = $book->stock_on_hand
+                - $book->stock_reserved;
+
+            if ($data['quantity'] > $available) {
+                throw ValidationException::withMessages([
+                    'quantity' => ['Not enough stock available.'],
+                ]);
+            }
+
+            $item->update([
+                'quantity' => $data['quantity'],
+            ]);
+
+            return $item->load('book', 'cart.user');
+        });
+
+        return response()->json([
+            'message' => 'Cart quantity updated successfully',
+            'data' => new CartResource($cartItem),
+        ], 201);
+    }
+
+
+    public function destroy(Request $request, string $id)
     {
         $cartItem = CartsItem::whereKey($id)
             ->whereHas('cart', function ($query) use ($request) {
-                $query->where(
-                    'user_id',
-                    $request->user()->id
-                );
+                $query->where('user_id', $request->user()->id);
             })
             ->firstOrFail();
 
         $cartItem->delete();
 
         return response()->json([
-            'message' => 'Book removed from cart successfully',
-        ], 200);
+            'message' => 'Cart item deleted successfully',
+        ], 201);
+    }
+
+
+    public function clear(Request $request)
+    {
+        $deletedCount = CartsItem::whereHas(
+            'cart',
+            function ($query) use ($request) {
+                $query->where(
+                    'user_id',
+                    $request->user()->id
+                );
+            }
+        )->delete();
+
+        return response()->json([
+            'message' => 'Cart cleared successfully',
+            'deleted_items' => $deletedCount,
+        ], 201);
     }
 }
