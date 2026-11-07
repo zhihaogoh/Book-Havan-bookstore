@@ -3,27 +3,32 @@ import { useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { MdDelete, MdFavorite, MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router";
+import { deleteCart } from "../../auth/auth";
+import DeleteStatus from "../Modal/delete_success";
 
 export default function ShoppingCarts({ carts }) {
   const [quantities, setQuantities] = useState({});
   const shippingFee = 5;
-  const getQuantity = (id) => quantities[id] ?? 1;
+  const [modal, setModal] = useState(false);
+  const getQuantity = (item, currentQuantities = quantities) => {
+    const quantity = Number(currentQuantities[item.id] ?? item.quantity);
+    return Number.isInteger(quantity) && quantity > 0 ? quantity : 1;
+  };
   const navigate = useNavigate();
-  console.log(carts);
-  const updateQuantity = (id, change) => {
+
+  const updateQuantity = (item, change) => {
     setQuantities((currentQuantities) => ({
       ...currentQuantities,
-      [id]: Math.max(1, (currentQuantities[id] ?? 1) + change),
+      [item.id]: Math.max(1, getQuantity(item, currentQuantities) + change),
     }));
   };
 
   const totalItems = carts.reduce(
-    (total, item) => total + getQuantity(item.id),
+    (total, item) => total + getQuantity(item),
     0,
   );
-
   const subtotal = carts.reduce(
-    (total, item) => total + Number(item.book?.book_price) * getQuantity(item.id),
+    (total, item) => total + Number(item.book?.book_price) * getQuantity(item),
     0,
   );
 
@@ -31,7 +36,17 @@ export default function ShoppingCarts({ carts }) {
   const handleProceedToCheckout = () => {
     navigate("/check_out");
   };
-
+  const handleDelete = async (id) => {
+    try {
+      const response = deleteCart(id);
+      if (response) {
+        console.log("Delete Successfully");
+        setModal(true);
+      }
+    } catch (error) {
+      console.error("Error deleting address : ", error);
+    }
+  };
   return (
     <>
       <div className="shopping_cart">
@@ -52,12 +67,24 @@ export default function ShoppingCarts({ carts }) {
                     <Card className="cart" key={item.id}>
                       <Row>
                         <Col md={4} lg={3}>
-                          <img src={"item.img"} alt={"item.img"} />
+                          <img
+                            src={
+                              item.img ??
+                              "../src/assets/image/Product/Product1.jpg"
+                            }
+                            alt={"item.img"}
+                          />
                         </Col>
                         <Col md={8} lg={9}>
                           <div className="name_price">
                             <h3>{item.book?.book_name}</h3>
-                            <h4>RM{Number(item.book?.book_price).toFixed(2)}</h4>
+                            <h4>
+                              RM
+                              {(
+                                getQuantity(item) *
+                                Number(item.book?.book_price)
+                              ).toFixed(2)}
+                            </h4>
                           </div>
                           <div className="author">
                             <span>{item.book?.book_author}</span>
@@ -71,7 +98,10 @@ export default function ShoppingCarts({ carts }) {
                                 </Button>
                               </Col>
                               <Col xs={3} md={3} lg={4}>
-                                <Button className="buttom">
+                                <Button
+                                  className="buttom"
+                                  onClick={() => handleDelete(item.id)}
+                                >
                                   <MdDelete className="me-1" /> Remove
                                 </Button>
                               </Col>
@@ -79,20 +109,23 @@ export default function ShoppingCarts({ carts }) {
                                 <div className="h-100 d-flex flex-row justify-content-between align-items-center">
                                   <Button
                                     className="btn-light"
-                                    onClick={() => updateQuantity(item.id, -1)}
-                                    disabled={getQuantity(item.id) <= 1}
+                                    onClick={() => updateQuantity(item, -1)}
+                                    disabled={getQuantity(item) <= 1}
                                   >
                                     -
                                   </Button>
                                   <input
                                     type="number"
                                     className="number"
-                                    value={getQuantity(item.id)}
+                                    value={getQuantity(item)}
                                     readOnly
                                   />
                                   <Button
                                     className="btn-light"
-                                    onClick={() => updateQuantity(item.id, 1)}
+                                    onClick={() => updateQuantity(item, 1)}
+                                    disabled={
+                                      getQuantity(item) >= Number(item.book.book_quantity)
+                                    }
                                   >
                                     +
                                   </Button>
@@ -130,7 +163,7 @@ export default function ShoppingCarts({ carts }) {
                     </div>
                     <div className="subtotal">
                       <h3 className="detail">Total</h3>
-                      <h3 className="price">{total.toFixed(2)}</h3>
+                      <h3 className="price">RM {total.toFixed(2)}</h3>
                     </div>
                     <div className="promo_code">
                       <div className="title">
@@ -155,6 +188,12 @@ export default function ShoppingCarts({ carts }) {
             </div>
           </>
         )}
+        <DeleteStatus
+          show={modal}
+          onHide={() => {
+            setModal(false);
+          }}
+        />
       </div>
     </>
   );
@@ -164,16 +203,18 @@ ShoppingCarts.propTypes = {
   carts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      quantity: PropTypes.number.isRequired,
+      quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       book: PropTypes.shape({
         id: PropTypes.number.isRequired,
         book_name: PropTypes.string.isRequired,
         book_price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         book_author: PropTypes.string.isRequired,
+        book_quantity: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+              .isRequired,
       }),
       cart: PropTypes.shape({
         user: PropTypes.object,
       }),
-    })
+    }),
   ).isRequired,
 };

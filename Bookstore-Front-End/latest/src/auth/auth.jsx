@@ -207,15 +207,41 @@ export const getBookById = async (id) => {
   }
 };
 
-export const getCart = async () =>{
-  try{
-    const response = await apiGet('/cart');
+export const addCart = async (book_id, quantity) => {
+  try {
+    const response = await apiPost("/cart", {
+      book_id,
+      quantity,
+    });
     return response;
-  } catch (error){
-    if(error.status === 401){
-      console.log("Error fetching carts :" , error);
+  } catch (error) {
+    if (error.status === 401) {
+      console.log(error);
     }
     throw error;
   }
-}
+};
 
+export const getCart = async () => {
+  try {
+    const response = await apiGet("/cart");
+    return response;
+  } catch (error) {
+    if (error.status === 401) {
+      console.log("Error fetching carts :", error);
+    }
+    throw error;
+  }
+};
+
+export const deleteCart = async (id) => {
+  try {
+    const responce = await apiDelete(`/cart/${encodeURIComponent(id)}`);
+    return responce;
+  } catch (error) {
+    if (error.status === 401) {
+      setAccessToken(null);
+    }
+    throw error;
+  }
+};

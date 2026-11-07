@@ -9,12 +9,28 @@ import "swiper/css/pagination";
 import { Grid, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SuccessStatus from "../Modal/success_status";
+import { addCart } from "../../auth/auth";
 
 export default function ProductDetails({ product, img }) {
   const [num, setNumber] = useState(1);
   const [modal, setModal] = useState(false);
-  const price = Number(product.book_price);
+  const price = Number(product.book_price) * num;
   const discount = price * (1 - (product.discount_percentage ?? 0) / 100);
+  const updateQuantity = (change) => {
+    setNumber((currentQuantity) => Math.max(1, currentQuantity + change));
+  };
+  const handleAddCart = async (id, quantity) => {
+    try {
+      const response = await addCart(id, quantity);
+      if (response) {
+        setModal(true);
+      }
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="product_detail">
@@ -91,7 +107,7 @@ export default function ProductDetails({ product, img }) {
                       <div className="buttom_add_max">
                         <Button
                           className="btn-light"
-                          onClick={() => setNumber(num - 1)}
+                          onClick={() => updateQuantity(-1)}
                           disabled={num <= 1}
                         >
                           -
@@ -104,8 +120,11 @@ export default function ProductDetails({ product, img }) {
                         />
                         <Button
                           className="btn-light"
-                          onClick={() => setNumber(num + 1)}
-                          disabled={product.status === 0}
+                          onClick={() => updateQuantity(1)}
+                          disabled={
+                            product.status === 0 ||
+                            num >= Number(product.book_quantity)
+                          }
                         >
                           +
                         </Button>
@@ -116,7 +135,7 @@ export default function ProductDetails({ product, img }) {
                         className="cart"
                         disabled={product.status === 0}
                         onClick={() => {
-                          setModal(true);
+                          handleAddCart(product.id, num);
                         }}
                       >
                         <FaShoppingCart /> Add to Cart
@@ -168,6 +187,7 @@ export default function ProductDetails({ product, img }) {
         </Row>
         <SuccessStatus
           show={modal}
+          img={img}
           product={product}
           number={num}
           onHide={() => {
@@ -192,6 +212,8 @@ ProductDetails.propTypes = {
     book_language: PropTypes.string.isRequired,
     book_pages: PropTypes.string.isRequired,
     book_isbn: PropTypes.string.isRequired,
+    book_quantity: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+      .isRequired,
     // star: PropTypes.number.isRequired,
     // viewNumber: PropTypes.number.isRequired,
     book_price: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
