@@ -124,7 +124,8 @@ export default function ShoppingCarts({ carts }) {
                                     className="btn-light"
                                     onClick={() => updateQuantity(item, 1)}
                                     disabled={
-                                      getQuantity(item) >= Number(item.book.book_quantity)
+                                      getQuantity(item) >=
+                                      Number(item.book.book_quantity)
                                     }
                                   >
                                     +
@@ -176,7 +177,7 @@ export default function ShoppingCarts({ carts }) {
                     </div>
                     <div className="check_out py-3">
                       <Button
-                        className="btn-light"
+                        className="btn-success"
                         onClick={handleProceedToCheckout}
                       >
                         Proceed to Check Out <MdKeyboardArrowRight />
@@ -210,7 +211,7 @@ ShoppingCarts.propTypes = {
         book_price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         book_author: PropTypes.string.isRequired,
         book_quantity: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-              .isRequired,
+          .isRequired,
       }),
       cart: PropTypes.shape({
         user: PropTypes.object,
