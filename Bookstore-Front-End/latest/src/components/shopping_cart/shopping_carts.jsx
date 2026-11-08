@@ -41,7 +41,7 @@ export default function ShoppingCarts({ carts }) {
   const handleDelete = async (id) => {
     try {
       const response = await deleteCart(id);
-      console.log(response);
+
       if (response) {
         setMessage(response.message)
         setModal(true);

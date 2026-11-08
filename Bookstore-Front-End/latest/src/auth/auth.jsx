@@ -275,6 +275,7 @@ export const getWishlist = async () => {
 export const deleteWishlist = async (id) => {
   try {
     const response = await apiDelete(`/wishlist/${encodeURIComponent(id)}`);
+    console.log(response);
     return response;
   } catch (error) {
     if (error.status === 401) {

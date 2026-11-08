@@ -11,7 +11,7 @@ export default function Home() {
     const fetchProducts = async () => {
       try{
         const response = await getBook();
-        console.log("Books fetched successfully:", response);
+        // console.log("Books fetched successfully:", response);
         if (!Array.isArray(response.data)) {
           throw new Error("Books API response.data must be an array");
         }
@@ -22,7 +22,7 @@ export default function Home() {
     };
     fetchProducts();
   }, []);
-  console.log("Products in Home component:", product);
+  // console.log("Products in Home component:", product);
   return (
     <>
       <>
