@@ -33,7 +33,8 @@ export default function ShoppingCarts({ carts }) {
   );
 
   const total = subtotal + shippingFee;
-  const handleProceedToCheckout = () => {
+  const handleProceedToCheckout = async() => {
+    
     navigate("/check_out");
   };
   const handleDelete = async (id) => {
@@ -178,7 +179,7 @@ export default function ShoppingCarts({ carts }) {
                     <div className="check_out py-3">
                       <Button
                         className="btn-success"
-                        onClick={handleProceedToCheckout}
+                        onClick={() => handleProceedToCheckout()}
                       >
                         Proceed to Check Out <MdKeyboardArrowRight />
                       </Button>

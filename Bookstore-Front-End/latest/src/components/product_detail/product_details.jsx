@@ -10,12 +10,14 @@ import { Grid, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SuccessStatus from "../Modal/success_status";
 import { addCart } from "../../auth/auth";
+import { useNavigate } from "react-router";
 
 export default function ProductDetails({ product, img }) {
   const [num, setNumber] = useState(1);
   const [modal, setModal] = useState(false);
   const price = Number(product.book_price) * num;
   const discount = price * (1 - (product.discount_percentage ?? 0) / 100);
+  const navigate = useNavigate();
   const updateQuantity = (change) => {
     setNumber((currentQuantity) => Math.max(1, currentQuantity + change));
   };
@@ -28,6 +30,7 @@ export default function ProductDetails({ product, img }) {
       return response;
     } catch (error) {
       console.log(error);
+      navigate('/login');
     }
   };
 

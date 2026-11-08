@@ -9,6 +9,7 @@ use App\Http\Controllers\ImageBookController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\userController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/cart' ,[CartController::class , 'clear']);
     Route::post('/cart/{id}' , [CartController::class, 'update']);
 
+    Route::get('/wishlist',[WishlistController:: class, 'index']);
+    Route::post('/wishlist',[WishlistController:: class, 'store']);
+    Route::delete('/wishlist/{id}', [WishlistController :: class, 'clear']);
 
     Route::get('/order-item', [OrderItemController::class, 'index']);
     Route::post('/order-item', [OrderItemController::class, 'store']);
