@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router";
 
-export default function SuccessStatus({ img, number, product, ...props }) {
+export default function SuccessStatus({ message ,img, number, product, ...props }) {
   const navigate = useNavigate();
   const toShoppingCart = () => {
     navigate("/shopping_cart");
@@ -11,7 +11,7 @@ export default function SuccessStatus({ img, number, product, ...props }) {
   const back = () => {
     navigate(-1);
   };
-
+  
   return (
     <>
       <Modal
@@ -25,7 +25,7 @@ export default function SuccessStatus({ img, number, product, ...props }) {
             <div className="success_status">
               <FaCheck className="icon" />
               <div className="status">
-                <h1>Added to Your Cart</h1>
+                <h1>{message ?? "Delete Successfully"}</h1>
                 <span>Ready for checkout or continue browsing</span>
               </div>
             </div>
@@ -62,6 +62,7 @@ export default function SuccessStatus({ img, number, product, ...props }) {
 }
 
 SuccessStatus.propTypes = {
+  message : PropTypes.string.isRequired,
   number: PropTypes.number.isRequired,
   product: PropTypes.shape({
     img: PropTypes.string.isRequired,

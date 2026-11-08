@@ -30,7 +30,7 @@ export default function FormLogin() {
   };
   const toProfile = () => {
     const from = location.state?.from;
-    navigate(from ? `${from.pathname}${from.search || ""}${from.hash || ""}` : "/home", { replace: true });
+    navigate(from ? `${from.pathname}${from.search || ""}${from.hash || ""}` : "/", { replace: true });
   };
   const [loginData, setLoginData] = useState({
     email: "",

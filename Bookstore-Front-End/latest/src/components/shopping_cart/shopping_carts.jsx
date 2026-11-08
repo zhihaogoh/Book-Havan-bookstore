@@ -3,13 +3,14 @@ import { useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { MdDelete, MdFavorite, MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router";
-import { deleteCart } from "../../auth/auth";
+import { addWishlist, deleteCart } from "../../auth/auth";
 import DeleteStatus from "../Modal/delete_success";
 
 export default function ShoppingCarts({ carts }) {
   const [quantities, setQuantities] = useState({});
   const shippingFee = 5;
   const [modal, setModal] = useState(false);
+  const [message,setMessage] = useState('')
   const getQuantity = (item, currentQuantities = quantities) => {
     const quantity = Number(currentQuantities[item.id] ?? item.quantity);
     return Number.isInteger(quantity) && quantity > 0 ? quantity : 1;
@@ -39,15 +40,29 @@ export default function ShoppingCarts({ carts }) {
   };
   const handleDelete = async (id) => {
     try {
-      const response = deleteCart(id);
+      const response = await deleteCart(id);
+      console.log(response);
       if (response) {
-        console.log("Delete Successfully");
+        setMessage(response.message)
         setModal(true);
       }
     } catch (error) {
       console.error("Error deleting address : ", error);
     }
   };
+    const handleAddWishlist = async (id) => {
+      try {
+        const response = await addWishlist(id);
+        if (response) {
+          setMessage(response.message);
+          setModal(true);
+        }
+        return response;
+      } catch (error) {
+        console.log(error);
+        navigate("/login");
+      }
+    };
   return (
     <>
       <div className="shopping_cart">
@@ -93,7 +108,7 @@ export default function ShoppingCarts({ carts }) {
                           <div className="set_product">
                             <Row>
                               <Col xs={5} md={5} lg={4}>
-                                <Button className="buttom">
+                                <Button className="buttom" onClick={() => handleAddWishlist(item.book?.id)}>
                                   <MdFavorite className="me-1" /> Move to
                                   Wishlist
                                 </Button>
@@ -191,6 +206,7 @@ export default function ShoppingCarts({ carts }) {
           </>
         )}
         <DeleteStatus
+          message={message}
           show={modal}
           onHide={() => {
             setModal(false);

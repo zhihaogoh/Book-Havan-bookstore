@@ -9,12 +9,13 @@ import "swiper/css/pagination";
 import { Grid, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SuccessStatus from "../Modal/success_status";
-import { addCart } from "../../auth/auth";
+import { addCart, addWishlist } from "../../auth/auth";
 import { useNavigate } from "react-router";
 
 export default function ProductDetails({ product, img }) {
   const [num, setNumber] = useState(1);
   const [modal, setModal] = useState(false);
+  const [message,setMessage] = useState('');
   const price = Number(product.book_price) * num;
   const discount = price * (1 - (product.discount_percentage ?? 0) / 100);
   const navigate = useNavigate();
@@ -25,12 +26,27 @@ export default function ProductDetails({ product, img }) {
     try {
       const response = await addCart(id, quantity);
       if (response) {
+        setMessage(response.message);
         setModal(true);
       }
       return response;
     } catch (error) {
       console.log(error);
-      navigate('/login');
+      navigate("/login");
+    }
+  };
+
+  const handleAddWishlist = async (id) => {
+    try {
+      const response = await addWishlist(id);
+      if (response) {
+        setMessage(response.message);
+        setModal(true);
+      }
+      return response;
+    } catch (error) {
+      console.log(error);
+      navigate("/login");
     }
   };
 
@@ -145,7 +161,7 @@ export default function ProductDetails({ product, img }) {
                       </Button>
                     </Col>
                     <Col className="p-1" sm={2} md={2} lg={2}>
-                      <Button className="favourite">
+                      <Button className="favourite" onClick={() => handleAddWishlist(product.id)}>
                         <MdOutlineFavorite />
                       </Button>
                     </Col>
@@ -189,6 +205,7 @@ export default function ProductDetails({ product, img }) {
           </Col>
         </Row>
         <SuccessStatus
+          message={message}
           show={modal}
           img={img}
           product={product}

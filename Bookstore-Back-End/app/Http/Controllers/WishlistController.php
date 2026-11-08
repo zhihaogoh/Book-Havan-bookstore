@@ -34,7 +34,7 @@ class WishlistController extends Controller
             ]);
 
 
-            $item = WishlistItem::create([
+            $item = WishlistItem::firstOrCreate([
                 'wishlist_id' => $wishlist->id,
                 'book_id' => $book->id,
 
@@ -43,9 +43,11 @@ class WishlistController extends Controller
             return $item->load('book');
         });
         return response()->json([
-            'message' => 'Book added to wishlist successfully',
+            'message' => $item->wasRecentlyCreated
+                ? 'Book added to wishlist successfully'
+                : 'Book already in wishlist',
             'data' => new WishlistResource($item),
-        ], 201);
+        ], $item->wasRecentlyCreated ? 201 : 200);
     }
 
     public function clear(Request $request ,string $id )

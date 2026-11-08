@@ -124,6 +124,7 @@ class CartController extends Controller
 
         return response()->json([
             'message' => 'Cart item deleted successfully',
+            'cart_item' => $cartItem
         ], 201);
     }
 

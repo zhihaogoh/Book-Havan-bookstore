@@ -2,7 +2,7 @@ import { Button, Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { FaCheck } from "react-icons/fa";
 
-export default function DeleteStatus({  ...props }){
+export default function DeleteStatus({  message , ...props}){
 //   const navigate = useNavigate();
   const toShoppingCart = () =>{
    window.location.replace(window.location.href);
@@ -21,7 +21,7 @@ export default function DeleteStatus({  ...props }){
           <div className="success_status">
             <FaCheck className="icon" />
             <div className="status">
-              <h1>Delete Successfully</h1>
+              <h1>{message}</h1>
               <span>Ready for continue browsing</span>
             </div>
           </div>
@@ -53,6 +53,7 @@ export default function DeleteStatus({  ...props }){
 }
 
 DeleteStatus.propTypes ={
+  message:PropTypes.string.isRequired,
   number: PropTypes.number.isRequired,
   product: PropTypes.shape({
     img: PropTypes.string.isRequired,

@@ -236,8 +236,46 @@ export const getCart = async () => {
 
 export const deleteCart = async (id) => {
   try {
-    const responce = await apiDelete(`/cart/${encodeURIComponent(id)}`);
-    return responce;
+    const response = await apiDelete(`/cart/${encodeURIComponent(id)}`);
+    return response;
+  } catch (error) {
+    if (error.status === 401) {
+      setAccessToken(null);
+    }
+    throw error;
+  }
+};
+
+export const addWishlist = async (book_id) => {
+  try {
+    const response = await apiPost("/wishlist", {
+      book_id,
+    });
+    return response;
+  } catch (error) {
+    if (error.status === 401) {
+      console.log(error);
+    }
+    throw error;
+  }
+};
+
+export const getWishlist = async () => {
+  try {
+    const response = await apiGet("/wishlist");
+    return response;
+  } catch (error) {
+    if (error.status === 401) {
+      console.log("Error fetching carts :", error);
+    }
+    throw error;
+  }
+};
+
+export const deleteWishlist = async (id) => {
+  try {
+    const response = await apiDelete(`/wishlist/${encodeURIComponent(id)}`);
+    return response;
   } catch (error) {
     if (error.status === 401) {
       setAccessToken(null);
