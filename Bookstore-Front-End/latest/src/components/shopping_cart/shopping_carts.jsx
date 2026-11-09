@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import { Button, Card, Col, Row } from "react-bootstrap";
 import { MdDelete, MdFavorite, MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { addWishlist, deleteCart } from "../../auth/auth";
@@ -24,7 +24,6 @@ export default function ShoppingCarts({ carts }) {
       [item.id]: Math.max(1, getQuantity(item, currentQuantities) + change),
     }));
   };
-
 
   const totalItems = carts.reduce(
     (total, item) => total + getQuantity(item),
@@ -96,16 +95,28 @@ export default function ShoppingCarts({ carts }) {
                         <Col md={8} lg={9}>
                           <div className="name_price">
                             <h3>{item.book?.book_name}</h3>
-                            <h4 className={item.book?.discount_percentage >0 ? "text-danger" : ""}>
-                              RM
-                              {item.book?.discount_percentage ? (
-                                getQuantity(item) *
-                                (Number(item.book?.book_price) *(1 - (Number(item.book?.discount_percentage ?? 0)) / 100))
-                              ).toFixed(2)
-                              :   (getQuantity(item) *
-                                (Number(item.book?.book_price)
-                              ).toFixed(2))}
-                            </h4>
+                            {item.book?.discount_percentage > 0 ? (
+                              <h4 className="text-danger">
+                                RM
+                                {(
+                                  getQuantity(item) *
+                                  (Number(item.book?.book_price) *
+                                    (1 -
+                                      Number(
+                                        item.book?.discount_percentage ?? 0,
+                                      ) /
+                                        100))
+                                ).toFixed(2)}
+                              </h4>
+                            ) : (
+                              <h4>
+                                RM
+                                {(
+                                  getQuantity(item) *
+                                  Number(item.book?.book_price)
+                                ).toFixed(2)}
+                              </h4>
+                            )}
                           </div>
                           <div className="author">
                             <span>{item.book?.author?.author_name}</span>
@@ -183,23 +194,10 @@ export default function ShoppingCarts({ carts }) {
                           RM{shippingFee.toFixed(2)}
                         </span>
                       </div>
-                      <div className="list_price">
-                        <span className="detail">Tax</span>
-                        <span className="price">Calculated at checkout</span>
-                      </div>
                     </div>
                     <div className="subtotal">
                       <h3 className="detail">Total</h3>
                       <h3 className="price">RM {total.toFixed(2)}</h3>
-                    </div>
-                    <div className="promo_code">
-                      <div className="title">
-                        <h3>Promo Code</h3>
-                      </div>
-                      <Form className="promo_form">
-                        <Form.Control type="text" placeholder="Enter Code" />
-                        <Button className="btn-light">Apply</Button>
-                      </Form>
                     </div>
                     <div className="check_out py-3">
                       <Button
