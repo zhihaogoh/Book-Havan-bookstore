@@ -29,7 +29,13 @@ class CartResource extends JsonResource
                     'id' => $this->book->id,
                     'book_name' => $this->book->book_name,
                     'book_price' => $this->book->book_price,
-                    'book_quantity' => $this->book->book_quantity
+                    'book_quantity' => $this->book->book_quantity,
+                    'author' => $this->whenLoaded('author') && $this->book->author ? [
+                        'id' => $this->book->author->id,
+                        'author_name' => $this->book->author->author_name,
+
+                    ] : null,
+                    'discount_percentage' => $this->book->discount_percentage,
                 ];
             }),
             'quantity' => $this->quantity

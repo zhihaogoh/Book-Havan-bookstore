@@ -1,9 +1,25 @@
 import { Col, Form, Row } from "react-bootstrap";
-import { products } from "../../data/products";
 import CardProduct from "../card_product/card_product";
+import { useEffect, useState } from "react";
+import { getWishlist } from "../../auth/auth";
 
 export default function DashboardFavourite() {
-  const product = products;
+   const [products, setProducts] = useState([]);
+   useEffect(() => {
+     const fetchProducts = async () => {
+       try{
+         const response = await getWishlist();
+         // console.log("Books fetched successfully:", response);
+         if (!Array.isArray(response.data)) {
+           throw new Error("Books API response.data must be an array");
+         }
+         setProducts(response.data);
+       } catch (error) {
+         console.error("Error fetching books:", error);
+       }
+     };
+     fetchProducts();
+   }, [])
   return (
     <>
       <div className="dashboard_favourite">
@@ -15,7 +31,7 @@ export default function DashboardFavourite() {
           </span>
         </div>
         <div className="result_favourite">
-          <span>{product.length} items saved</span>
+          <span>{products.length} items saved</span>
           <div className="sort">
             <span className="pe-3">Sort By : </span>
             <Form>
@@ -29,9 +45,9 @@ export default function DashboardFavourite() {
           </div>
         </div>
               <Row>
-        {product.map((item,index) => (
-          <Col className="p-3" xs={6} md={6} lg={4} key={index}>
-            <CardProduct product={item} favourite = {true} />
+        {products.map((item) => (
+          <Col className="p-3" xs={6} md={6} lg={4} key={item.id}>
+            <CardProduct product={item.book} wishlistItemId={item.id} favourite = {true} />
           </Col>
         ))}
       </Row>

@@ -10,7 +10,8 @@ export default function ShoppingCarts({ carts }) {
   const [quantities, setQuantities] = useState({});
   const shippingFee = 5;
   const [modal, setModal] = useState(false);
-  const [message,setMessage] = useState('')
+  const [message, setMessage] = useState("");
+
   const getQuantity = (item, currentQuantities = quantities) => {
     const quantity = Number(currentQuantities[item.id] ?? item.quantity);
     return Number.isInteger(quantity) && quantity > 0 ? quantity : 1;
@@ -24,18 +25,19 @@ export default function ShoppingCarts({ carts }) {
     }));
   };
 
+
   const totalItems = carts.reduce(
     (total, item) => total + getQuantity(item),
     0,
   );
+
   const subtotal = carts.reduce(
     (total, item) => total + Number(item.book?.book_price) * getQuantity(item),
     0,
   );
 
   const total = subtotal + shippingFee;
-  const handleProceedToCheckout = async() => {
-    
+  const handleProceedToCheckout = async () => {
     navigate("/check_out");
   };
   const handleDelete = async (id) => {
@@ -43,26 +45,26 @@ export default function ShoppingCarts({ carts }) {
       const response = await deleteCart(id);
 
       if (response) {
-        setMessage(response.message)
+        setMessage(response.message);
         setModal(true);
       }
     } catch (error) {
       console.error("Error deleting address : ", error);
     }
   };
-    const handleAddWishlist = async (id) => {
-      try {
-        const response = await addWishlist(id);
-        if (response) {
-          setMessage(response.message);
-          setModal(true);
-        }
-        return response;
-      } catch (error) {
-        console.log(error);
-        navigate("/login");
+  const handleAddWishlist = async (id) => {
+    try {
+      const response = await addWishlist(id);
+      if (response) {
+        setMessage(response.message);
+        setModal(true);
       }
-    };
+      return response;
+    } catch (error) {
+      console.log(error);
+      navigate("/login");
+    }
+  };
   return (
     <>
       <div className="shopping_cart">
@@ -94,21 +96,29 @@ export default function ShoppingCarts({ carts }) {
                         <Col md={8} lg={9}>
                           <div className="name_price">
                             <h3>{item.book?.book_name}</h3>
-                            <h4>
+                            <h4 className={item.book?.discount_percentage >0 ? "text-danger" : ""}>
                               RM
-                              {(
+                              {item.book?.discount_percentage ? (
                                 getQuantity(item) *
-                                Number(item.book?.book_price)
-                              ).toFixed(2)}
+                                (Number(item.book?.book_price) *(1 - (Number(item.book?.discount_percentage ?? 0)) / 100))
+                              ).toFixed(2)
+                              :   (getQuantity(item) *
+                                (Number(item.book?.book_price)
+                              ).toFixed(2))}
                             </h4>
                           </div>
                           <div className="author">
-                            <span>{item.book?.book_author}</span>
+                            <span>{item.book?.author?.author_name}</span>
                           </div>
                           <div className="set_product">
                             <Row>
                               <Col xs={5} md={5} lg={4}>
-                                <Button className="buttom" onClick={() => handleAddWishlist(item.book?.id)}>
+                                <Button
+                                  className="buttom"
+                                  onClick={() =>
+                                    handleAddWishlist(item.book?.id)
+                                  }
+                                >
                                   <MdFavorite className="me-1" /> Move to
                                   Wishlist
                                 </Button>
@@ -226,7 +236,13 @@ ShoppingCarts.propTypes = {
         id: PropTypes.number.isRequired,
         book_name: PropTypes.string.isRequired,
         book_price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        book_author: PropTypes.string.isRequired,
+        author: PropTypes.shape({
+          author_name: PropTypes.string.isRequired,
+        }),
+        discount_percentage: PropTypes.oneOfType([
+          PropTypes.number,
+          PropTypes.string,
+        ]),
         book_quantity: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
           .isRequired,
       }),

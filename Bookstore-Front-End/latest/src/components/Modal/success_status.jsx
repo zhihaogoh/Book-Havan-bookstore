@@ -3,15 +3,24 @@ import PropTypes from "prop-types";
 import { FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router";
 
-export default function SuccessStatus({ message ,img, number, product, ...props }) {
+export default function SuccessStatus({
+  link,
+  message,
+  img,
+  number,
+  product,
+  price,
+  discount,
+  ...props
+}) {
   const navigate = useNavigate();
   const toShoppingCart = () => {
-    navigate("/shopping_cart");
+    navigate(`/${link}`);
   };
   const back = () => {
     navigate(-1);
   };
-  
+
   return (
     <>
       <Modal
@@ -44,7 +53,18 @@ export default function SuccessStatus({ message ,img, number, product, ...props 
               </div>
             </Col>
             <Col md={3}>
-              <span>RM {(number* product.book_price).toFixed(2)}</span>
+              {product.discount_percentage > 0 ? (
+                <span>
+                  <p className="price text-danger fw-bold">
+                    RM{discount.toFixed(2)}
+                  </p>
+                  <p className="price_del">
+                    <del>RM{price.toFixed(2)}</del>
+                  </p>
+                </span>
+              ) : (
+                <span>RM{price.toFixed(2)}</span>
+              )}
             </Col>
           </Row>
         </Modal.Body>
@@ -53,7 +73,7 @@ export default function SuccessStatus({ message ,img, number, product, ...props 
             Continue
           </Button>
           <Button className="to_cart" onClick={toShoppingCart}>
-            To Shopping Cart
+            {link}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -62,7 +82,7 @@ export default function SuccessStatus({ message ,img, number, product, ...props 
 }
 
 SuccessStatus.propTypes = {
-  message : PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
   number: PropTypes.number.isRequired,
   product: PropTypes.shape({
     img: PropTypes.string.isRequired,
@@ -71,7 +91,14 @@ SuccessStatus.propTypes = {
       author_name: PropTypes.string.isRequired,
     }).isRequired,
     book_price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    discount_percentage: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
   }).isRequired,
+  price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  discount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   img: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
+  link: PropTypes.string.isRequired,
 };

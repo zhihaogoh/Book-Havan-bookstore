@@ -12,7 +12,7 @@ export default function DeleteStatus({  message , ...props}){
         <>
         <Modal
       {...props}
-      size="lg"
+      size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -27,8 +27,8 @@ export default function DeleteStatus({  message , ...props}){
           </div>
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        {/* <Row>
+      {/* <Modal.Body>
+        <Row>
           <Col md={3}>
             <img className="modal_img" src={product.img} alt={product.img} />
           </Col>
@@ -42,8 +42,8 @@ export default function DeleteStatus({  message , ...props}){
           <Col md={3}>
             <span>RM {product.Price}</span>
           </Col>
-        </Row> */}
-      </Modal.Body>
+        </Row>
+      </Modal.Body> */}
       <Modal.Footer>
         <Button className="to_cart" onClick={toShoppingCart}>Continue</Button>
       </Modal.Footer>

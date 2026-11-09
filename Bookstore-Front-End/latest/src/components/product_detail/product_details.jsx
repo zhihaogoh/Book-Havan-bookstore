@@ -19,6 +19,7 @@ export default function ProductDetails({ product, img }) {
   const price = Number(product.book_price) * num;
   const discount = price * (1 - (product.discount_percentage ?? 0) / 100);
   const navigate = useNavigate();
+  const [link, setLink] = useState('');
   const updateQuantity = (change) => {
     setNumber((currentQuantity) => Math.max(1, currentQuantity + change));
   };
@@ -27,6 +28,7 @@ export default function ProductDetails({ product, img }) {
       const response = await addCart(id, quantity);
       if (response) {
         setMessage(response.message);
+        setLink("shopping_cart");
         setModal(true);
       }
       return response;
@@ -41,6 +43,7 @@ export default function ProductDetails({ product, img }) {
       const response = await addWishlist(id);
       if (response) {
         setMessage(response.message);
+        setLink("favourite");
         setModal(true);
       }
       return response;
@@ -207,8 +210,11 @@ export default function ProductDetails({ product, img }) {
         <SuccessStatus
           message={message}
           show={modal}
+          link = {link}
           img={img}
           product={product}
+          price = {price}
+          discount = {discount}
           number={num}
           onHide={() => {
             setModal(false);
