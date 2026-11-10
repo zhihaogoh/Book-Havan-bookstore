@@ -47,15 +47,26 @@ export default function ReviewForm({ setStep, carts }) {
 
 ReviewForm.propTypes = {
   setStep: PropTypes.func.isRequired,
-  carts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      BookName: PropTypes.string.isRequired,
-      Author: PropTypes.string.isRequired,
-      Price: PropTypes.number.isRequired,
-      img: PropTypes.string.isRequired,
-      status: PropTypes.bool.isRequired,
-      quantity: PropTypes.number.isRequired,
-    }),
-  ),
+   carts: PropTypes.arrayOf(
+     PropTypes.shape({
+       id: PropTypes.number.isRequired,
+       quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+       book: PropTypes.shape({
+         id: PropTypes.number.isRequired,
+         book_name: PropTypes.string.isRequired,
+         book_price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+         discount_percentage: PropTypes.oneOfType([
+           PropTypes.number,
+           PropTypes.string,
+         ]),
+         book_quantity: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+           .isRequired,
+         book_isbn: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+           .isRequired,
+       }),
+       cart: PropTypes.shape({
+         user: PropTypes.object,
+       }),
+     }),
+   ).isRequired,
 };

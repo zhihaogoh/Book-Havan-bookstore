@@ -1,30 +1,74 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckOutView from "../../components/check_out_form/check_out_view";
 import AddressForm from "../../components/check_out_form/address_form";
 import ReviewForm from "../../components/check_out_form/review_form";
 import PaymentForm from "../../components/check_out_form/payment_form";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
-import { cart } from "../../data/products";
+import { Alert, Button, Card, Col, Form, Row, Spinner } from "react-bootstrap";
+
+import { getAddress, getCart } from "../../auth/auth";
 
 export default function CheckOut() {
-  const [quantities] = useState(1);
+  const quantity = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [carts, setCart] = useState([]);
+  const [address, setAddress] = useState([]);
   const shippingFee = 5;
-  const getQuantity = (id) => quantities[id] ?? 1;
+  const tax = 6;
+  const getQuantity = (item, currentQuantity = quantity) => {
+    const quantity = Number(currentQuantity[item.id] ?? item.quantity);
+    return Number.isInteger(quantity) && quantity > 0 ? quantity : 1;
+  };
   const [step, setStep] = useState(1);
-  const ShoppingCart = cart;
 
-  const totalItems = cart.reduce(
-    (total, item) => total + getQuantity(item.id),
+  const totalItems = carts.reduce(
+    (total, item) => total + getQuantity(item),
     0,
   );
+  
+  const subtotal = carts.reduce((total, item) => {
+    const price = Number(item.book?.book_price);
+    const discount = Number(item.book?.discount_percentage ?? 0);
+    const unitPrice = discount > 0 ? price * (1 - discount / 100) : price;
 
-  const subtotal = cart.reduce(
-    (total, item) => total + item.Price * getQuantity(item.id),
-    0,
-  );
+    return total + unitPrice * getQuantity(item);
+  }, 0);
+  const sstPrice = (tax / 100) * shippingFee;
+  const total = subtotal + sstPrice + shippingFee;
 
-  const total = subtotal + shippingFee;
+  useEffect(() => {
+    const loadCart = async () => {
+      try {
+        const response = await getCart();
+        if (!Array.isArray(response.data)) {
+          throw new Error("Carts error");
+        }
+        console.log(response.data);
+        setCart(response.data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    const loadAddress = async () => {
+      try {
+        const result = await getAddress();
+        const addresses = Array.isArray(result?.addresses) ? result.addresses : [];
+        const defaultAddress = addresses.find((address) => address.status === true);
+        setAddress(defaultAddress ?? null);
 
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadAddress();
+    loadCart();
+  }, []);
+  if (loading) return <Spinner className="center" animation="border" />;
+  if (error) return <Alert variant="danger">{error}</Alert>;
   return (
     <>
       <>
@@ -38,6 +82,7 @@ export default function CheckOut() {
               <CheckOutView step={step} />
               {step === 1 && (
                 <AddressForm
+                  address = {address}
                   step={step}
                   setStep={setStep}
                   onNext={() => {
@@ -61,7 +106,7 @@ export default function CheckOut() {
                 <ReviewForm
                   step={step}
                   setStep={setStep}
-                  carts={ShoppingCart}
+                  carts={carts}
                   onNext={() => {
                     setStep(4);
                   }}
@@ -98,7 +143,7 @@ export default function CheckOut() {
                   </div>
                   <div className="list_price">
                     <span className="detail">Tax</span>
-                    <span className="price">Calculated at checkout</span>
+                    <span className="price">RM {sstPrice.toFixed(2)}</span>
                   </div>
                 </div>
                 <div className="subtotal">

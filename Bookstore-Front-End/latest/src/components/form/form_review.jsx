@@ -28,17 +28,26 @@ export default function FormReview({ carts }) {
           {carts.map((item) => (
             <Row key={item.id} className="review_cart_item mb-3">
               <Col md={3} lg={2}>
-                <img src={item.img} alt={item.img} />
+                <img
+                  src={item.img ?? "../src/assets/image/Product/Product1.jpg"}
+                  alt={item.img ?? "../src/assets/image/Product/Product1.jpg"}
+                />
               </Col>
               <Col md={7} lg={7}>
                 <div className="name_qty">
-                  <h5>{item.BookName}</h5>
-                  <p>Quantity: {item.quantity}</p>
+                  <h5>{item.book?.book_name}</h5>
+                  <p>Quantity: {Number(item.quantity)}</p>
                 </div>
               </Col>
               <Col md={2} lg={2}>
                 <div className="price">
-                  <span>RM{item.Price.toFixed(2)}</span>
+                  <span>
+                    RM
+                    {item.book?.discount_percentage > 0
+                      ? (Number(item.book?.book_price) *
+                        (1 - item.book?.book_price / 100)).toFixed(2)
+                      : Number(item.book?.book_price).toFixed(2)}
+                  </span>
                 </div>
               </Col>
             </Row>
@@ -53,12 +62,23 @@ FormReview.propTypes = {
   carts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      BookName: PropTypes.string.isRequired,
-      Author: PropTypes.string.isRequired,
-      Price: PropTypes.number.isRequired,
-      img: PropTypes.string.isRequired,
-      status: PropTypes.bool.isRequired,
-      quantity: PropTypes.number.isRequired,
+      quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      book: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        book_name: PropTypes.string.isRequired,
+        book_price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        discount_percentage: PropTypes.oneOfType([
+          PropTypes.number,
+          PropTypes.string,
+        ]),
+        book_quantity: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+          .isRequired,
+        book_isbn: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+          .isRequired,
+      }),
+      cart: PropTypes.shape({
+        user: PropTypes.object,
+      }),
     }),
-  ),
+  ).isRequired,
 };
