@@ -97,7 +97,7 @@ export const updateProfile = async ({
 export const getAddress = async () => {
   try {
     const response = await apiGet("/address");
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (error) {
     if (error.status === 401) {

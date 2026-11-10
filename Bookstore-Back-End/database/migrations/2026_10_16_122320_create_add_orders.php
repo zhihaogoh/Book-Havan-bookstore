@@ -22,7 +22,7 @@ return new class extends Migration
                 ->constrained('user_address')
                 ->nullOnDelete();
             $table->string('status', 30);
-            $table->char('currency', 3);
+            $table->char('currency', 3)->default("RM");
             $table->decimal('subtotal', 12, 2)->default(0);
             $table->decimal('discount_total', 12, 2)->default(0);
             $table->decimal('shipping_total', 12, 2)->default(0);

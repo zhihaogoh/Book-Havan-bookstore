@@ -43,7 +43,7 @@ export default function CheckOut() {
         if (!Array.isArray(response.data)) {
           throw new Error("Carts error");
         }
-        console.log(response.data);
+        // console.log(response.data);
         setCart(response.data);
       } catch (error) {
         setError(error.message);
@@ -107,6 +107,7 @@ export default function CheckOut() {
                   step={step}
                   setStep={setStep}
                   carts={carts}
+                  address = {address}
                   onNext={() => {
                     setStep(4);
                   }}
@@ -148,7 +149,7 @@ export default function CheckOut() {
                 </div>
                 <div className="subtotal">
                   <h3 className="detail">Total</h3>
-                  <h3 className="price">{total.toFixed(2)}</h3>
+                  <h3 className="price">RM {total.toFixed(2)}</h3>
                 </div>
               </Card>
             </Col>
