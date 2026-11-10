@@ -23,7 +23,7 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-         'order_number' => ['required', 'string', 'max:255'],
+            'order_number' => ['required', 'string', 'max:255'],
             'user_id' => ['required', 'integer', 'exists:users,id'],
             'address_id' => ['required', 'integer', 'exists:user_address,id'],
             'status' => ['required', 'string', 'max:255'],

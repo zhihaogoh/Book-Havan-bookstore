@@ -28,6 +28,7 @@ class OrderItemController extends Controller
         $validated['subtotal'] = round(($validated['price_per_unit'] * $validated['quantity']) - $validated['discount_amount'] + $validated['tax_amount'], 2);
 
         [$orderItem, $order] = DB::transaction(function () use ($validated, $request) {
+            
             $order = Orders::where('user_id', $request->user()->id)
                 ->lockForUpdate()->findOrFail($validated['order_id']);
 

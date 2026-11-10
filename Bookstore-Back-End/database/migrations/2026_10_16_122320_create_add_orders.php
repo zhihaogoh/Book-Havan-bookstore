@@ -28,7 +28,6 @@ return new class extends Migration
             $table->decimal('shipping_total', 12, 2)->default(0);
             $table->decimal('tax_total', 12, 2)->default(0);
             $table->decimal('grand_total', 12, 2)->default(0);
-            $table->json('shipping_address_snapshot');
             $table->timestamp('placed_at')->nullable();
             $table->timestamps();
         });

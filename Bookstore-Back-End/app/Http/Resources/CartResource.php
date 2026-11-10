@@ -33,8 +33,9 @@ class CartResource extends JsonResource
                     'author' => $this->whenLoaded('author') && $this->book->author ? [
                         'id' => $this->book->author->id,
                         'author_name' => $this->book->author->author_name,
-
                     ] : null,
+
+                    'book_isbn' => $this->book->book_isbn,
                     'discount_percentage' => $this->book->discount_percentage,
                 ];
             }),

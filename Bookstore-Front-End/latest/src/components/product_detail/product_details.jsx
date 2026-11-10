@@ -23,9 +23,9 @@ export default function ProductDetails({ product, img }) {
   const updateQuantity = (change) => {
     setNumber((currentQuantity) => Math.max(1, currentQuantity + change));
   };
-  const handleAddCart = async (id, quantity) => {
+  const handleAddCart = async (item) => {
     try {
-      const response = await addCart(id, quantity);
+      const response = await addCart(item);
       if (response) {
         setMessage(response.message);
         setLink("shopping_cart");
@@ -34,7 +34,6 @@ export default function ProductDetails({ product, img }) {
       return response;
     } catch (error) {
       console.log(error);
-      navigate("/login");
     }
   };
 
@@ -157,7 +156,12 @@ export default function ProductDetails({ product, img }) {
                         className="cart"
                         disabled={product.status === 0}
                         onClick={() => {
-                          handleAddCart(product.id, num);
+                          handleAddCart([
+                            {
+                              'book_id' : product.id,
+                              'quantity' : num
+                            }
+                          ]);
                         }}
                       >
                         <FaShoppingCart /> Add to Cart

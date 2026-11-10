@@ -26,7 +26,7 @@ class OrderResource extends JsonResource
             'shipping_total' => $this->shipping_total,
             'tax_total' => $this->tax_total,
             'grand_total' => $this->grand_total,
-            'shipping_address_snapshot' => $this->shipping_address_snapshot,
+          
             'placed_at' => $this->placed_at,
         ];
     }

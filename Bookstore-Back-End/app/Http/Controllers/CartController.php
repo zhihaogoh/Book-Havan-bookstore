@@ -24,47 +24,53 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'book_id' => 'required|integer|exists:books,id',
-            'quantity' => 'required|integer|min:1',
+            'items' => 'required|array|min:1',
+            'items.*.book_id' => 'required|integer|exists:books,id',
+            'items.*.quantity' => 'required|integer|min:1',
         ]);
         $item = DB::transaction(function () use ($request, $data) {
-            $book = Books::whereKey($data['book_id'])
-                ->lockForUpdate()
-                ->firstOrFail();
 
+                
             $cart = Cart::firstOrCreate([
                 'user_id' => $request->user()->id,
             ]);
 
-            $item =  CartsItem::where('cart_id', $cart->id)
-                ->where('book_id', $book->id)
-                ->lockForUpdate()
-                ->first();
+            foreach ($data['items'] as $requestedItem) {
 
-            $newQuantity = ($item?->quantity ?? 0) + $data['quantity'];
-            $available = $book->stock_on_hand
-                - $book->stock_reserved;
+                $book = Books::whereKey($requestedItem['book_id'])
+                    ->lockForUpdate()
+                    ->firstOrFail();
 
-            if ($newQuantity > $available) {
-                throw ValidationException::withMessages([
-                    'quantity' => ['Not enough stock available.'],
-                ]);
+                $item =  CartsItem::where('cart_id', $cart->id)
+                    ->where('book_id', $book->id)
+                    ->lockForUpdate()
+                    ->first();
+
+                $newQuantity = ($item?->quantity ?? 0) + $requestedItem['quantity'];
+                $available = $book->stock_on_hand
+                    - $book->stock_reserved;
+
+                if ($newQuantity > $available) {
+                    throw ValidationException::withMessages([
+                        'quantity' => ['Not enough stock available.'],
+                    ]);
+                }
+
+                if ($item) {
+                    $item->update([
+                        'quantity' => $newQuantity,
+                    ]);
+                } else {
+                    $item = CartsItem::create([
+                        'cart_id' => $cart->id,
+                        'book_id' => $book->id,
+                        'quantity' => $newQuantity,
+                    ]);
+                }
             }
-
-            if ($item) {
-                $item->update([
-                    'quantity' => $newQuantity,
-                ]);
-            } else {
-                $item = CartsItem::create([
-                    'cart_id' => $cart->id,
-                    'book_id' => $book->id,
-                    'quantity' => $data['quantity'],
-                ]);
-            }
-
             return $item->load('book');
         });
+
         return response()->json([
             'message' => 'Book added to cart successfully',
             'data' => new CartResource($item),

@@ -24,17 +24,7 @@ class OrderController extends Controller
         $validated = $request->validated();
         $validated['user_id'] = $request->user()->id;
         $validated['placed_at'] = now();
-        $address = Address::findOrFail($validated['address_id']);
-        $validated['shipping_address_snapshot'] = $address->only([
-            'recipient_name',
-            'recipent_phone',
-            'address_1',
-            'address_2',
-            'city',
-            'state',
-            'postal_code',
-            'country',
-        ]);
+
         $order = Orders::create($validated);
 
         return response()->json([

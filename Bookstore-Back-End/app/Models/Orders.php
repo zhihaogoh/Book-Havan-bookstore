@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Orders extends Model
 {
-    protected $casts = [
-        'shipping_address_snapshot' => 'array',
-    ];
+
 
     protected $fillable = [
 
@@ -22,13 +20,17 @@ class Orders extends Model
         'shipping_total',
         'tax_total',
         'grand_total',
-        'shipping_address_snapshot',
         'placed_at',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+        public function address()
+    {
+        return $this->belongsTo(User::class, 'address_id');
     }
 
     public function orderItems()

@@ -1,13 +1,15 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Alert, Button, Card, Col, Row } from "react-bootstrap";
 import { MdDelete, MdFavorite, MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router";
-import { addWishlist, deleteCart } from "../../auth/auth";
+import { addWishlist, deleteCart, updateCart } from "../../auth/auth";
 import DeleteStatus from "../Modal/delete_success";
 
 export default function ShoppingCarts({ carts }) {
   const [quantities, setQuantities] = useState({});
+  const [updating, setUpdating] = useState({});
+  const [quantityError, setQuantityError] = useState("");
   const shippingFee = 5;
   const [modal, setModal] = useState(false);
   const [message, setMessage] = useState("");
@@ -18,11 +20,19 @@ export default function ShoppingCarts({ carts }) {
   };
   const navigate = useNavigate();
 
-  const updateQuantity = (item, change) => {
-    setQuantities((currentQuantities) => ({
-      ...currentQuantities,
-      [item.id]: Math.max(1, getQuantity(item, currentQuantities) + change),
-    }));
+  const updateQuantity = async (item, change) => {
+    if (updating[item.id]) return;
+    const quantity = Math.max(1, getQuantity(item) + change);
+    setUpdating((current) => ({ ...current, [item.id]: true }));
+    setQuantityError("");
+    try {
+      await updateCart(item.id, quantity);
+      setQuantities((current) => ({ ...current, [item.id]: quantity }));
+    } catch (error) {
+      setQuantityError(error.message || "Unable to update cart quantity.");
+    } finally {
+      setUpdating((current) => ({ ...current, [item.id]: false }));
+    }
   };
 
   const totalItems = carts.reduce(
@@ -30,10 +40,13 @@ export default function ShoppingCarts({ carts }) {
     0,
   );
 
-  const subtotal = carts.reduce(
-    (total, item) => total + Number(item.book?.book_price) * getQuantity(item),
-    0,
-  );
+  const subtotal = carts.reduce((total, item) => {
+    const price = Number(item.book?.book_price);
+    const discount = Number(item.book?.discount_percentage ?? 0);
+    const unitPrice = discount > 0 ? price * (1 - discount / 100) : price;
+
+    return total + unitPrice * getQuantity(item);
+  }, 0);
 
   const total = subtotal + shippingFee;
   const handleProceedToCheckout = async () => {
@@ -64,12 +77,24 @@ export default function ShoppingCarts({ carts }) {
       navigate("/login");
     }
   };
+
+  const backToHome = () => {
+    navigate("/");
+  };
+
   return (
     <>
       <div className="shopping_cart">
+        {quantityError && <Alert variant="danger">{quantityError}</Alert>}
         {carts.length === 0 ? (
-          <div className="title">
-            <h3>not in your cart</h3>
+          <div className="title d-flex flex-column align-items-center">
+            <h3>Not in your cart</h3>
+            <Button
+              className="btn-secondary py-2 px-5 m-3"
+              onClick={backToHome}
+            >
+              Back to home
+            </Button>
           </div>
         ) : (
           <>
@@ -146,8 +171,10 @@ export default function ShoppingCarts({ carts }) {
                                 <div className="h-100 d-flex flex-row justify-content-between align-items-center">
                                   <Button
                                     className="btn-light"
-                                    onClick={() => updateQuantity(item, -1)}
-                                    disabled={getQuantity(item) <= 1}
+                                    onClick={() =>
+                                      updateQuantity(item, -1)
+                                    }
+                                    disabled={updating[item.id] || getQuantity(item) <= 1}
                                   >
                                     -
                                   </Button>
@@ -159,8 +186,11 @@ export default function ShoppingCarts({ carts }) {
                                   />
                                   <Button
                                     className="btn-light"
-                                    onClick={() => updateQuantity(item, 1)}
+                                    onClick={() =>
+                                      updateQuantity(item, 1)
+                                    }
                                     disabled={
+                                      updating[item.id] ||
                                       getQuantity(item) >=
                                       Number(item.book.book_quantity)
                                     }
@@ -242,6 +272,8 @@ ShoppingCarts.propTypes = {
           PropTypes.string,
         ]),
         book_quantity: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+          .isRequired,
+        book_isbn: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
           .isRequired,
       }),
       cart: PropTypes.shape({

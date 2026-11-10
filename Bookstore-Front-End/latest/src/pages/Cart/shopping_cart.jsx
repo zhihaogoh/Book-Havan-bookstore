@@ -25,7 +25,7 @@ export default function ShoppingCart() {
 
     loadCart();
   }, []);
-  console.log(carts);
+  // console.log(carts);
   //   const ShoppingCart = cart;
 
   if (loading) return <Spinner className="center" animation="border" />;
