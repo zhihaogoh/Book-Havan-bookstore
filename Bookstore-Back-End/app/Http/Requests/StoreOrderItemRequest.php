@@ -24,14 +24,14 @@ class StoreOrderItemRequest extends FormRequest
     {
         return [
             'order_id' => ['required', 'integer', 'exists:orders,id'],
-            'book_id' => ['required', 'integer', 'exists:books,id'],
-            'quantity' => ['required', 'integer', 'min:1'],
-            'title_book' => ['required', 'string'],
-            'SKU' => ['required', 'string'],
-            'price_per_unit' => ['required', 'numeric', 'min:0'],
-            'discount_amount' => ['nullable', 'numeric', 'min:0'],
-            'tax_amount' => ['nullable', 'numeric', 'min:0'],
-            'subtotal' => ['sometimes', 'numeric', 'min:0'],
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.book_id' => ['required', 'integer', 'exists:books,id'],
+            'items.*.quantity' => ['required', 'integer', 'min:1'],
+            'items.*.title_book' => ['required', 'string'],
+            'items.*.SKU' => ['required', 'string'],
+            'items.*.price_per_unit' => ['required', 'numeric', 'min:0'],
+            'items.*.discount_amount' => ['nullable', 'numeric', 'min:0'],
+            'items.*.tax_amount' => ['nullable', 'numeric', 'min:0'],
         ];
     }
 }

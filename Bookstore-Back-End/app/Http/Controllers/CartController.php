@@ -30,7 +30,7 @@ class CartController extends Controller
         ]);
         $item = DB::transaction(function () use ($request, $data) {
 
-                
+
             $cart = Cart::firstOrCreate([
                 'user_id' => $request->user()->id,
             ]);

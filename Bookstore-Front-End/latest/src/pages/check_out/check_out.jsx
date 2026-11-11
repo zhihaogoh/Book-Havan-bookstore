@@ -108,6 +108,10 @@ export default function CheckOut() {
                   setStep={setStep}
                   carts={carts}
                   address = {address}
+                  subtotal={subtotal}
+                  shippingFee={shippingFee}
+                  taxTotal={sstPrice}
+                  total = {total}
                   onNext={() => {
                     setStep(4);
                   }}

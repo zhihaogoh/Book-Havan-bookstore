@@ -22,18 +22,20 @@ class StoreOrderRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'order_number' => ['required', 'string', 'max:255'],
-            'user_id' => ['required', 'integer', 'exists:users,id'],
+        $itemRules = (new StoreOrderItemRequest)->rules();
+        unset($itemRules['order_id']);
+        $itemRules['items'] = ['sometimes', 'array', 'min:1'];
+
+        return array_merge([
             'address_id' => ['required', 'integer', 'exists:user_address,id'],
             'status' => ['required', 'string', 'max:255'],
             'currency' => ['required', 'string', 'max:3'],
-            'subtotal' => ['required', 'numeric', 'min:0'],
+            'subtotal' => ['required_without:items', 'numeric', 'min:0'],
             'discount_total' => ['nullable', 'numeric', 'min:0'],
             'shipping_total' => ['nullable', 'numeric', 'min:0'],
             'tax_total' => ['nullable', 'numeric', 'min:0'],
-            'grand_total' => ['required', 'numeric', 'min:0'],
+            'grand_total' => ['required_without:items', 'numeric', 'min:0'],
             'placed_at' => ['nullable', 'date'],
-        ];
+        ], $itemRules);
     }
 }

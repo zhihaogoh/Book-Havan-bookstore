@@ -7,7 +7,6 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ImageBookController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Http\Request;
@@ -41,9 +40,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/wishlist',[WishlistController:: class, 'store']);
     Route::delete('/wishlist/{id}', [WishlistController :: class, 'clear']);
 
-    Route::get('/order-item', [OrderItemController::class, 'index']);
-    Route::post('/order-item', [OrderItemController::class, 'store']);
-    Route::delete('/order-item/{id}', [OrderItemController::class, 'destroy']);
+    Route::get('/order-item', [OrderController::class, 'items']);
+    Route::post('/order-item', [OrderController::class, 'storeItems']);
+    Route::delete('/order-item/{id}', [OrderController::class, 'destroyItem']);
     Route::get('/orders', [OrderController::class, 'index']);
     Route::post('/orders', [OrderController::class, 'store']);
 });
@@ -69,6 +68,3 @@ Route::delete('books/{id}', [BookController::class, 'destroy']);
 Route::get('books/{book}/image', [ImageBookController::class, 'index']);
 Route::post('books/{book}/image', [ImageBookController::class, 'store']);
 Route::delete('books/{book}/image/{id}', [ImageBookController::class, 'destroy']);
-
-
-Route::get('orders', [OrderController::class, 'index']);

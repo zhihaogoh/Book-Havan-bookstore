@@ -4,7 +4,7 @@ import { Alert, Button, Card, Col, Row } from "react-bootstrap";
 import { MdDelete, MdFavorite, MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { addWishlist, deleteCart, updateCart } from "../../auth/auth";
-import DeleteStatus from "../Modal/delete_success";
+import DeleteStatus from "../Modal/orderSuccess";
 
 export default function ShoppingCarts({ carts }) {
   const [quantities, setQuantities] = useState({});
@@ -171,10 +171,11 @@ export default function ShoppingCarts({ carts }) {
                                 <div className="h-100 d-flex flex-row justify-content-between align-items-center">
                                   <Button
                                     className="btn-light"
-                                    onClick={() =>
-                                      updateQuantity(item, -1)
+                                    onClick={() => updateQuantity(item, -1)}
+                                    disabled={
+                                      updating[item.id] ||
+                                      getQuantity(item) <= 1
                                     }
-                                    disabled={updating[item.id] || getQuantity(item) <= 1}
                                   >
                                     -
                                   </Button>
@@ -186,13 +187,11 @@ export default function ShoppingCarts({ carts }) {
                                   />
                                   <Button
                                     className="btn-light"
-                                    onClick={() =>
-                                      updateQuantity(item, 1)
-                                    }
+                                    onClick={() => updateQuantity(item, 1)}
                                     disabled={
                                       updating[item.id] ||
                                       getQuantity(item) >=
-                                      Number(item.book.book_quantity)
+                                        Number(item.book.book_quantity)
                                     }
                                   >
                                     +

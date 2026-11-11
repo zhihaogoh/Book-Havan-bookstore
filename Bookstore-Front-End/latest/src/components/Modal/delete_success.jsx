@@ -54,12 +54,5 @@ export default function DeleteStatus({  message , ...props}){
 
 DeleteStatus.propTypes ={
   message:PropTypes.string.isRequired,
-  number: PropTypes.number.isRequired,
-  product: PropTypes.shape({
-    img: PropTypes.string.isRequired,
-    BookName: PropTypes.string.isRequired,
-    Author: PropTypes.string.isRequired,
-    Price: PropTypes.number.isRequired
-  }).isRequired,
   onHide: PropTypes.func.isRequired,
 }

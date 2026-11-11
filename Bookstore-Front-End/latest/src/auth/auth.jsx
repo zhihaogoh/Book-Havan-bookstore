@@ -297,3 +297,16 @@ export const deleteWishlist = async (id) => {
     throw error;
   }
 };
+
+export const storeOrder = async (order, cartIds = []) => {
+  const response = await apiPost("/orders", order);
+  const failedCartIds = [];
+  for (const id of cartIds) {
+    try {
+      await deleteCart(id);
+    } catch {
+      failedCartIds.push(id);
+    }
+  }
+  return { ...response, failedCartIds };
+};

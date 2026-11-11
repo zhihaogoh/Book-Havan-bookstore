@@ -1,15 +1,87 @@
 import PropTypes from "prop-types";
 import FormReview from "../form/form_review";
-import { Button, Col, Row } from "react-bootstrap";
+import { Alert, Button, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router";
+import { useState } from "react";
+import { storeOrder } from "../../auth/auth";
+import DeleteStatus from "../Modal/orderSuccess";
 
-export default function ReviewForm({ setStep, carts, address }) {
+export default function ReviewForm({
+  setStep,
+  carts,
+  address,
+  total,
+  subtotal,
+  shippingFee,
+  taxTotal,
+}) {
+  const [message, setMessage] = useState("");
+  const [modal, setModal] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
   const navigate = useNavigate();
+  const addressId = Number(address?.id);
   const handleBackToHome = async () => {
+    if (submitting || orderPlaced) return;
+    if (!Number.isInteger(addressId) || addressId <= 0 || carts.length === 0) {
+      setMessage(
+        "Please select a shipping address and add items to your cart.",
+      );
+      return;
+    }
+    setMessage("");
+    setSubmitting(true);
     try {
-      navigate("/");
+      const items = carts.map((cart, index) => ({
+        book_id: Number(cart.book?.id),
+        quantity: Number(cart.quantity),
+        title_book: cart.book?.book_name,
+        SKU: String(cart.book?.book_isbn ?? ""),
+        price_per_unit: Number(cart.book?.book_price),
+        discount_amount: Number(
+          (
+            (Number(cart.book?.book_price) *
+              Number(cart.quantity) *
+              Number(cart.book?.discount_percentage ?? 0)) /
+            100
+          ).toFixed(2),
+        ),
+        // The API sums line taxes when recalculating the order total.
+        tax_amount: index === 0 ? Number(taxTotal.toFixed(2)) : 0,
+      }));
+      const cartIds = carts.map((cart) => cart.id);
+      const response = await storeOrder(
+        {
+          address_id: addressId,
+          currency: "MYR",
+          status: "pending",
+          grand_total: Number(total.toFixed(2)),
+          subtotal: Number(subtotal.toFixed(2)),
+          shipping_total: shippingFee,
+          tax_total: Number(taxTotal.toFixed(2)),
+          items,
+        },
+        cartIds,
+      );
+      setOrderPlaced(true);
+      if (response.failedCartIds.length > 0) {
+        setMessage(
+          "Your order was placed, but some purchased items could not be removed from your cart. Remove them before your next purchase.",
+        );
+        return;
+      }
+      setMessage(response.message);
+      setModal(true);
     } catch (error) {
-      console.log(error);
+      setMessage(
+        Object.values(error.errors ?? {})
+          .flat()
+          .join(" ") ||
+          error.message ||
+          "Unable to place your order.",
+      );
+    } finally {
+      setSubmitting(false);
     }
   };
   return (
@@ -18,7 +90,10 @@ export default function ReviewForm({ setStep, carts, address }) {
         <div className="title">
           <h3>Review Information</h3>
         </div>
-        <FormReview carts={carts} address={address} />
+        {message && (
+          <Alert variant={orderPlaced ? "warning" : "danger"}>{message}</Alert>
+        )}
+        <FormReview carts={carts} address={address ?? {}} />
       </div>
       <div className="btn_group">
         <Row>
@@ -36,15 +111,28 @@ export default function ReviewForm({ setStep, carts, address }) {
             <Button
               variant="primary"
               type="submit"
+              disabled={submitting || orderPlaced}
               onClick={() => {
                 handleBackToHome();
               }}
             >
-              Continue to Payment
+              {orderPlaced
+                ? "Order Placed"
+                : submitting
+                  ? "Placing Order..."
+                  : "Place Order"}
             </Button>
           </Col>
         </Row>
       </div>
+
+      <DeleteStatus
+        message={message}
+        show={modal}
+        onHide={() => {
+          setModal(false);
+        }}
+      />
     </>
   );
 }
@@ -70,17 +158,19 @@ ReviewForm.propTypes = {
       }),
     }),
   ).isRequired,
-  address: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-      recipient_name: PropTypes.string,
-      recipent_phone: PropTypes.string.isRequired,
-      address_1: PropTypes.string.isRequired,
-      city: PropTypes.string.isRequired,
-      state: PropTypes.string.isRequired,
-      postal_code: PropTypes.string.isRequired,
-      country: PropTypes.string.isRequired,
-      status: PropTypes.bool,
-    }),
-  ),
+  address: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    recipient_name: PropTypes.string,
+    recipent_phone: PropTypes.string.isRequired,
+    address_1: PropTypes.string.isRequired,
+    city: PropTypes.string.isRequired,
+    state: PropTypes.string.isRequired,
+    postal_code: PropTypes.string.isRequired,
+    country: PropTypes.string.isRequired,
+    status: PropTypes.bool,
+  }),
+  subtotal: PropTypes.number.isRequired,
+  shippingFee: PropTypes.number.isRequired,
+  taxTotal: PropTypes.number.isRequired,
+  total: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };
