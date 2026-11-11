@@ -298,6 +298,18 @@ export const deleteWishlist = async (id) => {
   }
 };
 
+export const getOrder = async () => {
+  try {
+    const response = await apiGet("/orders");
+    return response;
+  } catch (error) {
+    if (error.status === 401) {
+      console.log("Error fetching carts :", error);
+    }
+    throw error;
+  }
+};
+
 export const storeOrder = async (order, cartIds = []) => {
   const response = await apiPost("/orders", order);
   const failedCartIds = [];

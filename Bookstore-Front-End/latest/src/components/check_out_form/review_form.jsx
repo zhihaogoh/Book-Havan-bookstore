@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import FormReview from "../form/form_review";
 import { Alert, Button, Col, Row } from "react-bootstrap";
-import { useNavigate } from "react-router";
 import { useState } from "react";
 import { storeOrder } from "../../auth/auth";
 import DeleteStatus from "../Modal/orderSuccess";
@@ -19,7 +18,6 @@ export default function ReviewForm({
   const [modal, setModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const navigate = useNavigate();
   const addressId = Number(address?.id);
   const handleBackToHome = async () => {
     if (submitting || orderPlaced) return;
