@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderItemRequest;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Resources\OrderResource;
 use App\Models\Books;
 use App\Models\OrderItem;
 use App\Models\Orders;
@@ -16,12 +17,14 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $orders = Orders::with(['user', 'orderItems.book'])
-            ->where('user_id', $request->user()->id)->get();
+        $orders = Orders::with(['address', 'orderItems'])
+            ->where('user_id', $request->user()->id)
+            ->latest()
+            ->get();
 
         return response()->json([
             'message' => 'Orders retrieved successfully',
-            'orders' => $orders,
+            'orders' => OrderResource::collection($orders),
         ], 200);
     }
 

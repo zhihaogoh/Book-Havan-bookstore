@@ -26,8 +26,9 @@ class OrderResource extends JsonResource
             'shipping_total' => $this->shipping_total,
             'tax_total' => $this->tax_total,
             'grand_total' => $this->grand_total,
-          
             'placed_at' => $this->placed_at,
+            'user_address' => $this->whenLoaded('address'),
+            'order_items' => OrderItemResource::collection($this->whenLoaded('orderItems')),
         ];
     }
 }

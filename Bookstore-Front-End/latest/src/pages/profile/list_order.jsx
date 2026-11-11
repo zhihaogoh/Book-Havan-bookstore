@@ -38,7 +38,9 @@ export default function ListOrder() {
               <Listing />
             </Col>
             <Col md={8} lg={9}>
-              <OrderListing />
+              <OrderListing 
+                order = {order}
+              />
             </Col>
           </Row>
         </div>

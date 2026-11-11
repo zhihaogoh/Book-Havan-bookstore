@@ -24,7 +24,24 @@ class OrderItemResource extends JsonResource
             'price_per_unit' => $this->price_per_unit,
             'discount_amount' => $this->discount_amount,
             'tax_amount' => $this->tax_amount,
-            'subtotal' => $this->subtotal
+            'subtotal' => $this->subtotal,
+            'orders' => $this->whenLoaded(
+                'order',
+                function () {
+                    return [
+                        'id' => $this->order->id,
+                        'order_number' => $this->order->order_number,
+                        'status' => $this->order->status,
+                        'currency' => $this->order->currency,
+                        'subtotal' => $this->order->subtotal,
+                        'discount_total' => $this->order->discount_total,
+                        'shipping_total' => $this->order->shipping_total,
+                        'tax_total' => $this->order->tax_total,
+                        'grand_total' => $this->order->grand_total,
+                        'placed_at' => $this->order->placed_at,
+                    ];
+                }
+            ),
         ];
     }
 }

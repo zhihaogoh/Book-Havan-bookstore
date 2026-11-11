@@ -2,14 +2,16 @@ import { Card, Col, Nav, NavItem, Row, Tab } from "react-bootstrap";
 import { order } from "../../data/products";
 import { getSortOrders } from "../../routes/getSortOrder";
 import { useNavigate } from "react-router";
+import PropTypes from "prop-types";
 
-export default function OrderListing() {
+export default function OrderListing({order}) {
   const navigate = useNavigate();
   const orders = order;
   const sortOrders = getSortOrders(orders, 3);
   const toOrderDetial = (orderId) => {
     navigate(`/order_detail/${orderId}`);
   };
+
   return (
     <>
       <div className="order_listing">
@@ -35,7 +37,7 @@ export default function OrderListing() {
             </Nav>
           </div>
           <div className="listing">
-            <Tab.Content>
+            {/* <Tab.Content>
               <Tab.Pane eventKey={1}>
                 {sortOrders.map((item) => (
                   <Card className="my-3" key={item.id} onClick={() => toOrderDetial(item.id)}>
@@ -199,10 +201,19 @@ export default function OrderListing() {
                     </Card>
                   ))}
               </Tab.Pane>
-            </Tab.Content>
+            </Tab.Content> */}
           </div>
         </Tab.Container>
       </div>
     </>
   );
 }
+
+OrderListing.propTypes = {
+  order : PropTypes.arrayOf(
+    PropTypes.shape({
+        // address_id
+    })
+  )
+}
+
