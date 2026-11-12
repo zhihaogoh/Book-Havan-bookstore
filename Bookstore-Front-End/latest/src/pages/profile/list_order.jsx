@@ -26,7 +26,7 @@ export default function ListOrder() {
     };
     loadOrder();
   }, []);
-  console.log(order);
+  // console.log(order);
   if (loading) return <Spinner className="center" animation="border" />;
   if (error) return <Alert variant="danger">{error}</Alert>;
   return (

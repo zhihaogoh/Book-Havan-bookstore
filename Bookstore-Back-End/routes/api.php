@@ -32,18 +32,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/cart', [CartController::class, 'index']);
     Route::post('/cart', [CartController::class, 'store']);
-    Route::delete('/cart/{id}' ,[CartController::class , 'destroy']);
-    Route::delete('/cart' ,[CartController::class , 'clear']);
-    Route::post('/cart/{id}' , [CartController::class, 'update']);
+    Route::delete('/cart/{id}', [CartController::class, 'destroy']);
+    Route::delete('/cart', [CartController::class, 'clear']);
+    Route::post('/cart/{id}', [CartController::class, 'update']);
 
-    Route::get('/wishlist',[WishlistController:: class, 'index']);
-    Route::post('/wishlist',[WishlistController:: class, 'store']);
-    Route::delete('/wishlist/{id}', [WishlistController :: class, 'clear']);
+    Route::get('/wishlist', [WishlistController::class, 'index']);
+    Route::post('/wishlist', [WishlistController::class, 'store']);
+    Route::delete('/wishlist/{id}', [WishlistController::class, 'clear']);
 
     Route::get('/order-item', [OrderController::class, 'items']);
     Route::post('/order-item', [OrderController::class, 'storeItems']);
     Route::delete('/order-item/{id}', [OrderController::class, 'destroyItem']);
     Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/orders/{id}', [OrderController::class, 'show']);
     Route::post('/orders', [OrderController::class, 'store']);
 });
 

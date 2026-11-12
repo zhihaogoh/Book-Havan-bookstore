@@ -322,3 +322,16 @@ export const storeOrder = async (order, cartIds = []) => {
   }
   return { ...response, failedCartIds };
 };
+
+export const getOrderId = async(id) =>{
+   try {
+    const response = await apiGet(`/orders/${encodeURIComponent(id)}`);
+    console.log("Book fetched successfully:", response);
+    return response;
+  } catch (error) {
+    if (error.status === 401) {
+      setAccessToken(null);
+    }
+    throw error;
+  }
+}

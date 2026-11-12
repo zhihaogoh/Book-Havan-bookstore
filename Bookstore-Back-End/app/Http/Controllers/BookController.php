@@ -48,8 +48,6 @@ class BookController extends Controller
             'message' => 'Book found',
             'book' => new BookResource($book)
         ], 200);
-
-
         }
 
     public function store(StoreBookRequest $request)

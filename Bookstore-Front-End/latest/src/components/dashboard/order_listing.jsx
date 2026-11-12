@@ -30,10 +30,13 @@ export default function OrderListing({ order }) {
                 <Nav.Link eventKey={1}>All Order</Nav.Link>
               </NavItem>
               <NavItem>
-                <Nav.Link eventKey={2}>Deliver</Nav.Link>
+                <Nav.Link eventKey={2}>Pending</Nav.Link>
               </NavItem>
               <NavItem>
-                <Nav.Link eventKey={3}>Cancel</Nav.Link>
+                <Nav.Link eventKey={3}>Deliver</Nav.Link>
+              </NavItem>
+              <NavItem>
+                <Nav.Link eventKey={4}>Cancel</Nav.Link>
               </NavItem>
             </Nav>
           </div>
@@ -104,7 +107,7 @@ export default function OrderListing({ order }) {
               </Tab.Pane>
               <Tab.Pane eventKey={2}>
                 {sortOrders
-                  .filter((item) => item.status === "Delivered")
+                  .filter((item) => item.status === "pending")
                   .map((item) => (
                     <Card
                       className="my-3"
@@ -165,7 +168,68 @@ export default function OrderListing({ order }) {
               </Tab.Pane>
               <Tab.Pane eventKey={3}>
                 {sortOrders
-                  .filter((item) => item.status === "Canceled")
+                  .filter((item) => item.status === "delivered")
+                  .map((item) => (
+                    <Card
+                      className="my-3"
+                      key={item.id}
+                      onClick={() => toOrderDetial(item.id)}
+                    >
+                      <div className="card_order p-3">
+                        <div className="order_name">
+                          <h3>Purchase order : {item.order_number}</h3>
+                          <span>{item.placed_at}</span>
+                        </div>
+                        <div className="order_price">
+                          <h3>
+                            RM
+                            {Number(item.grand_total).toFixed(2)}
+                          </h3>
+                          <div className="status">
+                            <span>{item.status}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="order_detail">
+                        {item.order_items.map((product) => (
+                          <Row className="my-3" key={product.id}>
+                            <Col xs={3} md={3} lg={3}>
+                              <div className="product_img">
+                                <img
+                                  src={
+                                    product.img ??
+                                    "../src/assets/image/Product/Product1.jpg"
+                                  }
+                                  alt={product.title_book}
+                                />
+                              </div>
+                            </Col>
+                            <Col xs={9} md={9} lg={9}>
+                              <div className="detail">
+                                <h3>{product.title_book}</h3>
+                                <span>SKU : {product.SKU}</span>
+                                <div className="d-flex flex-row justify-content-between">
+                                  <span>
+                                    Quantity : {Number(product.quantity)}
+                                  </span>
+                                  <span>
+                                    Price : RM
+                                    {Number(product.price_per_unit).toFixed(
+                                      2,
+                                    )}{" "}
+                                  </span>
+                                </div>
+                              </div>
+                            </Col>
+                          </Row>
+                        ))}
+                      </div>
+                    </Card>
+                  ))}
+              </Tab.Pane>
+              <Tab.Pane eventKey={4}>
+                {sortOrders
+                  .filter((item) => item.status === "canceled")
                   .map((item) => (
                     <Card
                       className="my-3"
@@ -211,7 +275,7 @@ export default function OrderListing({ order }) {
                                   </span>
                                   <span>
                                     Price : RM
-                                    {Number(product.price_per_unit).toFixed(
+                                    {Number(product.subtotal).toFixed(
                                       2,
                                     )}{" "}
                                   </span>
@@ -244,7 +308,7 @@ OrderListing.propTypes = {
           SKU: PropTypes.string.isRequired,
           id: PropTypes.number.isRequired,
           quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-          price_per_unit: PropTypes.oneOfType([
+          subtotal: PropTypes.oneOfType([
             PropTypes.string,
             PropTypes.number,
           ]),

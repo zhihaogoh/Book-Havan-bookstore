@@ -28,6 +28,22 @@ class OrderController extends Controller
         ], 200);
     }
 
+    public function show(string $id)
+    {
+        $orders = Orders::with(['address', 'orderItems'])->find($id);
+        if (!$orders) {
+            return response()->json([
+                'message' => 'Book not found'
+            ], 404);
+        }
+        return response()->json([
+            'message' => 'Order found',
+            'orders' => new OrderResource($orders),
+        ], 200);
+    }
+
+
+
     public function store(StoreOrderRequest $request)
     {
         $validated = $request->validated();
@@ -44,7 +60,7 @@ class OrderController extends Controller
 
             $order = Orders::create($validated);
             $order->update([
-                'order_number' => 'PO'.str_pad(
+                'order_number' => 'PO' . str_pad(
                     (string) $order->id,
                     3,
                     '0',
@@ -120,7 +136,7 @@ class OrderController extends Controller
     private function recalculateTotals(Orders $order): void
     {
         $items = $order->orderItems()->get();
-        $subtotal = $items->sum(fn ($item) => $item->price_per_unit * $item->quantity);
+        $subtotal = $items->sum(fn($item) => $item->price_per_unit * $item->quantity);
         $discount = $items->sum('discount_amount');
         $tax = $items->sum('tax_amount');
         $order->update([
