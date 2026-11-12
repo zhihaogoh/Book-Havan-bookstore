@@ -4,13 +4,15 @@ import Categories from "../../components/categories/Categories";
 import ServiceList from "../../components/service/service_list";
 import { useEffect, useState } from "react";
 import { getBook } from "../../auth/auth";
+import { getNewProduct } from "../../routes/getSortOrder";
 
 export default function Home() {
   const [product, setProducts] = useState([]);
+  const newProduct = getNewProduct(product);
   useEffect(() => {
     const fetchProducts = async () => {
       try{
-        const response = await getBook();
+        const response = await getBook(2);
         // console.log("Books fetched successfully:", response);
         if (!Array.isArray(response.data)) {
           throw new Error("Books API response.data must be an array");
@@ -80,7 +82,7 @@ export default function Home() {
         <ListProduct
           title="New Arrivals"
           viewAllLink="All Link"
-          products={product}
+          products={newProduct}
         />
         {/* New Arrivals  Ends*/}
         {/* Discount Starts*/}

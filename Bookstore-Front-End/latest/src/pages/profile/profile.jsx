@@ -10,6 +10,7 @@ export default function Profile() {
   const [order, setOrder] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  
   useEffect(() => {
     const loadProfile = async () => {
       try {
