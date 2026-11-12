@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { handleRegister } from "../../auth/auth";
 import { useAuth } from "../../context/AuthContext";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import ModalMessage from "../Modal/modalMessage";
 
 export default function FormLogin() {
   const navigate = useNavigate();
@@ -12,7 +13,11 @@ export default function FormLogin() {
   const [errorMessage, setErrorMessage] = useState("");
   const [loginError, setLoginError] = useState({});
   const [registerError, setRegisterError] = useState({});
-  // const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [message,setMessage] = useState('');
+  const [modal, setModal] = useState(false);
+  //连接回login
+  const [activeTab, setActiveTab] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   const [showRegisterCPassword, setShowRegisterCPassword] = useState(false);
@@ -30,7 +35,10 @@ export default function FormLogin() {
   };
   const toProfile = () => {
     const from = location.state?.from;
-    navigate(from ? `${from.pathname}${from.search || ""}${from.hash || ""}` : "/", { replace: true });
+    navigate(
+      from ? `${from.pathname}${from.search || ""}${from.hash || ""}` : "/",
+      { replace: true },
+    );
   };
   const [loginData, setLoginData] = useState({
     email: "",
@@ -46,46 +54,58 @@ export default function FormLogin() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    if(submitting) return;
     setLoginError({});
     setErrorMessage("");
     // setError("");
     try {
       await loginUser(loginData);
       toProfile();
+      
     } catch (error) {
       if (error.status === 422) {
         setLoginError(error.errors ?? {});
         return;
       }
       setErrorMessage(error.message || "Unable to sign in. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
   };
   const handleRegisterSubmit = async (event) => {
     event.preventDefault();
     setRegisterError({});
+      setSubmitting(true);
+
     try {
-      await handleRegister(
+      const response = await handleRegister(
         data.first_name,
         data.last_name,
         data.email,
         data.password,
         data.password_confirmation,
       );
-      navigate("/login");
+      setMessage(response.message);
+      setModal(true);
     } catch (error) {
       if (error.status === 422) {
         setRegisterError(error.errors ?? {});
         return;
       }
+    } finally{
+      setSubmitting(false);
     }
   };
   return (
     <>
-      <Tabs className="login mb-3" defaultActiveKey="login" fill>
+      <Tabs className="login mb-3" activeKey={activeTab} onSelect={setActiveTab} fill>
         <Tab eventKey="login" title="Login">
           <Form className="login_form" onSubmit={handleSubmit}>
-            {errorMessage && <p role="alert" className="text-danger">{errorMessage}</p>}
+            {errorMessage && (
+              <p role="alert" className="text-danger">
+                {errorMessage}
+              </p>
+            )}
             <Form.Group className="mb-3">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
@@ -244,10 +264,24 @@ export default function FormLogin() {
                 {registerError.password?.[0]}
               </Form.Control.Feedback>
             </Form.Group>
-            <Button className="btn-success my-3" type="submit">
-              Sign In
+            <Button
+              className="btn-success my-3"
+              type="submit"
+              disabled={submitting}
+            >
+              {submitting ? "Register..." : "Register"}
             </Button>
           </Form>
+          <ModalMessage
+            message={message}
+            show={modal}
+            onBackToLogin={() => {
+              setModal(false);
+              setActiveTab("login");
+            }}
+            onHide={() =>{
+              setModal(false);
+            }} />
         </Tab>
       </Tabs>
     </>
