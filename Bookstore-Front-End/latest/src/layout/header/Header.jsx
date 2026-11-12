@@ -7,12 +7,37 @@ import {
   MdOutlineShoppingBag,
   MdPerson,
 } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import headerLogo from "../../assets/Image/Header_Logo.png";
 import { useAuth } from "../../context/AuthContext";
+import { getCart, getWishlist } from "../../auth/auth";
 
 export default function Header({ menu }) {
+
+  const [countFavourite, setCountFavourite] =useState(0);
+  const [countCarts, setCountCart] = useState(0);
+  useEffect (() =>{
+    const numberFavourite = async () =>{
+      try{
+        const response = await getWishlist();
+        setCountFavourite(response.data.length);
+      } catch (error){
+        console.log(error);
+      }
+    };
+        const numberCart = async () =>{
+      try{
+        const response = await getCart();
+        setCountCart(response.data.length);
+      } catch (error){
+        console.log(error);
+      }
+    };
+
+    numberFavourite();
+    numberCart();
+  },[])
   const { loading, isAuthenticated, logoutUser } = useAuth();
   const navigate = useNavigate();
   const [loggingOut, setLoggingOut] = useState(false);
@@ -71,25 +96,25 @@ export default function Header({ menu }) {
               <div className="icon">
                 <MdFavoriteBorder className="icon-menu" />
                 {isAuthenticated ? (
-                  <span className="d-md-none d-lg-block">1</span>
+                  <span className="d-md-none d-lg-block">{countFavourite}</span>
                 ) : (
                   ""
                 )}
               </div>
-              <h5 className="d-md-block d-lg-none m-0">Favourites</h5>
+              <h5 className="d-md-block d-lg-none ms-3">Favourites</h5>
             </Nav.Link>
 
             <Nav.Link className="menu py-2" href="/shopping_cart">
               <div className="icon">
                 <MdOutlineShoppingBag className="icon-menu" />
                 {isAuthenticated ? (
-                  <span className="d-md-none d-lg-block">1</span>
+                  <span className="d-md-none d-lg-block">{countCarts}</span>
                 ) : (
                   ""
                 )}
               </div>
 
-              <h5 className="d-md-block d-lg-none m-0">Cart</h5>
+              <h5 className="d-md-block d-lg-none ms-3">Cart</h5>
             </Nav.Link>
             {!loading &&
               (isAuthenticated ? (
@@ -100,7 +125,7 @@ export default function Header({ menu }) {
                     to="/profile"
                   >
                     <MdPerson className="icon-menu" />
-                    <h5 className="d-md-block d-lg-none m-0">Profile</h5>
+                    <h5 className="d-md-block d-lg-none ms-3">Profile</h5>
                   </Nav.Link>
                   <Nav.Link
                     className="menu py-2"
@@ -109,7 +134,7 @@ export default function Header({ menu }) {
                     disabled={loggingOut}
                   >
                     <MdLogout className="icon-menu" />
-                    <h5 className="d-md-block d-lg-none m-0">Logout</h5>
+                    <h5 className="d-md-block d-lg-none ms-3">Logout</h5>
                   </Nav.Link>
                 </>
               ) : (
@@ -119,7 +144,7 @@ export default function Header({ menu }) {
                   to="/profile"
                 >
                   <MdPerson className="icon-menu" />
-                  <h5 className="d-md-block d-lg-none m-0">Login</h5>
+                  <h5 className="d-md-block d-lg-none ms-3">Login</h5>
                 </Nav.Link>
               ))}
             {/*have already login redirect to profile page if haven't login redirect to login page */}

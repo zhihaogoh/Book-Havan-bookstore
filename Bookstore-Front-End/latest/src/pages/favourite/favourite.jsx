@@ -13,6 +13,7 @@ export default function Favoutite() {
         if (!Array.isArray(response.data)) {
           throw new Error("Books API response.data must be an array");
         }
+        // console.log(response);
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching books:", error);
