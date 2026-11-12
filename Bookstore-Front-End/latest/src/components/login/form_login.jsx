@@ -14,7 +14,7 @@ export default function FormLogin() {
   const [loginError, setLoginError] = useState({});
   const [registerError, setRegisterError] = useState({});
   const [submitting, setSubmitting] = useState(false);
-  const [message,setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [modal, setModal] = useState(false);
   //连接回login
   const [activeTab, setActiveTab] = useState("login");
@@ -54,14 +54,14 @@ export default function FormLogin() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if(submitting) return;
+    setSubmitting(true);
     setLoginError({});
     setErrorMessage("");
+
     // setError("");
     try {
       await loginUser(loginData);
       toProfile();
-      
     } catch (error) {
       if (error.status === 422) {
         setLoginError(error.errors ?? {});
@@ -75,7 +75,7 @@ export default function FormLogin() {
   const handleRegisterSubmit = async (event) => {
     event.preventDefault();
     setRegisterError({});
-      setSubmitting(true);
+    setSubmitting(true);
 
     try {
       const response = await handleRegister(
@@ -92,13 +92,18 @@ export default function FormLogin() {
         setRegisterError(error.errors ?? {});
         return;
       }
-    } finally{
+    } finally {
       setSubmitting(false);
     }
   };
   return (
     <>
-      <Tabs className="login mb-3" activeKey={activeTab} onSelect={setActiveTab} fill>
+      <Tabs
+        className="login mb-3"
+        activeKey={activeTab}
+        onSelect={setActiveTab}
+        fill
+      >
         <Tab eventKey="login" title="Login">
           <Form className="login_form" onSubmit={handleSubmit}>
             {errorMessage && (
@@ -158,8 +163,12 @@ export default function FormLogin() {
                 Forgot Password
               </Link>
             </div>
-            <Button className="btn-success my-3" type="submit">
-              Sign Up
+            <Button
+              className="btn-success my-3"
+              type="submit"
+              disabled={submitting}
+            >
+              {submitting ? "Sign up..." : "Sign up"}
             </Button>
           </Form>
         </Tab>
@@ -279,9 +288,10 @@ export default function FormLogin() {
               setModal(false);
               setActiveTab("login");
             }}
-            onHide={() =>{
+            onHide={() => {
               setModal(false);
-            }} />
+            }}
+          />
         </Tab>
       </Tabs>
     </>

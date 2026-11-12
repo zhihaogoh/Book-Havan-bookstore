@@ -68,12 +68,27 @@ export default function Header({ menu }) {
             </Form>
             {/* sub menu  */}
             <Nav.Link className="menu py-2" href="/favourite">
-              <MdFavoriteBorder className="icon-menu" />
+              <div className="icon">
+                <MdFavoriteBorder className="icon-menu" />
+                {isAuthenticated ? (
+                  <span className="d-md-none d-lg-block">1</span>
+                ) : (
+                  ""
+                )}
+              </div>
               <h5 className="d-md-block d-lg-none m-0">Favourites</h5>
             </Nav.Link>
 
             <Nav.Link className="menu py-2" href="/shopping_cart">
-              <MdOutlineShoppingBag className="icon-menu" />
+              <div className="icon">
+                <MdOutlineShoppingBag className="icon-menu" />
+                {isAuthenticated ? (
+                  <span className="d-md-none d-lg-block">1</span>
+                ) : (
+                  ""
+                )}
+              </div>
+
               <h5 className="d-md-block d-lg-none m-0">Cart</h5>
             </Nav.Link>
             {!loading &&
