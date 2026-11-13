@@ -27,7 +27,7 @@ export default function FliterProduct() {
   };
   useEffect(() => {
     const fetchProducts = async () => {
-      try{
+      try {
         const response = await getBook(currentPage);
         // console.log("Books fetched successfully:", response);
         if (!Array.isArray(response.data)) {
@@ -45,9 +45,7 @@ export default function FliterProduct() {
         // console.log("Categories fetched successfully:", response);
 
         setCheckCategories(response);
-
-      }
-      catch (error) {
+      } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
@@ -60,13 +58,20 @@ export default function FliterProduct() {
     const matchesCategory =
       selectedCategories.length === 0 ||
       selectedCategories.includes(product.category.categories_name); //选择一个以上的书类
-    let matchesMinPrice =
-      minPrice === "" ? null : Number(minPrice) || product.book_price >= Number(minPrice); //设置至少的价钱
-    let matchesMaxPrice =
-      maxPrice === "" ? null : Number(maxPrice) || product.book_price <= Number(maxPrice); //设置至多的价钱
-    if(matchesMinPrice !== null && matchesMaxPrice !== null && matchesMinPrice>matchesMaxPrice){
-      [matchesMinPrice,matchesMaxPrice] = [matchesMaxPrice,matchesMinPrice];
+
+    let min = minPrice === "" ? null : Number(minPrice);
+    let max = maxPrice === "" ? null : Number(maxPrice);
+
+    // // 如果 Min > Max，自动交换
+    if (min !== null && max !== null && min > max) {
+      [min, max] = [max, min];
     }
+
+    const matchesMinPrice =
+      minPrice === "" || Number(product.book_price)  >= min; //设置至少的价钱
+    const matchesMaxPrice =
+      maxPrice === "" || Number(product.book_price) <= max; //设置至多的价钱
+
     const matchesStock = !inStockOnly || product.status === 1; // 设置佣有货
     const matchSearch =
       keyword === "" ||
@@ -90,7 +95,6 @@ export default function FliterProduct() {
     setInStockOnly(false);
   };
 
-  
   return (
     <>
       <>
