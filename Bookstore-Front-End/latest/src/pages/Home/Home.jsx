@@ -24,6 +24,7 @@ export default function Home() {
     };
     fetchProducts();
   }, []);
+
   // console.log("Products in Home component:", product);
   return (
     <>

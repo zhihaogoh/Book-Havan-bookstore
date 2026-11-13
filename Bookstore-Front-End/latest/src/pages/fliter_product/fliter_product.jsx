@@ -60,10 +60,13 @@ export default function FliterProduct() {
     const matchesCategory =
       selectedCategories.length === 0 ||
       selectedCategories.includes(product.category.categories_name); //选择一个以上的书类
-    const matchesMinPrice =
-      minPrice === "" || product.book_price >= Number(minPrice); //设置至少的价钱
-    const matchesMaxPrice =
-      maxPrice === "" || product.book_price <= Number(maxPrice); //设置至多的价钱
+    let matchesMinPrice =
+      minPrice === "" ? null : Number(minPrice) || product.book_price >= Number(minPrice); //设置至少的价钱
+    let matchesMaxPrice =
+      maxPrice === "" ? null : Number(maxPrice) || product.book_price <= Number(maxPrice); //设置至多的价钱
+    if(matchesMinPrice !== null && matchesMaxPrice !== null && matchesMinPrice>matchesMaxPrice){
+      [matchesMinPrice,matchesMaxPrice] = [matchesMaxPrice,matchesMinPrice];
+    }
     const matchesStock = !inStockOnly || product.status === 1; // 设置佣有货
     const matchSearch =
       keyword === "" ||

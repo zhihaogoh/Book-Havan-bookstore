@@ -40,6 +40,7 @@ class BookResource extends JsonResource
             'stock_on_hand' => $this->stock_on_hand,
             'stock_reserved' => $this->stock_reserved,
             'status' => $this->status,
+            'created_at' => $this->created_at,
         ];
     }
 }
