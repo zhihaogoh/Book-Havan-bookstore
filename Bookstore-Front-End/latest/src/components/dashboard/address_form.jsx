@@ -2,13 +2,21 @@ import PropTypes, { shape } from "prop-types";
 import { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { FiSave } from "react-icons/fi";
-import {  MdBookmarks } from "react-icons/md";
+import { MdBookmarks } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { addAddress, updateAddress } from "../../auth/auth";
+import DeleteStatus from "../Modal/delete_success";
 
-export default function AddressForm({ address_type, address_field, addressId, initialDefault = false }) {
+export default function AddressForm({
+  address_type,
+  address_field,
+  addressId,
+  initialDefault = false,
+}) {
   const navigate = useNavigate();
-
+  const [modal, setModal] = useState(false);
+  const [message, setMessage] = useState("");
+  const [link , setLink] = useState("");
   const [purpose, setPurpose] = useState(address_type[0]?.id ?? 1);
   //没有数据
   const [value, setValue] = useState(() =>
@@ -20,7 +28,7 @@ export default function AddressForm({ address_type, address_field, addressId, in
   const [isDefault, setIsDefault] = useState(initialDefault);
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (isSaving) return;
 
@@ -45,17 +53,21 @@ export default function AddressForm({ address_type, address_field, addressId, in
     }
 
     setIsSaving(true);
-    try{
+    try {
       const payload = {
         ...cleaned,
         status: purpose === 1 && isDefault,
       };
       if (addressId) {
-        await updateAddress(addressId, payload);
+        const response = await updateAddress(addressId, payload);
+        setMessage(response.message);
+        setLink("address");
       } else {
-        await addAddress(payload);
+        const response = await addAddress(payload);
+        setLink("address");
+        setMessage(response.message);
       }
-      navigate("/address");
+      setModal(true);
     } catch (error) {
       const fieldErrors = Object.fromEntries(
         Object.entries(error.errors ?? {}).map(([field, messages]) => [
@@ -70,9 +82,7 @@ export default function AddressForm({ address_type, address_field, addressId, in
     } finally {
       setIsSaving(false);
     }
-  }
-
-
+  };
 
   return (
     <>
@@ -190,6 +200,14 @@ export default function AddressForm({ address_type, address_field, addressId, in
           </Form>
         </Card>
       </div>
+      <DeleteStatus
+        message={message}
+        show={modal}
+        link = {link}
+        onHide={() => {
+          setModal(false);
+        }}
+      />
     </>
   );
 }

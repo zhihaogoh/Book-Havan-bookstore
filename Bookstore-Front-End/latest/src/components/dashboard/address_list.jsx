@@ -4,9 +4,13 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { readAddresses } from "../../routes/address_storage";
 import PropTypes from "prop-types";
 import { deleteAddress } from "../../auth/auth";
+import DeleteStatus from "../Modal/delete_success";
+import { useState } from "react";
 
 export default function AddressList({ addresses = [] }) {
   const location = useLocation();
+  const [modal, setModal] = useState(false);
+  const [message, setMessage] = useState("");
   let savedAddresses = [];
   let storageError = false;
   // 储存不可用时仍显示原有地址，并提供明确提示。
@@ -21,20 +25,19 @@ export default function AddressList({ addresses = [] }) {
     navigate(`/address/new/${AddressId}`);
   };
 
-  const toDeleteAddress = (AddressId) => {
+  const toDeleteAddress = async (AddressId) => {
     // Implement delete functionality here
-    try{
-      const response = deleteAddress(AddressId);
+    try {
+      const response = await deleteAddress(AddressId);
       if (response) {
-        // Optionally, you can update the state or refetch the addresses after deletion
-        console.log(`Address with ID ${AddressId} deleted successfully.`);
-        navigate("/address"); // Navigate back to the address list after deletion
+        setMessage(response.message);
+        setModal(true);
       }
     } catch (error) {
       console.error("Error deleting address:", error);
     }
   };
-    
+
   return (
     <>
       <div className="address_list">
@@ -68,7 +71,6 @@ export default function AddressList({ addresses = [] }) {
         </div>
         <div className="listing">
           <Row>
-            
             {address_bill.map((item, index) => (
               <Col className="my-3" md={6} key={item.id || index}>
                 <Card>
@@ -78,9 +80,11 @@ export default function AddressList({ addresses = [] }) {
                   </div>
                   <div className="name">
                     <span>
-                      {item.recipient_name ?? item.recipent_name ?? item.Name} 
+                      {item.recipient_name ?? item.recipent_name ?? item.Name}
                     </span>
-                    <strong className="text-success px-3">{item.status ? "Active" : ""}</strong>
+                    <strong className="text-success px-3">
+                      {item.status ? "Active" : ""}
+                    </strong>
                     <strong>{item.type}</strong>
                   </div>
                   <div className="address">
@@ -106,7 +110,10 @@ export default function AddressList({ addresses = [] }) {
                     >
                       Edit
                     </Button>
-                    <Button className="delete" onClick={() => toDeleteAddress(item.id)}>
+                    <Button
+                      className="delete"
+                      onClick={() => toDeleteAddress(item.id)}
+                    >
                       Delete
                     </Button>
                   </div>
@@ -131,6 +138,13 @@ export default function AddressList({ addresses = [] }) {
           </Row>
         </div>
       </div>
+      <DeleteStatus
+        message={message}
+        show={modal}
+        onHide={() => {
+          setModal(false);
+        }}
+      />
     </>
   );
 }
