@@ -15,11 +15,11 @@ import { useNavigate } from "react-router";
 export default function ProductDetails({ product, img }) {
   const [num, setNumber] = useState(1);
   const [modal, setModal] = useState(false);
-  const [message,setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const price = Number(product.book_price) * num;
   const discount = price * (1 - (product.discount_percentage ?? 0) / 100);
   const navigate = useNavigate();
-  const [link, setLink] = useState('');
+  const [link, setLink] = useState("");
   const updateQuantity = (change) => {
     setNumber((currentQuantity) => Math.max(1, currentQuantity + change));
   };
@@ -65,6 +65,20 @@ export default function ProductDetails({ product, img }) {
                 slidesPerView={4}
                 grid={{
                   rows: 1,
+                }}
+                breakpoints={{
+                  320: {
+                    slidesPerView: 4,
+                    spaceBetween: 25,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                  },
+                  1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 30,
+                  },
                 }}
                 spaceBetween={5}
                 modules={[Grid, Pagination]}
@@ -158,9 +172,9 @@ export default function ProductDetails({ product, img }) {
                         onClick={() => {
                           handleAddCart([
                             {
-                              'book_id' : product.id,
-                              'quantity' : num
-                            }
+                              book_id: product.id,
+                              quantity: num,
+                            },
                           ]);
                         }}
                       >
@@ -168,7 +182,10 @@ export default function ProductDetails({ product, img }) {
                       </Button>
                     </Col>
                     <Col className="p-1" sm={2} md={2} lg={2}>
-                      <Button className="favourite" onClick={() => handleAddWishlist(product.id)}>
+                      <Button
+                        className="favourite"
+                        onClick={() => handleAddWishlist(product.id)}
+                      >
                         <MdOutlineFavorite />
                       </Button>
                     </Col>
@@ -214,11 +231,11 @@ export default function ProductDetails({ product, img }) {
         <SuccessStatus
           message={message}
           show={modal}
-          link = {link}
+          link={link}
           img={img}
           product={product}
-          price = {price}
-          discount = {discount}
+          price={price}
+          discount={discount}
           number={num}
           onHide={() => {
             setModal(false);
