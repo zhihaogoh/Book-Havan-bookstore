@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateAddressRequest;
 use App\Http\Resources\AddressResource;
 use App\Models\Address;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
@@ -19,9 +20,25 @@ class AddressController extends Controller
     }
     public function store(StoreAddressRequest $request){
         $data = $request->validated();
-        $data['user_id'] = $request->user()->id;
+        $userId = $request->user()->id;
 
-        $address = Address::create($data);
+        $address = DB::transaction(function () use ($data,$userId){
+
+            DB::table('users')
+            ->where('id',$userId)
+            ->lockForUpdate()
+            ->first();
+
+            Address::where('user_id', $userId)
+            ->update(['status' => false]);
+
+            return Address::create([
+                ...$data,
+                'user_id' => $userId,
+                'status' => true
+            ]);
+        });
+
         if(!$address){
             return response()->json([
                 'message' => 'Address creation failed'
