@@ -35,7 +35,7 @@ class StoreOrderRequest extends FormRequest
             'shipping_total' => ['nullable', 'numeric', 'min:0'],
             'tax_total' => ['nullable', 'numeric', 'min:0'],
             'grand_total' => ['required_without:items', 'numeric', 'min:0'],
-            'placed_at' => ['nullable', 'date'],
+            'placed_at' => ['nullable', 'date_format : d-m-Y'],
         ], $itemRules);
     }
 }

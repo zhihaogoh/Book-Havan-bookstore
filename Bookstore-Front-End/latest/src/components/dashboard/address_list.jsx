@@ -6,10 +6,12 @@ import PropTypes from "prop-types";
 import { deleteAddress } from "../../auth/auth";
 import DeleteStatus from "../Modal/delete_success";
 import { useState } from "react";
+import ConfrimMessage from "../Modal/confrimMessage";
 
 export default function AddressList({ addresses = [] }) {
   const location = useLocation();
   const [modal, setModal] = useState(false);
+  const [confrim, setConfrim] = useState(false);
   const [message, setMessage] = useState("");
   let savedAddresses = [];
   let storageError = false;
@@ -110,12 +112,20 @@ export default function AddressList({ addresses = [] }) {
                     >
                       Edit
                     </Button>
-                    <Button
-                      className="delete"
-                      onClick={() => toDeleteAddress(item.id)}
-                    >
+                    <Button className="delete" onClick={() => setConfrim(true)}>
                       Delete
                     </Button>
+                    <ConfrimMessage
+                      message={"Are you delete this address"}
+                      show={confrim}
+                      submit={() => {
+                        setConfrim(false);
+                        toDeleteAddress(item.id);
+                      }}
+                      onHide={() => {
+                        setConfrim(false);
+                      }}
+                    />
                   </div>
                 </Card>
               </Col>
@@ -138,6 +148,7 @@ export default function AddressList({ addresses = [] }) {
           </Row>
         </div>
       </div>
+
       <DeleteStatus
         message={message}
         show={modal}

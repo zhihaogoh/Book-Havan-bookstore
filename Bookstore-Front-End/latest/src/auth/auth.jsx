@@ -63,7 +63,7 @@ export const handleLogout = async () => {
 export const getProfile = async () => {
   try {
     const response = await apiGet("/user");
-    console.log(response);
+    // console.log(response);
     return response.user;
   } catch (error) {
     console.error("Get profile error", error);
@@ -133,7 +133,7 @@ export const addAddress = async ({
       country,
       status,
     });
-    console.log("Address added successfully:", response);
+    // console.log("Address added successfully:", response);
     return response;
   } catch (error) {
     console.error("Error adding address:", error);
