@@ -1384,6 +1384,13 @@
 
 //account liat start
 .account {
+  .accordion{
+    --bs-accordion-active-bg: var(--bs-success-bg-subtle);
+    --bs-accordion-btn-focus-box-shadow: none;
+  .accordion-item{
+    border: none;
+  }
+}
   .account_menu {
     padding: 0.5rem;
     .nav-link {

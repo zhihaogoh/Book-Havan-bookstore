@@ -8,7 +8,7 @@ export default function ChangePassword(){
         <>
             <div className="container">
                 <Row>
-                    <Col md={4} lg={3} className="d-none d-md-block">
+                    <Col md={4} lg={3}>
                         <Listing />
                     </Col>
                     <Col md={8} lg={9}>

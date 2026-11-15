@@ -15,10 +15,6 @@ export default function Layout() {
             link: "/",
           },
           {
-            menu_title: "Category",
-            link: "#",
-          },
-          {
             menu_title: "Product",
             link: "/fliter_product",
           },

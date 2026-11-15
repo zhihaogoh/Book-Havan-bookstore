@@ -96,7 +96,7 @@ export default function Header({ menu }) {
               <div className="icon">
                 <MdFavoriteBorder className="icon-menu" />
                 {isAuthenticated ? (
-                  <span className="d-md-none d-lg-block">{countFavourite}</span>
+                  <span className="d-none d-lg-block">{countFavourite}</span>
                 ) : (
                   ""
                 )}
@@ -108,7 +108,7 @@ export default function Header({ menu }) {
               <div className="icon">
                 <MdOutlineShoppingBag className="icon-menu" />
                 {isAuthenticated ? (
-                  <span className="d-md-none d-lg-block">{countCarts}</span>
+                  <span className="d-none d-lg-block">{countCarts}</span>
                 ) : (
                   ""
                 )}

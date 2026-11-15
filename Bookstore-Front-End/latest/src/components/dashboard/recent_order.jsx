@@ -45,7 +45,7 @@ export default function RecentOrder({ order }) {
               <div className="order_detail">
                 {item.order_items.map((product) => (
                   <Row className="my-3" key={product.id}>
-                    <Col xs={3} md={3} lg={3}>
+                    <Col xs={6} md={5} lg={3}>
                       <div className="product_img">
                         <img
                           src={
@@ -56,17 +56,21 @@ export default function RecentOrder({ order }) {
                         />
                       </div>
                     </Col>
-                    <Col xs={9} md={9} lg={9}>
+                    <Col xs={6} md={7} lg={9}>
                       <div className="detail">
                         <h3>{product.title_book}</h3>
                         <span>SKU : {product.SKU}</span>
                         <div className="d-flex flex-row justify-content-between">
                           <span>Quantity : {Number(product.quantity)}</span>
-                          <span>
+                          <span className="d-none d-lg-block">
                             Price : RM
                             {Number(product.subtotal).toFixed(2)}{" "}
                           </span>
                         </div>
+                        <span className="d-block d-lg-none">
+                          Price : RM
+                          {Number(product.price_per_unit).toFixed(2)}{" "}
+                        </span>
                       </div>
                     </Col>
                   </Row>
@@ -91,10 +95,7 @@ RecentOrder.propTypes = {
           SKU: PropTypes.string.isRequired,
           id: PropTypes.number.isRequired,
           quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-          subtotal: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.number,
-          ]),
+          subtotal: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
           title_book: PropTypes.string.isRequired,
         }),
       ),

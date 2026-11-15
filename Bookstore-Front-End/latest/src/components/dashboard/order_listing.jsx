@@ -71,7 +71,7 @@ export default function OrderListing({ order }) {
                             key={product.id}
                             onClick={() => toOrderDetial(item.id)}
                           >
-                            <Col xs={3} md={4} lg={3}>
+                            <Col xs={6} md={5} lg={3}>
                               <div className="product_img">
                                 <img
                                   src={
@@ -82,7 +82,7 @@ export default function OrderListing({ order }) {
                                 />
                               </div>
                             </Col>
-                            <Col xs={9} md={8} lg={9}>
+                            <Col xs={6} md={7} lg={9}>
                               <div className="detail">
                                 <h3>{product.title_book}</h3>
                                 <span>SKU : {product.SKU}</span>
@@ -90,14 +90,14 @@ export default function OrderListing({ order }) {
                                   <span>
                                     Quantity : {Number(product.quantity)}
                                   </span>
-                                  <span className="d-md-none d-lg-block">
+                                  <span className="d-none d-lg-block">
                                     Price : RM
                                     {Number(product.price_per_unit).toFixed(
                                       2,
                                     )}{" "}
                                   </span>
                                 </div>
-                                <span className="d-md-block d-lg-none">
+                                <span className="d-block d-lg-none">
                                   Price : RM
                                   {Number(product.price_per_unit).toFixed(
                                     2,

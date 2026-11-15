@@ -1,4 +1,4 @@
-import { Nav } from "react-bootstrap";
+import { Accordion, Nav } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
 import {
   MdAccountCircle,
@@ -12,85 +12,158 @@ import { useAuth } from "../../context/AuthContext";
 export default function Listing() {
   const navigate = useNavigate();
   const { logoutUser } = useAuth();
-  const toLogin =async () =>{
-    try{
+  const toLogin = async () => {
+    try {
       await logoutUser();
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
       return;
     }
 
     navigate("/login");
-  }
+  };
   return (
     <>
       <div className="account">
-        <div className="title">
-          <h3>My Account</h3>
-        </div>
-        <Nav  className="flex-column account_menu">
-          <Nav.Item>
-            <RouterNavLink
-              className={({ isActive }) =>
-                `nav-link ${isActive ? "active" : ""}`
-              }
-              to="/profile"
-            >
-              <MdAccountCircle /> Profile
-            </RouterNavLink>
-          </Nav.Item>
+        <div className="d-none d-md-block">
+          <div className="title">
+            <h3>My Account</h3>
+          </div>
 
-          <Nav.Item>
-            <RouterNavLink
-              className={({ isActive }) =>
-                `nav-link ${isActive ? "active" : ""}`
-              }
-              to="/change_password"
-            >
-              <MdSecurity /> Change Password
-            </RouterNavLink>
-          </Nav.Item>
-          <Nav.Item>
-            <RouterNavLink
-              className={({ isActive }) =>
-                `nav-link ${isActive ? "active" : ""}`
-              }
-              to="/list_order"
-            >
-              <MdShoppingBasket /> My Orders
-            </RouterNavLink>
-          </Nav.Item>
-          <Nav.Item>
-            <RouterNavLink
-              className={({ isActive }) =>
-                `nav-link ${isActive ? "active" : ""}`
-              }
-             to ="/profile_favourite"
-            >
-              <MdFavorite /> Wishlist
-            </RouterNavLink>
-          </Nav.Item>
-          <Nav.Item>
-            <RouterNavLink
-              className={({ isActive }) =>
-                `nav-link ${isActive ? "active" : ""}`
-              }
-              to="/address"
-            >
-              <MdLocationPin /> Address
-            </RouterNavLink>
-          </Nav.Item>
-          <Nav.Item>
-            <RouterNavLink
-              className={({ isActive }) =>
-                `nav-link mt-3 ${isActive ? "fw-bold" : ""}`
-              }
-              onClick={toLogin}
-            >
-              <FaSignOutAlt /> Logout
-            </RouterNavLink>
-          </Nav.Item>
-        </Nav>
+          <Nav className="flex-column account_menu">
+            <Nav.Item>
+              <RouterNavLink
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""}`
+                }
+                to="/profile"
+              >
+                <MdAccountCircle /> Profile
+              </RouterNavLink>
+            </Nav.Item>
+
+            <Nav.Item>
+              <RouterNavLink
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""}`
+                }
+                to="/change_password"
+              >
+                <MdSecurity /> Change Password
+              </RouterNavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <RouterNavLink
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""}`
+                }
+                to="/list_order"
+              >
+                <MdShoppingBasket /> My Orders
+              </RouterNavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <RouterNavLink
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""}`
+                }
+                to="/profile_favourite"
+              >
+                <MdFavorite /> Wishlist
+              </RouterNavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <RouterNavLink
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""}`
+                }
+                to="/address"
+              >
+                <MdLocationPin /> Address
+              </RouterNavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <RouterNavLink
+                className={({ isActive }) =>
+                  `nav-link mt-3 ${isActive ? "fw-bold" : ""}`
+                }
+                onClick={toLogin}
+              >
+                <FaSignOutAlt /> Logout
+              </RouterNavLink>
+            </Nav.Item>
+          </Nav>
+        </div>
+        <Accordion className="bg-secondary-subtle my-3 d-block d-md-none" defaultActiveKey="0">
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>My Account</Accordion.Header>
+            <Accordion.Body className="p-none">
+              <Nav className="flex-column account_menu">
+                <Nav.Item>
+                  <RouterNavLink
+                    className={({ isActive }) =>
+                      `nav-link ${isActive ? "active" : ""}`
+                    }
+                    to="/profile"
+                  >
+                    <MdAccountCircle /> Profile
+                  </RouterNavLink>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <RouterNavLink
+                    className={({ isActive }) =>
+                      `nav-link ${isActive ? "active" : ""}`
+                    }
+                    to="/change_password"
+                  >
+                    <MdSecurity /> Change Password
+                  </RouterNavLink>
+                </Nav.Item>
+                <Nav.Item>
+                  <RouterNavLink
+                    className={({ isActive }) =>
+                      `nav-link ${isActive ? "active" : ""}`
+                    }
+                    to="/list_order"
+                  >
+                    <MdShoppingBasket /> My Orders
+                  </RouterNavLink>
+                </Nav.Item>
+                <Nav.Item>
+                  <RouterNavLink
+                    className={({ isActive }) =>
+                      `nav-link ${isActive ? "active" : ""}`
+                    }
+                    to="/profile_favourite"
+                  >
+                    <MdFavorite /> Wishlist
+                  </RouterNavLink>
+                </Nav.Item>
+                <Nav.Item>
+                  <RouterNavLink
+                    className={({ isActive }) =>
+                      `nav-link ${isActive ? "active" : ""}`
+                    }
+                    to="/address"
+                  >
+                    <MdLocationPin /> Address
+                  </RouterNavLink>
+                </Nav.Item>
+                <Nav.Item>
+                  <RouterNavLink
+                    className={({ isActive }) =>
+                      `nav-link mt-3 ${isActive ? "fw-bold" : ""}`
+                    }
+                    onClick={toLogin}
+                  >
+                    <FaSignOutAlt /> Logout
+                  </RouterNavLink>
+                </Nav.Item>
+              </Nav>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
       </div>
     </>
   );

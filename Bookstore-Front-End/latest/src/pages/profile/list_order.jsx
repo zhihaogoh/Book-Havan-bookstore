@@ -22,7 +22,6 @@ export default function ListOrder() {
           throw new Error("Orders error");
         }
         setOrder(response.orders);
-
       } catch (error) {
         setError(error.message);
       } finally {
@@ -43,18 +42,19 @@ export default function ListOrder() {
               <Listing />
             </Col>
             <Col md={8} lg={9}>
-            {order.length >0 ?(
-              <OrderListing 
-                order = {order}
-              />
-            ): (
-                    <div className="title d-flex flex-column justify-content-center align-items-center">
-                      <h3>Not in your Order</h3>
-                      <Button className="btn-secondary py-2 px-5 m-3" onClick={backToHome}>
-                        Back to home
-                      </Button>
-                    </div>
-                  )}
+              {order.length > 0 ? (
+                <OrderListing order={order} />
+              ) : (
+                <div className="title d-flex flex-column justify-content-center align-items-center">
+                  <h3>Not in your Order</h3>
+                  <Button
+                    className="btn-secondary py-2 px-5 m-3"
+                    onClick={backToHome}
+                  >
+                    Back to home
+                  </Button>
+                </div>
+              )}
             </Col>
           </Row>
         </div>
