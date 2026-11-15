@@ -43,6 +43,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/order-item', [OrderController::class, 'items']);
     Route::post('/order-item', [OrderController::class, 'storeItems']);
     Route::delete('/order-item/{id}', [OrderController::class, 'destroyItem']);
+    Route::post('/orders/{id}/status', [OrderController::class, 'updateStatus']);
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);
     Route::post('/orders', [OrderController::class, 'store']);

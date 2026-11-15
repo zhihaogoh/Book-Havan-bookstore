@@ -11,6 +11,7 @@ use App\Models\Orders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class OrderController extends Controller
@@ -79,6 +80,44 @@ class OrderController extends Controller
             'order' => $order,
         ], 201);
     }
+
+    public function updateStatus(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'status' => ['required', Rule::in(
+                [
+                    'pending',
+                    'processing',
+                    'shipped',
+                    'delivered',
+                    'cancelled'
+                ]
+            )]
+        ]);
+
+        $order = Orders::where('user_id', $request->user()->id)
+            ->findOrFail($id);
+
+        if ($order->status !== 'pending') {
+            return response()->json([
+                'message' => 'This order cannot be cancelled.'
+            ], 422);
+        }
+
+        if ($validated['status'] !== 'cancelled') {
+            return response()->json([
+                'message' => 'Only cancellation is allowed.'
+            ], 422);
+        }
+
+        $order->status = 'cancelled';
+        $order->save();
+        return response()->json([
+            'message' => 'status updated successfully',
+            'data' => $order
+        ]);
+    }
+
 
     public function items(Request $request)
     {

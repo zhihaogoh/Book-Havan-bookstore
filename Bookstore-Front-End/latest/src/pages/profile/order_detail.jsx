@@ -50,7 +50,7 @@ export default function OrderDetail() {
               ) : error ? (
                 <p role="alert">{error}</p>
               ) : order && <OrderDetailOverview 
-              
+                id = {order.id}
                 order_number = {order.order_number}
                 status = {order.status}
                 placed_at = {order.placed_at}

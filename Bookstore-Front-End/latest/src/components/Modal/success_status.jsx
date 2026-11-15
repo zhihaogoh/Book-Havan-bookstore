@@ -25,7 +25,7 @@ export default function SuccessStatus({
     <>
       <Modal
         {...props}
-        size="lg"
+        size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -42,29 +42,29 @@ export default function SuccessStatus({
         </Modal.Header>
         <Modal.Body>
           <Row>
-            <Col md={3}>
+            <Col xs={5} md={4} lg={4}>
               <img className="modal_img" src={img} alt={img} />
             </Col>
-            <Col md={6}>
+            <Col xs={7} md={8} lg={8}>
               <div className="d-flex flex-column align-items-start">
                 <h3>{product.book_name}</h3>
                 <span>by : {product.author?.author_name}</span>
                 <span>Qty: {number}</span>
+               
+                  {product.discount_percentage > 0 ? (
+                    <span>
+                      <p className="price text-danger fw-bold">
+                       Price : RM{discount.toFixed(2)}
+                      </p>
+                      <p className="price_del">
+                        <del>RM{price.toFixed(2)}</del>
+                      </p>
+                    </span>
+                  ) : (
+                    <span>Price : RM{price.toFixed(2)}</span>
+                  )}
+         
               </div>
-            </Col>
-            <Col md={3}>
-              {product.discount_percentage > 0 ? (
-                <span>
-                  <p className="price text-danger fw-bold">
-                    RM{discount.toFixed(2)}
-                  </p>
-                  <p className="price_del">
-                    <del>RM{price.toFixed(2)}</del>
-                  </p>
-                </span>
-              ) : (
-                <span>RM{price.toFixed(2)}</span>
-              )}
             </Col>
           </Row>
         </Modal.Body>

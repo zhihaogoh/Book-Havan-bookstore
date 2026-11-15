@@ -28,7 +28,6 @@ class StoreOrderRequest extends FormRequest
 
         return array_merge([
             'address_id' => ['required', 'integer', 'exists:user_address,id'],
-            'status' => ['required', 'string', 'max:255'],
             'currency' => ['required', 'string', 'max:3'],
             'subtotal' => ['required_without:items', 'numeric', 'min:0'],
             'discount_total' => ['nullable', 'numeric', 'min:0'],

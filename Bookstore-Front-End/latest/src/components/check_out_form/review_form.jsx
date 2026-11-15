@@ -52,7 +52,6 @@ export default function ReviewForm({
         {
           address_id: addressId,
           currency: "MYR",
-          status: "pending",
           grand_total: Number(total.toFixed(2)),
           subtotal: Number(subtotal.toFixed(2)),
           shipping_total: shippingFee,

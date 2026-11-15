@@ -323,10 +323,10 @@ export const storeOrder = async (order, cartIds = []) => {
   return { ...response, failedCartIds };
 };
 
-export const getOrderId = async(id) =>{
-   try {
+export const getOrderId = async (id) => {
+  try {
     const response = await apiGet(`/orders/${encodeURIComponent(id)}`);
-    console.log("Book fetched successfully:", response);
+    // console.log("Book fetched successfully:", response);
     return response;
   } catch (error) {
     if (error.status === 401) {
@@ -334,4 +334,19 @@ export const getOrderId = async(id) =>{
     }
     throw error;
   }
-}
+};
+
+export const cancelOrderId = async (id) => {
+  try {
+    const response = await apiPost(
+      `/orders/${encodeURIComponent(id)}/status`,
+     {status:"cancelled"},
+    );
+    return response;
+  } catch (error) {
+    if (error.status === 401) {
+      setAccessToken(null);
+    }
+    throw error;
+  }
+};

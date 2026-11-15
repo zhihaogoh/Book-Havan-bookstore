@@ -21,7 +21,13 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('user_address')
                 ->nullOnDelete();
-            $table->string('status', 30);
+            $table->enum('status',[
+                'pending',
+                'processing',
+                'shipped',
+                'delivered',
+                'cancelled'
+            ]) -> default('pending');
             $table->char('currency', 3)->default("RM");
             $table->decimal('subtotal', 12, 2)->default(0);
             $table->decimal('discount_total', 12, 2)->default(0);

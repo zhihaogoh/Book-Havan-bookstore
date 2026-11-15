@@ -23,10 +23,10 @@ export default function ConfrimMessage({ submit, message, ...props }) {
           </div>
         </ModalBody>
         <Modal.Footer>
-          <Button className="to_cart" onClick={props.onHide}>
+          <Button className="to_cart btn-success" onClick={props.onHide}>
             Cancel
           </Button>
-          <Button className="to_cart" onClick={submit}>
+          <Button className="to_cart btn-success" onClick={submit}>
             Delete
           </Button>
         </Modal.Footer>
