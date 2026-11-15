@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 
-export default function FormReview({ carts,address }) {
+export default function FormReview({ carts, address }) {
   return (
     <>
       <div className="form_review">
-        <Row>
+        <Row className="my-3">
           <Col md={6} lg={6}>
             <div className="review_address">
               <h4>Shipping Information</h4>
@@ -28,22 +28,33 @@ export default function FormReview({ carts,address }) {
           <h4>Items in Order</h4>
           {carts.map((item) => (
             <Row key={item.id} className="review_cart_item mb-3">
-              <Col md={3} lg={2}>
+              <Col xs={4} md={4} lg={2}>
                 <img
                   src={item.img ?? "../src/assets/image/Product/Product1.jpg"}
                   alt={item.img ?? "../src/assets/image/Product/Product1.jpg"}
                 />
               </Col>
-              <Col md={7} lg={7}>
+              <Col xs={8} md={8} lg={6}>
                 <div className="name_qty">
                   <h5>{item.book?.book_name}</h5>
                   <p>Quantity: {Number(item.quantity)}</p>
+                  <div className="d-block d-lg-none price">
+                    <span>
+                      Price : RM
+                      {item.book?.discount_percentage > 0
+                        ? (
+                            Number(item.book?.book_price) *
+                            (1 - item.book?.book_price / 100)
+                          ).toFixed(2)
+                        : Number(item.book?.book_price).toFixed(2)}
+                    </span>
+                  </div>
                 </div>
               </Col>
-              <Col md={2} lg={2}>
+              <Col className="d-none d-lg-block " md={3} lg={4}>
                 <div className="price">
                   <span>
-                    RM
+                    Price : RM
                     {item.book?.discount_percentage > 0
                       ? (
                           Number(item.book?.book_price) *
