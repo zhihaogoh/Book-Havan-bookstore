@@ -95,27 +95,37 @@ class OrderController extends Controller
             )]
         ]);
 
-        $order = Orders::where('user_id', $request->user()->id)
-            ->findOrFail($id);
-
-        if ($order->status !== 'pending') {
-            return response()->json([
-                'message' => 'This order cannot be cancelled.'
-            ], 422);
-        }
-
         if ($validated['status'] !== 'cancelled') {
             return response()->json([
                 'message' => 'Only cancellation is allowed.'
             ], 422);
         }
 
-        $order->status = 'cancelled';
-        $order->save();
-        return response()->json([
-            'message' => 'status updated successfully',
-            'data' => $order
-        ]);
+        return DB::transaction(function () use ($request, $id) {
+            $order = Orders::where('user_id', $request->user()->id)
+                ->lockForUpdate()->findOrFail($id);
+
+            if ($order->status !== 'pending') {
+                return response()->json([
+                    'message' => 'This order cannot be cancelled.'
+                ], 422);
+            }
+
+            foreach ($order->orderItems()->orderBy('book_id')->get() as $item) {
+                $book = Books::whereKey($item->book_id)->lockForUpdate()->firstOrFail();
+                $book->incrementEach([
+                    'book_quantity' => $item->quantity,
+                    'stock_on_hand' => $item->quantity,
+                ]);
+            }
+
+            $order->update(['status' => 'cancelled']);
+
+            return response()->json([
+                'message' => 'status updated successfully',
+                'data' => $order
+            ]);
+        });
     }
 
 
@@ -188,6 +198,12 @@ class OrderController extends Controller
 
     private function addItemsToOrder(Orders $order, array $requestedItems): array
     {
+        if ($order->status === 'cancelled') {
+            throw ValidationException::withMessages([
+                'order_id' => ['Cannot add items to a cancelled order.'],
+            ]);
+        }
+
         $itemIds = [];
         foreach ($requestedItems as $index => $requestedItem) {
             $book = Books::whereKey($requestedItem['book_id'])
@@ -195,9 +211,10 @@ class OrderController extends Controller
             $item = $order->orderItems()->where('book_id', $book->id)
                 ->lockForUpdate()->first();
             $quantity = ($item?->quantity ?? 0) + $requestedItem['quantity'];
-            $available = $book->stock_on_hand - $book->stock_reserved;
 
-            if ($quantity > $available) {
+            $available = min($book->book_quantity, $book->stock_on_hand - $book->stock_reserved);
+
+            if ($requestedItem['quantity'] > $available) {
                 throw ValidationException::withMessages([
                     "items.$index.quantity" => ['Not enough stock available.'],
                 ]);
@@ -223,6 +240,11 @@ class OrderController extends Controller
             } else {
                 $item = $order->orderItems()->create($values);
             }
+            
+            $book->decrementEach([
+                'book_quantity' => $requestedItem['quantity'],
+                'stock_on_hand' => $requestedItem['quantity'],
+            ]);
             $itemIds[] = $item->id;
         }
 
