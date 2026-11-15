@@ -1,8 +1,16 @@
 import { Button, Col, Row } from "react-bootstrap";
 import FormPayment from "../form/form_payment";
 import PropTypes from "prop-types";
+import ListTotal from "./list_total";
 
-export default function PaymentForm({ setStep }) {
+export default function PaymentForm({
+  setStep,
+  subtotal,
+  shippingFee,
+  sstPrice,
+  total,
+  totalItems,
+}) {
   return (
     <>
       <div className="check_out_form">
@@ -11,6 +19,13 @@ export default function PaymentForm({ setStep }) {
         </div>
         <FormPayment />
       </div>
+      <ListTotal
+        subtotal={subtotal}
+        shippingFee={shippingFee}
+        sstPrice={sstPrice}
+        total={total}
+        totalItems={totalItems}
+      />
       <div className="btn_group">
         <Row>
           <Col md={12} lg={6}>
@@ -42,4 +57,13 @@ export default function PaymentForm({ setStep }) {
 
 PaymentForm.propTypes = {
   setStep: PropTypes.func.isRequired,
+  subtotal: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  totalItems: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  shippingFee: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  sstPrice: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  total: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };

@@ -4,6 +4,7 @@ import { Alert, Button, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import { storeOrder } from "../../auth/auth";
 import DeleteStatus from "../Modal/orderSuccess";
+import ListTotal from "./list_total";
 
 export default function ReviewForm({
   setStep,
@@ -13,6 +14,7 @@ export default function ReviewForm({
   subtotal,
   shippingFee,
   taxTotal,
+  totalItems,
 }) {
   const [message, setMessage] = useState("");
   const [modal, setModal] = useState(false);
@@ -92,6 +94,13 @@ export default function ReviewForm({
         )}
         <FormReview carts={carts} address={address ?? {}} />
       </div>
+      <ListTotal
+        subtotal={subtotal}
+        shippingFee={shippingFee}
+        sstPrice={taxTotal}
+        total={total}
+        totalItems={totalItems}
+      />
       <div className="btn_group">
         <Row>
           <Col md={12} lg={6}>
@@ -166,6 +175,8 @@ ReviewForm.propTypes = {
     country: PropTypes.string.isRequired,
     status: PropTypes.bool,
   }),
+  totalItems: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
   subtotal: PropTypes.number.isRequired,
   shippingFee: PropTypes.number.isRequired,
   taxTotal: PropTypes.number.isRequired,

@@ -2,8 +2,17 @@ import PropTypes from "prop-types";
 import { Button, Col, Row } from "react-bootstrap";
 import FormAddress from "../form/form_address";
 import { useNavigate } from "react-router";
+import ListTotal from "./list_total";
 
-export default function AddressForm({ address, setStep }) {
+export default function AddressForm({
+  address,
+  setStep,
+  subtotal,
+  shippingFee,
+  sstPrice,
+  total,
+  totalItems,
+}) {
   const navigate = useNavigate();
   const handleBackToShoppingCart = () => {
     navigate("/shopping_cart");
@@ -14,10 +23,15 @@ export default function AddressForm({ address, setStep }) {
         <div className="title">
           <h3>Shipping Information</h3>
         </div>
-        <FormAddress
-          address={address}
-        />
+        <FormAddress address={address} />
       </div>
+      <ListTotal
+        subtotal={subtotal}
+        shippingFee={shippingFee}
+        sstPrice={sstPrice}
+        total={total}
+        totalItems={totalItems}
+      />
       <div className="btn_group">
         <Row>
           <Col md={12} lg={6}>
@@ -58,4 +72,13 @@ AddressForm.propTypes = {
       status: PropTypes.bool,
     }),
   ),
+  subtotal: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  totalItems: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  shippingFee: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  sstPrice: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  total: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };

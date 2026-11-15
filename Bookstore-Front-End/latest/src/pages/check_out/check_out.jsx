@@ -70,21 +70,25 @@ export default function CheckOut() {
   if (loading) return <Spinner className="center" animation="border" />;
   if (error) return <Alert variant="danger">{error}</Alert>;
   return (
-    <>
-      <>
+
         <div className="container mb-3">
           <div className="title">
             <h3>Check Out</h3>
             <span>Complete your order securely.</span>
           </div>
           <Row>
-            <Col lg={8}>
+            <Col md={12} lg={8}>
               <CheckOutView step={step} />
               {step === 1 && (
                 <AddressForm
                   address = {address}
                   step={step}
                   setStep={setStep}
+                  subtotal={subtotal}
+                  shippingFee={shippingFee}
+                  sstPrice={sstPrice}
+                  total={total}
+                  totalItems={totalItems}
                   onNext={() => {
                     setStep(2);
                   }}
@@ -94,6 +98,11 @@ export default function CheckOut() {
                 <PaymentForm
                   step={step}
                   setStep={setStep}
+                  subtotal={subtotal}
+                  shippingFee={shippingFee}
+                  sstPrice={sstPrice}
+                  total={total}
+                  totalItems={totalItems}
                   onNext={() => {
                     setStep(3);
                   }}
@@ -112,6 +121,8 @@ export default function CheckOut() {
                   shippingFee={shippingFee}
                   taxTotal={sstPrice}
                   total = {total}
+                  totalItems={totalItems}
+
                   onNext={() => {
                     setStep(4);
                   }}
@@ -121,7 +132,7 @@ export default function CheckOut() {
                 />
               )}
             </Col>
-            <Col lg={4}>
+            <Col className="d-none d-lg-block" lg={4}>
               <Card className="mt-3 p-2 summary_price">
                 <div className="title">
                   <h3>Order Summary</h3>
@@ -159,7 +170,6 @@ export default function CheckOut() {
             </Col>
           </Row>
         </div>
-      </>
-    </>
+
   );
 }
