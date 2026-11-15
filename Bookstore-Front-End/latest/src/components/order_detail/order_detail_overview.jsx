@@ -296,6 +296,7 @@ export default function OrderDetailOverview({
           setConfrim(false);
           CancelOrder(id);
         }}
+        buttonConfrim = {"Cancel"}
         onHide={() => {
           setConfrim(false);
         }}

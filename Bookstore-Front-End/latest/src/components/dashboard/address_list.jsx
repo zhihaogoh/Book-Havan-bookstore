@@ -118,6 +118,7 @@ export default function AddressList({ addresses = [] }) {
                     <ConfrimMessage
                       message={"Are you delete this address"}
                       show={confrim}
+                      buttonConfrim = {"Delete"}
                       submit={() => {
                         setConfrim(false);
                         toDeleteAddress(item.id);

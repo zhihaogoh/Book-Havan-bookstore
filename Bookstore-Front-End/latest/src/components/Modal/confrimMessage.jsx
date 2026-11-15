@@ -2,7 +2,7 @@ import { Button, Modal, ModalBody } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { MdError } from "react-icons/md";
 
-export default function ConfrimMessage({ submit, message, ...props }) {
+export default function ConfrimMessage({ buttonConfrim,submit, message, ...props }) {
   return (
     <>
       <Modal
@@ -23,11 +23,11 @@ export default function ConfrimMessage({ submit, message, ...props }) {
           </div>
         </ModalBody>
         <Modal.Footer>
-          <Button className="to_cart btn-success" onClick={props.onHide}>
-            Cancel
+          <Button className=" btn-secondary" onClick={props.onHide}>
+           Back
           </Button>
           <Button className="to_cart btn-success" onClick={submit}>
-            Delete
+            {buttonConfrim}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -39,4 +39,5 @@ ConfrimMessage.propTypes = {
   message: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
+  buttonConfrim: PropTypes.string.isRequired
 };
