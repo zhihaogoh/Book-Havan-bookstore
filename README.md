@@ -1,4 +1,4 @@
-Book Havan — Bookstore Web Application
+📚 Bookstore E-Commerce Frontend
 
 A personal learning and portfolio project built with a React frontend and a Laravel REST API. The project explores book browsing, authentication, persistent shopping carts, wishlists, and order management.
 
