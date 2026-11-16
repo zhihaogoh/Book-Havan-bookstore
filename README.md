@@ -110,8 +110,8 @@ Use `localhost` consistently for both services. The current CORS configuration a
 After seeding a fresh local database, the sample customer account is:
 
 ```text
-Email: test@example.com
-Password: password
+Email: Abc@gmail.com.com
+Password: Abc@12345
 ```
 
 These are public local-demo credentials. You can also register a new customer account.
