@@ -29,9 +29,11 @@ class OrderController extends Controller
         ], 200);
     }
 
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-        $orders = Orders::with(['address', 'orderItems'])->find($id);
+        $orders = Orders::with(['address', 'orderItems'])
+        ->where('user_id', $request->user()->id)
+        ->findOrFail($id);
         if (!$orders) {
             return response()->json([
                 'message' => 'Book not found'
@@ -240,7 +242,7 @@ class OrderController extends Controller
             } else {
                 $item = $order->orderItems()->create($values);
             }
-            
+
             $book->decrementEach([
                 'book_quantity' => $requestedItem['quantity'],
                 'stock_on_hand' => $requestedItem['quantity'],
